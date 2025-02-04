@@ -254,7 +254,6 @@ Carnegie Mellon University}
 \newcommand{\ket}{\rangle}
 \newcommand{\norm}[1]{\left\lVert #1\right\rVert}
 \newcommand{\normalorder}[1]{\mathop{:}\nolimits\!#1\!\mathop{:}\nolimits}
-\newcommand{\tv}[1]{|#1|}
 \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
 \DeclareMathOperator{\curl}{curl}
 \DeclareMathOperator{\diverge}{div}
@@ -285,6 +284,9 @@ Carnegie Mellon University}
 \DeclareMathOperator{\var}{Var}
 \newcommand{\E}{\mathbb{E}}
 \newcommand{\Prob}{\mathbb{P}}
+\newcommand{\KLc}[2]{\mathrm{KL}\left(#1 \Vert #2 \right)}
+\newcommand{\normal}{\mathcal{N}}
+\DeclareMathOperator{\KL}{KL}
 
 % Algebra
 \DeclareMathOperator{\adj}{adj}
@@ -358,7 +360,6 @@ Carnegie Mellon University}
 \DeclareMathOperator{\erfc}{erfc}
 \DeclareMathOperator{\erf}{erf}
 \DeclareMathOperator*{\esssup}{ess\,sup}
-\DeclareMathOperator{\ev}{ev}
 \DeclareMathOperator{\Ext}{Ext}
 \DeclareMathOperator{\fst}{fst}
 \DeclareMathOperator{\Fit}{Fit}
@@ -401,6 +402,62 @@ Carnegie Mellon University}
 \DeclareMathOperator{\Syl}{Syl}
 \DeclareMathOperator{\Sym}{Sym}
 \DeclareMathOperator{\vol}{vol}
+
+% mathbf lowercase
+\newcommand{\av}{\vec{a}}
+\newcommand{\bv}{\vec{b}}
+\newcommand{\cv}{\vec{c}}
+\newcommand{\dv}{\vec{d}}
+\newcommand{\ev}{\vec{e}}
+\newcommand{\fv}{\vec{f}}
+\newcommand{\gv}{\vec{g}}
+\newcommand{\hv}{\vec{h}}
+\newcommand{\iv}{\vec{i}}
+\newcommand{\jv}{\vec{j}}
+\newcommand{\kv}{\vec{k}}
+\newcommand{\lv}{\vec{l}}
+\newcommand{\mv}{\vec{m}}
+\newcommand{\nv}{\vec{n}}
+\newcommand{\ov}{\vec{o}}
+\newcommand{\pv}{\vec{p}}
+\newcommand{\qv}{\vec{q}}
+\newcommand{\rv}{\vec{r}}
+\newcommand{\sv}{\vec{s}}
+\newcommand{\tv}{\vec{t}}
+\newcommand{\uv}{\vec{u}}
+\newcommand{\vv}{\vec{v}}
+\newcommand{\wv}{\vec{w}}
+\newcommand{\xv}{\vec{x}}
+\newcommand{\yv}{\vec{y}}
+\newcommand{\zv}{\vec{z}}
+
+% mathbf uppercase
+\newcommand{\Av}{\vec{A}}
+\newcommand{\Bv}{\vec{B}}
+\newcommand{\Cv}{\vec{C}}
+\newcommand{\Dv}{\vec{D}}
+\newcommand{\Ev}{\vec{E}}
+\newcommand{\Fv}{\vec{F}}
+\newcommand{\Gv}{\vec{G}}
+\newcommand{\Hv}{\vec{H}}
+\newcommand{\Iv}{\vec{I}}
+\newcommand{\Jv}{\vec{J}}
+\newcommand{\Kv}{\vec{K}}
+\newcommand{\Lv}{\vec{L}}
+\newcommand{\Mv}{\vec{M}}
+\newcommand{\Nv}{\vec{N}}
+\newcommand{\Ov}{\vec{O}}
+\newcommand{\Pv}{\vec{P}}
+\newcommand{\Qv}{\vec{Q}}
+\newcommand{\Rv}{\vec{R}}
+\newcommand{\Sv}{\vec{S}}
+\newcommand{\Tv}{\vec{T}}
+\newcommand{\Uv}{\vec{U}}
+\newcommand{\Vv}{\vec{V}}
+\newcommand{\Wv}{\vec{W}}
+\newcommand{\Xv}{\vec{X}}
+\newcommand{\Yv}{\vec{Y}}
+\newcommand{\Zv}{\vec{Z}}
 
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,

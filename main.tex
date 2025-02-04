@@ -110,13 +110,13 @@ The following implication holds:
   = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma} 
   \convDist Z,
   \]
-  where $Z \sim N(0, 1)$. In other words, 
+  where $Z \sim \normal(0, 1)$. In other words, 
   \[
   \lim_{n \to \infty} \P[Z_n < z] = \Phi(z) 
   = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}} 
   \; dx.
   \]
-  Also write $Z_n \approx N(0, 1)$.
+  Also write $Z_n \approx \normal(0, 1)$.
 \end{thm}
 
 \subsection{Statistical Inference}
@@ -169,9 +169,11 @@ The MSE can be written as
 \textbf{Warning!} In the above definition, 
 $C_n$ is random and $\theta$ is fixed.
 
-\section{Supervised Learning}
+\section{Linear models}
+
 \subsection{Logistic Regression}
-Logistic regression is used for classfication problems.
+Logistic regression is a linear model that can be 
+used for classfication problems.
 Logistic regression takes in input feature $x \in \R^n$, and 
 output a prediction $y \in \left\{ 0, 1 \right\}$. 
 The hypotheses function $h_{\theta}(x)$ is chosen as 
@@ -180,7 +182,7 @@ h_\theta(x) = \sigma(\theta^T x) = \frac{1}{1 + e^{- \theta^T x}},
 \]
 where 
 \[
-g(z) = \frac{1}{1 + e^{-z}}
+\sigma(z) = \frac{1}{1 + e^{-z}}
 \]
 is the sigmoid function. 
 \begin{figure}[H]
@@ -229,5 +231,245 @@ It is easier to maximize the log-likelihood:
 \end{aligned}
 \]
 This is called the logisitic loss or the binary cross-entropy.
+
+\section{Mixture Models and EM}
+
+\subsection{Kullback-Leibler (KL) Divergence}
+In this section, we adopt the convention that $0 \log 0 = 0$.
+
+\begin{defi}[KL divergence]
+  The Kullback-Leibler (KL) divergence of two  
+  distributions $P(X)$ and $Q(X)$ 
+  over the outcome space $X$ is defined as follows: 
+  \[
+  \KL (P \Vert Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)}.
+  \]
+\end{defi}
+
+To understand the significance of KL-divergence better, 
+we first discuss some related concepts in information theory,
+starting with the definition of \emph{entropy}.
+\begin{defi}
+  The entropy of a distribution $P(X)$ 
+  is defined as 
+  \[
+  H(P) = - \sum_{x \in X} P(x) \log P(x)
+  \]
+\end{defi}
+
+Intuitively, entropy measures how dispersed a probability 
+distribution is. For example, a uniform distribution is 
+considered to have very high entropy (i.e. a lot of uncertainty), 
+whereas a distribution that assigns all its mass on a single 
+point is considered to have zero entropy (i.e. no uncertainty). 
+Notably, it can be shown that among continuous distributions 
+over $\R$, the Gaussian distribution $\normal(\mu, \sigma^2)$ has 
+the highest entropy (highest uncertainty) among all possible 
+distributions that have the given mean $\mu$ and variance $\sigma^2$.
+
+To further solidify our intuition, we present motivation from 
+communication theory. Suppose we want to communicate from a 
+source to a destination, and our messages are always 
+(a sequence of) discrete symbols over space $X$ 
+(for example, $X$ could be letters \{a, b, \dots, z\}). 
+We want to construct an encoding scheme for our symbols 
+in the form of sequences of binary bits that are transmitted 
+over the channel. Further, suppose that in the long run the 
+frequency of occurrence of symbols follow a probability 
+distribution $P(X)$. This means, in the long run, the fraction 
+of times the symbol $x$ gets transmitted is $P(x)$.
+
+A common desire is to construct an encoding scheme such that 
+the average number of bits per symbol transmitted remains as 
+small as possible. Intuitively, this means we want very 
+frequent symbols to be assigned to a bit pattern having a 
+small number of bits. Likewise, because we are interested in 
+reducing the average number of bits per symbol in the long 
+term, it is tolerable for infrequent words to be assigned to 
+bit patterns having a large number of bits, since their low 
+frequency has little effect on the long term average. The 
+encoding scheme can be as complex as we desire, for example, 
+a single bit could possibly represent a long sequence of 
+multiple symbols (if that specific pattern of symbols is very 
+common). The entropy of a probability distribution $P(X)$ is 
+its optimal bit rate, i.e., the lowest average bits per 
+message that can possibly be achieved if the symbols $x \in X$ 
+occur according to $P(X)$. It does not specifically tell us 
+how to construct that optimal encoding scheme. It only tells 
+us that no encoding can possibly give us a lower long term 
+bits per message than $H(P)$.
+
+To see a concrete example, suppose our messages have a 
+vocabulary of $K = 32$ symbols, and each symbol has an equal 
+probability of transmission in the long term (i.e, uniform 
+probability distribution). An encoding scheme that would 
+work well for this scenario would be to have $\log_2 K$ bits 
+per symbol, and assign each symbol some unique combination 
+of the $\log_2 K$ bits. In fact, it turns out that this is the 
+most efficient encoding one can come up with for the uniform 
+distribution scenario.
+
+It may have occurred to you by now that the long term average 
+number of bits per message depends only on the frequency of 
+occurrence of symbols. The encoding scheme of scenario A can 
+in theory be reused in scenario B with a different set of 
+symbols (assume equal vocabulary size for simplicity), 
+with the same long term efficiency, as long as the symbols 
+of scenario B follow the same probability distribution as the 
+symbols of scenario A. It might also have occured to you, 
+that reusing the encoding scheme designed to be optimal for 
+scenario A, for messages in scenario B having a different 
+probability of symbols, will always be suboptimal for 
+scenario B. To be clear, we do not need know what the 
+specific optimal schemes are in either scenarios. As long 
+as we know the distributions of their symbols, we can say 
+that the optimal scheme designed for scenario A will be 
+suboptimal for scenario B if the distributions are different.
+
+Concretely, if we reuse the optimal scheme designed for a 
+scenario having symbol distribution $Q(X)$, into a scenario 
+that has symbol distribution $P(X)$, the long term average 
+number of bits per symbol achieved is called the cross entropy, 
+denoted by $H(P,Q)$:
+
+\begin{defi}
+  The cross-entropy of two distributions $P(X)$
+  and $Q(X)$ is defined as 
+  \[
+  H(P, Q) = - \sum_{x \in X} P(X) \log Q(x) 
+  \]
+\end{defi}
+
+To recap, the entropy $H(P)$ is the best possible long term 
+average bits per message (optimal) that can be achived under 
+a symbol distribution $P(X)$ by using an encoding scheme 
+(possibly unknown) specifically designed for $P(X)$. 
+The cross entropy $H(P,Q)$ is the long term average bits 
+per message (suboptimal) that results under a symbol 
+distribution $P(X)$, by reusing an encoding scheme 
+(possibly unknown) designed to be optimal for a scenario 
+with symbol distribution $Q(X)$.
+
+Now, KL divergence is the penalty we pay, as measured in 
+average number of bits, for using the optimal scheme for 
+$Q(X)$, under the scenario where symbols are actually 
+distributed as $P(X)$. It is straightforward to see this:
+\[
+\begin{aligned}
+  \KL(P \Vert Q) 
+  &= \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} \\
+  &= \sum_{x \in X} P(x) \log P(x) - \sum_{x \in X} 
+  P(x) \log Q(x) \\
+  &= H(P, Q) - H(P). 
+  \quad \text{ (difference in average number of bits) }
+\end{aligned}
+\]
+
+If the cross entropy between $P$ and $Q$ is zero 
+(and hence $KL(P \Vert Q) = 0$) then it necessarily 
+means $P = Q$. In Machine Learning, it is a common 
+task to find a distribution $Q$ that is ``close'' to 
+another distribution $P$. To achieve this, we use 
+$\KL(P \Vert Q)$ to be the loss function to be optimized. 
+As we will see in this below, Maximum Likelihood 
+Estimation, which is a commonly used optimization objective, 
+turns out to be equivalent minimizing KL divergence between 
+the training data (i.e. the empirical distribution over the 
+data) and the model.
+
+Now we present some useful properties of KL divergence.
+
+\begin{thm}[Non-negativity]
+  For any distribution $P$ and $Q$, we have 
+  \[
+  \KL(P \Vert Q) \geq 0,
+  \]
+  and $\KL(P \Vert Q) = 0$ if and only if $P = Q$ (almost 
+  everywhere).
+\end{thm}
+
+\begin{proof}
+  By definition,
+  \[
+    \KL(P \Vert Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}.
+  \] 
+  Since $-\log x$ is strictly convex, by Jensen's inequality, we have
+  \[
+  \begin{aligned}
+    \KL(P \Vert Q) = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}
+    \geq -\log \sum_{x \in X} P(x) \frac{Q(x)}{P(x)} = 0.
+  \end{aligned}
+  \]
+  When the equality holds, 
+  \[
+  \log \frac{Q(x)}{P(x)} = 0
+  \]
+  almost everywhere. 
+  That is, $Q = P$ almost everywhere. 
+  This completes the proof.
+\end{proof}
+
+\begin{defi}[KL divergence of conditional distribution]
+  The KL divergence between 2 conditional distributions 
+  $P(X \mid Y)$, $Q(X \mid Y)$ is defined as follows:
+  \[
+  \KL({P(X \mid Y)} \Vert {Q(X \mid Y)}) = \sum_y P(y) 
+  \left( \sum_x P(x \mid y) \log 
+  \frac{P(x \mid y)}{Q(x \mid y)} \right).
+  \]
+  This can be thought of as the expected KL divergence 
+  between the corresponding conditional distributions on 
+  $x$. That is, between $P(X \mid Y = y)$ and $Q(X \mid Y = y)$, 
+  where the expectation is taken over the random $y$.
+\end{defi}
+
+\begin{thm}[Chain rule for KL divergence]
+The following equality holds:
+\[
+\KL({P(X, Y)} \Vert {Q(X, Y)}) = 
+\KL({P(X)} \Vert {Q(X)}) + \KL({P(Y \mid X)} 
+\Vert {Q(Y \mid X)}).
+\]
+\end{thm}
+
+\begin{proof}
+\[
+\begin{aligned}
+  \text{LHS} &= \sum_x \sum_y P(x,y) \log \frac{P(x,y)}{Q(x,y)} \\
+  &= \sum_x \sum_y P(y \mid x) P(x) \left[ \log 
+  \frac{P(y \mid x)}{Q(y \mid x)} + \log \frac{P(x)}{Q(x)} \right] \\
+  &= \sum_x \sum_y P(y \mid x) P(x) \log 
+  \frac{P(y \mid x)}{Q(y \mid x)} + \sum_x P(x) \log 
+  \frac{P(x)}{Q(x)} \sum_y P(y \mid x) \\
+  &= \sum_x \sum_y P(y \mid x) P(x) \log \frac{P(y \mid x)}
+  {Q(y \mid x)} + \sum_x P(x) \log \frac{P(x)}{Q(x)} \\
+  &= \KL({P(X)} \Vert {Q(X)}) + \KL({P(Y \mid X)} \Vert {Q(Y \mid X)}) \\
+  &= \text{RHS}.
+\end{aligned}
+\]
+\end{proof}
+
+\subsection{The EM Algorithm in General}
+
+\section{Approximate Inference} 
+A central task in the application of probabilistic models is 
+the evaluation of the posterior distribution $p(\Zv|\Xv)$ of the 
+latent variables $\Zv$ given the observed (visible) data variables 
+$\Xv$, and the evaluation of expectations computed with respect 
+to this distribution. For many models of practical interest, 
+it will be infeasible 
+to evaluate the posterior distribution or indeed to compute 
+expectations with respect to this distribution.
+
+In this chapter, we introduce a range of deterministic 
+approximation schemes, some of which scale well to large 
+applications. These are based on analytical approximations 
+to the posterior distribution, for example by assuming that 
+it factorizes in a particular way or that it has a specific 
+parametric form such as a Gaussian. As such, they can never 
+generate exact results, and so their strengths and weaknesses 
+are complementary to those of sampling methods.
+
+
 
 \end{document}
