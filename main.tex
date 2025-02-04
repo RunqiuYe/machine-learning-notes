@@ -102,7 +102,7 @@ The following implication holds:
 \end{proof}
 
 \begin{thm}[Central Limit Theorem]
-  Let $X_1, \dots, X_n$ be i.i.d with mean $\mu$ and variance 
+  Let $X_1, \dots, X_n$ be i.i.d. with mean $\mu$ and variance 
   $\sigma^2$. Let $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
   Then 
   \[
@@ -122,6 +122,38 @@ The following implication holds:
 \subsection{Statistical Inference}
 
 \begin{defi}
+  Let $X_1, \dots, X_n$ be $n$ i.i.d. data points from some 
+  distribution $F$. A point estimator $\hat{\theta}_n$ 
+  of a parameter $\theta$ is some function of 
+  $X_1, \dots, X_n$:
+  \[
+  \hat{\theta}_n = g(X_1, \dots, X_n).
+  \]
+  The bias of an estimator is defined as 
+  \[
+  \bias (\hat{\theta}_n)  
+  = \E_\theta [\hat{\theta}_n] - \theta.
+  \]
+  The mean squared error is defined as 
+  \[
+  \mse = \E_\theta (\hat{\theta}_n - \theta)^2.
+  \]
+\end{defi}
+
+\begin{defi}
+  A point estimator $\hat\theta_n$ of a parameter
+  $\theta$ is \emph{consistent} if $\hat{\theta}_n 
+  \convProb \theta$.
+\end{defi}
+
+\begin{thm}
+The MSE can be written as 
+\[
+\mse = \bias^2 (\hat{\theta}_n) - \var_\theta (\hat{\theta}_n).
+\]
+\end{thm}
+
+\begin{defi}
   A $1 - \alpha$ interval for a parameter $\theta$ is 
   an interval $C_n = (a, b)$ where 
   $a = a(X_1, \dots, X_n)$ and $b = b(X_1, \dots, X_n)$
@@ -132,7 +164,9 @@ The following implication holds:
   \]
   In other word, $(a, b)$ traps $\theta$ with probablity 
   $1 - \alpha$. 
-  \textbf{Warning!} $C_n$ is random and $\theta$ is fixed.
 \end{defi}
+
+\textbf{Warning!} In the above definition, 
+$C_n$ is random and $\theta$ is fixed.
 
 \end{document}
