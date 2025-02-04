@@ -3,7 +3,7 @@
 
 \def\nterm {Spring}
 \def\nyear {2025}
-\def\ncourse {Introduction to Machine Learning}
+\def\ncourse {Machine Learning}
 
 \input{header}
 
@@ -12,71 +12,127 @@
 
 \tableofcontents
 
-\section{Supervised Learning}
+\section{Probability and Statistical Inference}
 
-\subsection{Logistic Regression}
-Logistic regression is used for classfication problems.
-Logistic regression takes in input feature $x \in \R^n$, and 
-output a prediction $y \in \left\{ 0, 1 \right\}$. 
-The hypotheses function $h_{\theta}(x)$ is chosen as 
-\[
-h_\theta(x) = \sigma(\theta^T x) = \frac{1}{1 + e^{- \theta^T x}},
-\]
-where 
-\[
-g(z) = \frac{1}{1 + e^{-z}}
-\]
-is the sigmoid function. 
+\subsection{Probability}
+\begin{defi}[Types of convergence]
+Let $\left\{ X_n \right\}_{n=1}^\infty$ be a sequence of random
+variables and $X$ be another random variable. Let 
+$F_n$ be the CDF of $X_n$ for each $n \in \N$ and $F$ 
+be the CDF of $X$. 
+\begin{enumerate}
+  \item $X_n$ converges to $X$ \emph{in probability} 
+  and write $X_n \convProb X$ if for arbitrary 
+  $\epsilon > 0$, 
+  \[
+  \Prob \left[ \abs{X_n - X} > \epsilon \right] \to 0
+  \]
+  as $n \to \infty$.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\linewidth]{fig/sigmoid.pdf}
-  \caption{A plot of the sigmoid function $\sigma(z)$.}
-  \label{sigmoid}
-\end{figure}
+  \item $X_n$ converges to $X$ \emph{in distribution} and 
+  write $X_n \convDist X$ if 
+  \[
+  \lim_{n \to \infty} F_n(t) = F(t)
+  \]
+  for all $t$ where $F$ is continuous.
+  
+  \item $X_n$ converges to $X$ in $L^p$ if 
+  \[
+  \E \left[ \abs{X_n - X}^p \right] \to 0
+  \]
+  as $n \to \infty$. In particular, say $X_n$ converges to 
+  $X$ in \emph{quadratic mean} and write $X_n \convQM X$
+  if $X_n$ converges to $X$ in $L^2$.
 
-A plot of the sigmoid function is shown in Figure 
-\ref{sigmoid}. The range of the sigmoid function is bounded
-in $[0, 1]$. In particular, $\sigma(z) \to 1$ when $z \to \infty$
-and $\sigma(z) \to 0$ as $z \to - \infty$. A useful property
-about the sigmoid function is its derivative. It is easy 
-to verify that 
-\[
-\begin{aligned}
-  \sigma'(z) 
-  = \frac{e^{-z}}{(1 + e^{-z})^2}
-  = \sigma(z) (1 - \sigma(z)).
-\end{aligned}
-\]
+  \item $X_n$ converges to $X$ \emph{almost surely} 
+  and write $X_n \convAS X$ if 
+  \[
+  \Prob \left[ \lim_{n \to \infty} X_n =  X \right] = 1. 
+  \]
+\end{enumerate}
+\end{defi}
 
-To fit the parameter $\theta$ to dataset, assume that 
-\[
-\begin{aligned}
-  p(y = 1 \mid x ; \theta) &= h_\theta(x), \\
-  p(y = 0 \mid x ; \theta) &= 1 - h_\theta(x).
-\end{aligned}
-\]
-Note that 
-\[
-p(y \mid x; \theta) = h_\theta(x)^y (1 - h_\theta(x))^{1 - y}.
-\]
-Assuming $n$ independent training examples, the likelihood 
-function 
-\[
-\begin{aligned}
-  L(\theta) &= \prod_{i=1}^n p(\yii \mid \xii ; \theta) \\
-  &= \prod_{i=1}^n h_\theta(\xii)^{\yii} (1 - h_\theta(\xii))^{1 - \yii}.
-\end{aligned}
-\]
-It is easier to maximize the log-likelihood: 
-\[
-\begin{aligned}
-  \ell(\theta) &= \sum_{i=1}^n 
-  \yii h_\theta(\xii) + (1 - \yii) (1 - h_\theta(\xii)).
-\end{aligned}
-\]
-This is called the logisitic loss or the binary cross-entropy.
+\begin{thm}
+The following implication holds:
+\begin{enumerate}
+  \item If $X_n$ converges to $X$ almost surely, 
+  then $X_n$ converges to $X$ in probability. 
+  
+  \item If $X_n$ converges to $X$ in $L^p$, then 
+  $X_n$ converges to $X$ in probability.
+\end{enumerate}
+\end{thm}
 
+\begin{proof}
 
+\begin{enumerate}
+  \item If $X_n$ converges to $X$ almost surely, 
+  the set of points $O = \left\{ \omega : \lim_{n \to \infty}
+  X_n(\omega) \neq X(\omega) \right\}$ has measure zero.
+  Now fix $\epsilon > 0$ and consider the sequence of 
+  sets 
+  \[
+  A_n = \bigcup_{m = n}^\infty \left\{ \abs{X_m - X} > \epsilon \right\}.
+  \]
+  Note that $A_n \supset A_{n+1}$ for each $n \in \N$ and 
+  let $A_\infty = \bigcap_{n=1}^\infty A_n$. 
+  Now show $\P[A_\infty] = 0$. If $\omega \notin O$, then 
+  $\lim_{n \to \infty} X_n (\omega) = X(\omega)$ and thus 
+  $\abs{X_n(\omega) - X(\omega)} < \epsilon$ for some $n \in \N$.
+  Therefore, $\omega \notin A_\infty$.
+  It follows that $A_\infty \subset O$ and $\P[A_\infty] = 0$. 
+  
+  By monotone 
+  continuity, we have $\lim_{n \to \infty} \P[A_n] = 
+  \P[A_\infty]$. It follows that
+  \[
+  \P \left[ \abs{X_n - X} > \epsilon \right] 
+  \leq \P \left[ A_n \right] \to 0 
+  \]
+  as $n \to \infty$. This completes the proof.
+
+  \item From Chebyshev's inequality, we have 
+  \[
+  \Prob \left[ \abs{X - X_n} > \epsilon \right] \leq 
+  \frac{1}{\epsilon^p} \E [\abs{X - X_n}^p].
+  \]
+  The claim follows directly.
+\end{enumerate}
+
+\end{proof}
+
+\begin{thm}[Central Limit Theorem]
+  Let $X_1, \dots, X_n$ be i.i.d with mean $\mu$ and variance 
+  $\sigma^2$. Let $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
+  Then 
+  \[
+  Z_n = \frac{S_n - \mu}{\sqrt{\var S_n}}
+  = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma} 
+  \convDist Z,
+  \]
+  where $Z \sim N(0, 1)$. In other words, 
+  \[
+  \lim_{n \to \infty} \P[Z_n < z] = \Phi(z) 
+  = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}} 
+  \; dx.
+  \]
+  Also write $Z_n \approx N(0, 1)$.
+\end{thm}
+
+\subsection{Statistical Inference}
+
+\begin{defi}
+  A $1 - \alpha$ interval for a parameter $\theta$ is 
+  an interval $C_n = (a, b)$ where 
+  $a = a(X_1, \dots, X_n)$ and $b = b(X_1, \dots, X_n)$
+  are functions of data such that 
+  \[
+  \P_\theta[\theta \in C_n] \geq 1 - \alpha 
+  \text{ for all $\theta \in \Theta$. }
+  \]
+  In other word, $(a, b)$ traps $\theta$ with probablity 
+  $1 - \alpha$. 
+  \textbf{Warning!} $C_n$ is random and $\theta$ is fixed.
+\end{defi}
 
 \end{document}
