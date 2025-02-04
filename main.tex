@@ -169,4 +169,65 @@ The MSE can be written as
 \textbf{Warning!} In the above definition, 
 $C_n$ is random and $\theta$ is fixed.
 
+\section{Supervised Learning}
+\subsection{Logistic Regression}
+Logistic regression is used for classfication problems.
+Logistic regression takes in input feature $x \in \R^n$, and 
+output a prediction $y \in \left\{ 0, 1 \right\}$. 
+The hypotheses function $h_{\theta}(x)$ is chosen as 
+\[
+h_\theta(x) = \sigma(\theta^T x) = \frac{1}{1 + e^{- \theta^T x}},
+\]
+where 
+\[
+g(z) = \frac{1}{1 + e^{-z}}
+\]
+is the sigmoid function. 
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.5\linewidth]{fig/sigmoid.pdf}
+  \caption{A plot of the sigmoid function $\sigma(z)$.}
+  \label{sigmoid}
+\end{figure}
+A plot of the sigmoid function is shown in Figure 
+\ref{sigmoid}. The range of the sigmoid function is bounded
+in $[0, 1]$. In particular, $\sigma(z) \to 1$ when $z \to \infty$
+and $\sigma(z) \to 0$ as $z \to - \infty$. A useful property
+about the sigmoid function is its derivative. It is easy 
+to verify that 
+\[
+\begin{aligned}
+  \sigma'(z) 
+  = \frac{e^{-z}}{(1 + e^{-z})^2}
+  = \sigma(z) (1 - \sigma(z)).
+\end{aligned}
+\]
+To fit the parameter $\theta$ to dataset, assume that 
+\[
+\begin{aligned}
+  p(y = 1 \mid x ; \theta) &= h_\theta(x), \\
+  p(y = 0 \mid x ; \theta) &= 1 - h_\theta(x).
+\end{aligned}
+\]
+Note that 
+\[
+p(y \mid x; \theta) = h_\theta(x)^y (1 - h_\theta(x))^{1 - y}.
+\]
+Assuming $n$ independent training examples, the likelihood 
+function 
+\[
+\begin{aligned}
+  L(\theta) &= \prod_{i=1}^n p(\yii \mid \xii ; \theta) \\
+  &= \prod_{i=1}^n h_\theta(\xii)^{\yii} (1 - h_\theta(\xii))^{1 - \yii}.
+\end{aligned}
+\]
+It is easier to maximize the log-likelihood: 
+\[
+\begin{aligned}
+  \ell(\theta) &= \sum_{i=1}^n 
+  \yii h_\theta(\xii) + (1 - \yii) (1 - h_\theta(\xii)).
+\end{aligned}
+\]
+This is called the logisitic loss or the binary cross-entropy.
+
 \end{document}
