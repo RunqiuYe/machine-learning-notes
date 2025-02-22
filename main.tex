@@ -401,17 +401,19 @@ of risk.
   \hat{\risk}_S (h)$ and $\E[\hat{\risk}_S (h)] = 
   \risk_D(h)$, where the expected value is with respect to 
   the randomness of the dataset. Note that 
-  \[
-  \begin{aligned}
-    \reg_{D, \scrh} (\hat{h}) 
-    &= \risk_D (\hat{h}) - \risk_D (\hopt) \\
-    &= (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
-    + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt)) 
-    - (\risk_D (\hopt) - \hat{\risk}_S (\hopt))  \\
-    &\leq (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
-    - (\risk_D (\hopt) - \hat{\risk}_S (\hopt)),
-  \end{aligned}
-  \]
+  \begin{equation*}
+    \begin{aligned}
+      \reg_{D, \scrh} (\hat{h}) 
+      &= \risk_D (\hat{h}) - \risk_D (\hopt) \\
+      &= (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
+      + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt)) 
+      - (\risk_D (\hopt) - \hat{\risk}_S (\hopt))  \\
+      &\leq (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
+      - (\risk_D (\hopt) - \hat{\risk}_S (\hopt)),
+    \end{aligned}
+    \tag{$*$}
+    \label{reg}
+  \end{equation*}
   where the inequality is because our algorithm
   always gives
   $\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt) \leq 0$.
@@ -449,7 +451,11 @@ of risk.
   \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right] 
   \leq 2 \abs{\scrh} e^{- 2 n \epsilon^2}.
   \]
-  Therefore,
+  Notice that if  
+  $\abs{\hat{\risk}_S (h) - \risk_D (h)} > \epsilon$
+  for all $h \in \scrh$, we must have $\reg_{D, \scrh} 
+  (\hat{h}) \leq 2 \epsilon$ by inequality \eqref{reg}.
+  above. Therefore,
   $\reg_{D, \scrh} (\hat{h}) \leq 2 \epsilon$ with probability at least 
   $1 - 2 \abs{\scrh} e^{- 2 n \epsilon^2}$. 
 }
