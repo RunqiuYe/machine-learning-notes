@@ -22,7 +22,7 @@ variables and $X$ be another random variable. Let
 $F_n$ be the CDF of $X_n$ for each $n \in \N$ and $F$ 
 be the CDF of $X$. 
 \begin{enumerate}
-  \item $X_n$ converges to $X$ \emph{in probability} 
+  \item $X_n$ converges to $X$ \textbf{in probability} 
   and write $X_n \convProb X$ if for arbitrary 
   $\epsilon > 0$, 
   \[
@@ -30,7 +30,7 @@ be the CDF of $X$.
   \]
   as $n \to \infty$.
 
-  \item $X_n$ converges to $X$ \emph{in distribution} and 
+  \item $X_n$ converges to $X$ \textbf{in distribution} and 
   write $X_n \convDist X$ if 
   \[
   \lim_{n \to \infty} F_n(t) = F(t)
@@ -42,10 +42,10 @@ be the CDF of $X$.
   \E \left[ \abs{X_n - X}^p \right] \to 0
   \]
   as $n \to \infty$. In particular, say $X_n$ converges to 
-  $X$ in \emph{quadratic mean} and write $X_n \convQM X$
+  $X$ in \textbf{quadratic mean} and write $X_n \convQM X$
   if $X_n$ converges to $X$ in $L^2$.
 
-  \item $X_n$ converges to $X$ \emph{almost surely} 
+  \item $X_n$ converges to $X$ \textbf{almost surely} 
   and write $X_n \convAS X$ if 
   \[
   \Prob \left[ \lim_{n \to \infty} X_n =  X \right] = 1. 
@@ -144,16 +144,45 @@ The following implication holds:
 
 \begin{defi}
   A point estimator $\hat\theta_n$ of a parameter
-  $\theta$ is \emph{consistent} if $\hat{\theta}_n 
+  $\theta$ is \textbf{consistent} if $\hat{\theta}_n 
   \convProb \theta$.
 \end{defi}
+
+Next we an important relation between bias, variance, 
+and MSE. This is a more rigorous way to express the
+\textbf{bias-variance tradeoff} of point estimators.
 
 \begin{thm}
 The MSE can be written as 
 \[
-\mse = \bias^2 (\hat{\theta}_n) - \var_\theta (\hat{\theta}_n).
+\mse = \bias^2 (\hat{\theta}_n) + \var_\theta (\hat{\theta}_n).
 \]
 \end{thm}
+
+\begin{proof}
+  Let $\bar{\theta}_n = \E_\theta (\hat{\theta}_n)$. 
+  Then we have 
+  \[
+  \begin{aligned}
+    \E_\theta(\theta - \hat{\theta}_n)^2 
+    &= \E_\theta(\theta - \bar{\theta}_n + \bar{\theta}_n 
+    - \hat{\theta}_n)^2 \\
+    &= \E_\theta(\theta - \bar{\theta}_n)^2 
+    - 2 (\theta - \bar{\theta}_n) \E_\theta (\bar{\theta}_n - 
+    \hat{\theta}_n)
+    + \E_\theta (\bar{\theta}_n - \theta)^2 \\
+    &= (\theta - \bar{\theta}_n)^2 
+    + \E_\theta (\bar{\theta}_n - \theta)^2 \\
+    &= \bias^2(\hat{\theta}_n) + \var_\theta (\hat{\theta}_n),
+  \end{aligned}
+  \]
+  where we have used the fact that 
+  $\E_\theta (\bar{\theta}_n - 
+  \hat{\theta}_n) = \bar{\theta}_n - E_\theta(\hat{\theta}_n)
+  = \bar{\theta}_n - \bar{\theta}_n = 0$.
+\end{proof}
+
+Below is the definition of a confidence set/interval.
 
 \begin{defi}
   A $1 - \alpha$ interval for a parameter $\theta$ is 
@@ -173,7 +202,136 @@ $C_n$ is random and $\theta$ is fixed.
 
 \subsection{PAC learning}
 
+PAC learning is short for Probably Approxinate Correct 
+learning, and the setting of PAC learning is as follows:
+\begin{itemize}
+  \item We have data $x \in \R^d$ and label $y \in \left\{ -1, 
+  +1 \right\}$. 
+  \item We collect features $x_1, \dots, x_n$ iid from 
+  some distribution $D$. Note that we make no assumption on 
+  the distribution $D$ of the features. 
+  \item We collect corresponding labels $y_1, \dots, y_n$. 
+  \item Assume there exists some true classifier $h^\star$.
+  \item Let $\scrh$ be the set of all hypotheses.
+\end{itemize}
+The goal of PAC learning is $(\epsilon, \delta)$-PAC, 
+which is defined as follows. 
+\begin{defi}
+  An $(\epsilon, \delta)$-PAC learning algorithm
+  refers to an algorithm that 
+  picks an hypothesis $h \in \scrh$  
+  after observing training data 
+  $\left\{ x_i, y_i \right\}_{i=1}^n$,
+  where the hypothesis $h \in \scrh$ satisfies
+  \[
+  \err_D (\hat{h}) = 
+  \Prob_{x \sim D} \left[ \hat{h}(x) \neq h^\star(x) \right]
+  < \epsilon.
+  \]
+  with probability at least $1 - \delta$, where the probability
+  is with respect to the randomness of the training set.
+\end{defi}
+Putting it more concretely, suppose $g$ is a point estimator
+(the algorithm), then we want 
+\[
+\Prob_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon 
+\right] \geq 1 - \delta.
+\]
 
+We also say the algorithm is a PAC learner if it uses 
+$n$ samples and the running time is at most $\poly
+\left( d, \frac{1}{\epsilon}, \log \frac{1}{\delta}, 
+\bits(h^\star) \right)$, but in this section we do not 
+focus on the runtime of the algorithm.
+
+There are two types of PAC learning -- realizable PAC learning,
+in which case $h^\star \in \scrh$, and agnostic PAC learning, 
+in which case $h^\star \notin \scrh$. We first discuss 
+realizable PAC learning, and we will find out agnostic PAC 
+learning is a more general setting but than PAC learning
+but a natural extension. 
+
+\subsubsection*{Realizable PAC learning}
+
+For realizable PAC learning, we present a simple algorithm:
+\begin{algorithm}[Consistent Learner]
+Pick any $\hat{h} \in \scrh$ such that $h(x_i) = y_i$ 
+for all $1 \leq i \leq n$.
+\end{algorithm}
+Now we analyze this algorithm in terms of the sample size needed 
+to produce a desired hypothesis.
+
+\begin{thm}
+  Over the dataset of $n$ iid samples,
+  the consistent learning produces $\hat{h}$ such 
+  that $\err_D(\hat{h}) > \epsilon$ with probability
+  at most $\abs{\scrh} e^{-n\epsilon}$. 
+\end{thm}
+\begin{proof}
+  Suppose $h \in \scrh$ is such that 
+  $\err_D(h) = \P_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
+  For such an $h$ and some data $x_i$, we have 
+  \[
+  \Prob_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
+  \]
+  Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are iid, we have 
+  \[
+  \Prob_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all 
+  $1 \leq i \leq n$}] < (1 - \epsilon)^n.
+  \]
+  Note that our consistent learner do not make any mistake 
+  on the training set $\left\{ x_i, y_i \right\}_{i=1}^n$
+  \[
+  \Prob_{x_{1 : n} \sim D} [h = \hat{h}] < (1 - \epsilon)^n.
+  \]
+  It follows that 
+  \[
+  \begin{aligned}
+    \Prob_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon] 
+    & \leq \sum_{h \in \scrh: \; \err_D(h) > \epsilon} 
+    \Prob[\hat{h} = h]  \\
+    & \leq \abs{\scrh} (1 - \epsilon)^n \\
+    & \leq \abs{\scrh} e^{-n\epsilon},
+  \end{aligned}
+  \]
+  where in the last step we used the inequality 
+  $(1 - u)^n \leq e^{-nu}$. This completes the proof.
+\end{proof}
+
+\begin{cor}
+  If we want $\P_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
+  \leq \delta$, we must have 
+  \[
+  n \geq \frac{\ln \left( \abs{\scrh} / \delta \right)}{\epsilon}.
+  \]
+\end{cor}
+Technically speaking the implication should be the other direction, 
+but this bound for sample size $n$ 
+\textbf{gurantees} $(\epsilon, \delta)$-PAC.
+
+To illustrate how we should think of $\abs{\scrh}$, 
+we present an example.
+\begin{eg}
+\textcolor{red}{*** TO-DO ***}
+\end{eg}
+
+Now we move on to the setting of agnostic leraning.
+
+\subsubsection*{Agnostic leraning}
+
+In agnostic learning, again we collect features $x_1, \dots,
+x_n \sim D$ iid, and labels $y_1, \dots, y_n$. This forms a 
+data set $S_n = \left\{ x_i, y_i \right\}_{i=1}^n$. The 
+goal is to use this dataset $S_n$ to produce an hypothesis 
+$\hat{h}$ such that 
+\[
+\reg_{D, \scrh} (\hat{h}) = 
+\err_D (\hat{h}) - \min_{h \in \scrh} \err_D (h) < \epsilon
+\]
+with probability at least $1 - \delta$, where the probability
+is with respect to the randomness of the dataset $S_n$.
+
+For this setting, we 
 
 \section{Mixture models and EM}
 
@@ -191,7 +349,7 @@ In this section, we adopt the convention that $0 \log 0 = 0$.
 
 To understand the significance of KL-divergence better, 
 we first discuss some related concepts in information theory,
-starting with the definition of \emph{entropy}.
+starting with the definition of \textbf{entropy}.
 \begin{defi}
   The entropy of a distribution $P(X)$ 
   is defined as 

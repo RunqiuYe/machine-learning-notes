@@ -32,6 +32,7 @@ Carnegie Mellon University}
 \usepackage[normalem]{ulem}
 \usepackage[all]{xy}
 \usepackage{imakeidx}
+\usepackage{mathrsfs}
 \usepackage[includehead,includefoot, heightrounded,  left=1.0in, top=1.6cm, bottom=2.4cm, right=1.0in]{geometry}
 
 \makeindex[intoc, title=Index]
@@ -159,6 +160,7 @@ Carnegie Mellon University}
 \newtheorem*{rrule}{Rule}
 \newtheorem*{thm}{Theorem}
 \newtheorem*{assumption}{Assumption}
+\newtheorem*{algorithm}{Algorithm}
 
 \newtheorem*{remark}{Remark}
 \newtheorem*{warning}{Warning}
@@ -195,6 +197,11 @@ Carnegie Mellon University}
 % training examples
 \newcommand{\xii}{x^{(i)}}
 \newcommand{\yii}{y^{(i)}}
+
+% machine learning 
+\DeclareMathOperator{\err}{err}
+\DeclareMathOperator{\bits}{bits}
+\DeclareMathOperator{\reg}{reg}
 
 % Matrix groups
 \newcommand{\GL}{\mathrm{GL}}
@@ -448,6 +455,9 @@ Carnegie Mellon University}
 \newcommand{\Xv}{\vec{X}}
 \newcommand{\Yv}{\vec{Y}}
 \newcommand{\Zv}{\vec{Z}}
+
+% mathscr 
+\newcommand{\scrh}{\mathscr{H}}
 
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,
