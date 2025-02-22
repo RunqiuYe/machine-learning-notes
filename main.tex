@@ -251,7 +251,7 @@ realizable PAC learning, and we will find out agnostic PAC
 learning is a more general setting but than PAC learning
 but a natural extension. 
 
-\subsubsection*{Realizable PAC learning}
+\subsubsection*{Realizable learning}
 
 For realizable PAC learning, we present a simple algorithm:
 \begin{algorithm}[Consistent Learner]
@@ -263,7 +263,7 @@ to produce a desired hypothesis.
 
 \begin{thm}
   Over the dataset of $n$ iid samples,
-  the consistent learning produces $\hat{h}$ such 
+  the consistent learning algorithm produces $\hat{h}$ such 
   that $\err_D(\hat{h}) > \epsilon$ with probability
   at most $\abs{\scrh} e^{-n\epsilon}$. 
 \end{thm}
@@ -312,7 +312,17 @@ but this bound for sample size $n$
 To illustrate how we should think of $\abs{\scrh}$, 
 we present an example.
 \begin{eg}
-\textcolor{red}{*** TO-DO ***}
+Consider the binary half-spaces hypotheses: 
+\[
+\scrh = \left\{ h_w(x) = \sign(\braket{w}{x}) : 
+w_i \in \left\{ -1, 1 \right\} \right\}.
+\]
+In this case $\abs{\scrh} = 2^d$, so $\ln \abs{\scrh} = 
+\Theta(d)$. 
+
+We should always think of $\abs{\scrh}$
+as exponential with respect to the dimension, so 
+$\ln \abs{\scrh}$ is linear with respect to dimension.
 \end{eg}
 
 Now we move on to the setting of agnostic leraning.
@@ -331,7 +341,152 @@ $\hat{h}$ such that
 with probability at least $1 - \delta$, where the probability
 is with respect to the randomness of the dataset $S_n$.
 
-For this setting, we 
+For this setting, we present an algorithm called the empirical 
+loss minimizer (ERM). 
+\begin{algorithm}[empirical loss minimizer]
+  Choose $\hat{h} \in \scrh$ by minimizing the $\left\{ 0,1
+   \right\}$ loss:
+  \[
+  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n 1 \left\{ 
+    h(x_i) = y_i
+   \right\}.
+  \]
+  In a more general setting, suppose $\ell(\cdot, \cdot)$ 
+  be any loss function bounded in $[0, 1]$, choose 
+  $\hat{h} \in \scrh$ by minimizing the loss:
+  \[
+  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n \ell(h(x_i), 
+  y_i).
+  \] 
+\end{algorithm}
+
+We next prove a similar relation between the sample 
+size and the performance of the hypothesis, evaluated 
+in terms of risk. We first present the definition 
+of risk.
+
+\begin{defi}[Risk]
+  The risk of a hypothesis $h$ is defined as 
+  \[
+  \risk_D (h) = \E_{x \sim D} [ \ell(h(x), y) ].
+  \]
+\end{defi}
+
+\begin{thm}
+  Over the dataset of $n$ iid samples, the ERM algorithm
+  produces $\hat{h}$ such that 
+  \[
+  \reg_{D, \scrh} (\hat{h}) 
+  = \risk_D (\hat{h}) - \min_{h \in \scrh} 
+  \risk_D (h) 
+  \leq \sqrt{\frac{\ln (\abs{\scrh} / \delta)}{n}}.
+  \]
+  with probability at least $1 - \delta$.
+\end{thm}
+
+\begin{proof}
+{
+  \newcommand{\hopt}{h^{\text{opt}}}
+  First we define
+  \[
+    \hopt = \argmin_{h \in \scrh} \risk_D (h).
+  \]
+  Note that $\reg_{D, \scrh}(\hopt) = 0$. Define also the 
+  estimated risk of hypothesis $h$ for data set $S$:
+  \[
+  \hat{\risk}_S (h) := \frac{1}{n} \sum_{i=1}^n \ell(h(x_i),
+  y_i).
+  \]
+  Note that $\hat{h} = \argmin_{h \in \scrh} 
+  \hat{\risk}_S (h)$ and $\E[\hat{\risk}_S (h)] = 
+  \risk_D(h)$, where the expected value is with respect to 
+  the randomness of the dataset. Note that 
+  \[
+  \begin{aligned}
+    \reg_{D, \scrh} (\hat{h}) 
+    &= \risk_D (\hat{h}) - \risk_D (\hopt) \\
+    &= (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
+    + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt)) 
+    - (\risk_D (\hopt) - \hat{\risk}_S (\hopt))  \\
+    &\leq (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
+    - (\risk_D (\hopt) - \hat{\risk}_S (\hopt)),
+  \end{aligned}
+  \]
+  where the inequality is because our algorithm
+  always gives
+  $\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt) \leq 0$.
+
+  For the first term, we have for any $h \in \scrh$, 
+  \[
+  \begin{aligned}
+    \hat{\risk}_S (h) - \risk_D(h) 
+    &= \frac{1}{n} \sum_{i=1}^n \ell(h(x_i), y_i) 
+    - \risk_D (h) \\
+    &= \frac{1}{n} \sum_{i=1}^n \left( 
+      \ell(h(x_i), y_i) - \E_{x, y \sim D} 
+      [\ell(h(x), y)]
+     \right).
+  \end{aligned}
+  \]
+  Define now random variable $Z_i := \ell(h(x_i), y_i) - 
+  \E_{x, y \sim D} [\ell(h(x), y)]$. Notice that $Z_i$ 
+  iid, $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore, 
+  we can utilize the Hoeffding bound to get 
+  \[
+  \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
+  \leq e^{- 2 n \epsilon^2} \text{ and }
+  \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
+  \leq e^{- 2 n \epsilon^2}
+  \]
+  This implies that for any fixed $h \in \scrh$,  
+  \[
+  \Prob \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon 
+  \right] \leq 2 e^{-2 n \epsilon^2}.
+  \]
+  It follows from the union bound that 
+  \[
+  \Prob \left[ \exists h \in \scrh: \; 
+  \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right] 
+  \leq 2 \abs{\scrh} e^{- 2 n \epsilon^2}.
+  \]
+  Therefore,
+  $\reg_{D, \scrh} (\hat{h}) \leq 2 \epsilon$ with probability at least 
+  $1 - 2 \abs{\scrh} e^{- 2 n \epsilon^2}$. 
+}
+\end{proof}
+
+\begin{cor}
+Let $\delta > 0$ be given. Then, 
+setting 
+$n = \frac{1}{2\epsilon^2} \ln \left( 2 \abs{\scrh} / 
+\delta \right)$, we obtain that $\reg_{D, \scrh} (\hat{h})
+\leq 2\epsilon$ with probability at least $1 - \delta$.
+Therefore, if we want $\reg_{D, \scrh} 
+(\hat{h}) \leq \epsilon$ with probability at least $1 - 
+\delta$, we must have 
+\[
+  n \geq \frac{2 \ln 
+  \left( 2 \abs{\scrh} / \delta \right)}
+  {\epsilon^2}.
+\]
+\end{cor}
+
+Now we compare realizable learning and agnostic 
+learning. We can see the sample size needed to 
+achieve the same $(\epsilon, \delta)$-PAC bound is 
+\[
+n = \Theta \left( \frac{\ln \left( \abs{\scrh} / \delta
+\right)}{\epsilon} \right)
+\]
+for realizable learning, and 
+\[
+n = \Theta \left( \frac{\ln(\abs{\scrh} / \delta)}{\epsilon^2} 
+\right)
+\]
+for agnostic learning. Since $\epsilon < 1$, 
+we can deduce that agnostic learning needs 
+\textbf{more sample} for the estimator to achieve the 
+same $(\epsilon, \delta)$-PAC bound.
 
 \section{Mixture models and EM}
 
