@@ -142,7 +142,7 @@ The following implication holds:
   \]
 \end{defi}
 
-\begin{defi}
+\begin{defi}[Consistent point estimator]
   A point estimator $\hat\theta_n$ of a parameter
   $\theta$ is \textbf{consistent} if $\hat{\theta}_n 
   \convProb \theta$.
@@ -237,6 +237,16 @@ Putting it more concretely, suppose $g$ is a point estimator
 \Prob_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon 
 \right] \geq 1 - \delta.
 \]
+Through the $\epsilon$-$\delta$ definition of limit, 
+it is not hard to  
+notice the similarity between this definition 
+and \textbf{convergence in probability}.
+As we observe more and more data ($n \to \infty$), 
+we want the hypothesis 
+produce by the algorithm to converge to the true classifier
+\textbf{in probability}. This is exactly the definition 
+of a \textbf{consistent} point estimator in the previous 
+section.
 
 We also say the algorithm is a PAC learner if it uses 
 $n$ samples and the running time is at most $\poly
@@ -452,7 +462,7 @@ of risk.
   \leq 2 \abs{\scrh} e^{- 2 n \epsilon^2}.
   \]
   Notice that if  
-  $\abs{\hat{\risk}_S (h) - \risk_D (h)} > \epsilon$
+  $\abs{\hat{\risk}_S (h) - \risk_D (h)} \leq \epsilon$
   for all $h \in \scrh$, we must have $\reg_{D, \scrh} 
   (\hat{h}) \leq 2 \epsilon$ by inequality \eqref{reg}.
   above. Therefore,
