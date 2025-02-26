@@ -389,9 +389,10 @@ of risk.
   \reg_{D, \scrh} (\hat{h}) 
   = \risk_D (\hat{h}) - \min_{h \in \scrh} 
   \risk_D (h) 
-  \leq \sqrt{\frac{\ln (\abs{\scrh} / \delta)}{n}}.
+  \leq 2 \epsilon.
   \]
-  with probability at least $1 - \delta$.
+  with probability at least $1 - 2 \abs{\scrh} e^{- 2
+  n \epsilon^2}$.
 \end{thm}
 
 \begin{proof}
@@ -428,7 +429,7 @@ of risk.
   always gives
   $\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt) \leq 0$.
 
-  For the first term, we have for any $h \in \scrh$, 
+  For any $h \in \scrh$, we have
   \[
   \begin{aligned}
     \hat{\risk}_S (h) - \risk_D(h) 
