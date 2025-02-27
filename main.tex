@@ -207,7 +207,7 @@ learning, and the setting of PAC learning is as follows:
 \begin{itemize}
   \item We have data $x \in \R^d$ and label $y \in \left\{ -1, 
   +1 \right\}$. 
-  \item We collect features $x_1, \dots, x_n$ iid from 
+  \item We collect features $x_1, \dots, x_n$ i.i.d. from 
   some distribution $D$. Note that we make no assumption on 
   the distribution $D$ of the features. 
   \item We collect corresponding labels $y_1, \dots, y_n$. 
@@ -272,7 +272,7 @@ Now we analyze this algorithm in terms of the sample size needed
 to produce a desired hypothesis.
 
 \begin{thm}
-  Over the dataset of $n$ iid samples,
+  Over the dataset of $n$ i.i.d. samples,
   the consistent learning algorithm produces $\hat{h}$ such 
   that $\err_D(\hat{h}) > \epsilon$ with probability
   at most $\abs{\scrh} e^{-n\epsilon}$. 
@@ -284,7 +284,7 @@ to produce a desired hypothesis.
   \[
   \Prob_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
   \]
-  Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are iid, we have 
+  Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are i.i.d., we have 
   \[
   \Prob_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all 
   $1 \leq i \leq n$}] < (1 - \epsilon)^n.
@@ -340,7 +340,7 @@ Now we move on to the setting of agnostic leraning.
 \subsubsection{Agnostic leraning}
 
 In agnostic learning, again we collect features $x_1, \dots,
-x_n \sim D$ iid, and labels $y_1, \dots, y_n$. This forms a 
+x_n \sim D$ i.i.d., and labels $y_1, \dots, y_n$. This forms a 
 data set $S_n = \left\{ x_i, y_i \right\}_{i=1}^n$. The 
 goal is to use this dataset $S_n$ to produce an hypothesis 
 $\hat{h}$ such that 
@@ -357,7 +357,7 @@ loss minimizer (ERM).
   Choose $\hat{h} \in \scrh$ by minimizing the $\left\{ 0,1
    \right\}$ loss:
   \[
-  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n 1 \left\{ 
+  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n \ind \left\{ 
     h(x_i) = y_i
    \right\}.
   \]
@@ -383,7 +383,7 @@ of risk.
 \end{defi}
 
 \begin{thm}
-  Over the dataset of $n$ iid samples, the ERM algorithm
+  Over the dataset of $n$ i.i.d. samples, the ERM algorithm
   produces $\hat{h}$ such that 
   \[
   \reg_{D, \scrh} (\hat{h}) 
@@ -443,8 +443,8 @@ of risk.
   \]
   Define now random variable $Z_i := \ell(h(x_i), y_i) - 
   \E_{x, y \sim D} [\ell(h(x), y)]$. Notice that $Z_i$ 
-  iid, $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore, 
-  we can utilize the Hoeffding bound to get 
+  i.i.d., $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore, 
+  we can utilize the \textbf{Hoeffding bound} to get 
   \[
   \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
   \leq e^{- 2 n \epsilon^2} \text{ and }
@@ -504,6 +504,121 @@ for agnostic learning. Since $\epsilon < 1$,
 we can deduce that agnostic learning needs 
 \textbf{more sample} for the estimator to achieve the 
 same $(\epsilon, \delta)$-PAC bound.
+
+\subsection{Infinite hypotheses space and VC dimension}
+
+In last section, we discussed PAC learning with finite 
+hypotheses space $\scrh$. However, we often need 
+to deal with situations where the hypotheses space 
+is infinite. Consider the following example.
+
+\begin{eg}
+  Consider the binary half space hypotheses: 
+  \[
+  \scrh = \left\{ h_w(x) = 
+  \sign(\braket{w}{x}) : w \in \R^d \right\}.
+  \]
+  Then, $\abs{\scrh} = \infty$ since each 
+  $w \in \R^d$ gives a different decision boundary.
+\end{eg}
+
+However, on some fixed dataset $S$, not all of the hypotheses
+in the hypotheses space $\scrh$ gives a different prediction. 
+This leads to the following definition and theorem, which 
+charaterize the ``effective size'' of the hypotheses
+space.
+
+\begin{defi}
+  Let $S$ be a dataset with $n$ points 
+  $\left\{ x_1, \dots, x_n \right\}$. Define 
+  $\abs{\scrh(S)}$ as the number of distinct labeling 
+  $\left\{ (x_i, y_i) \right\}_{i=1}^n$, where each 
+  $y_i = h(x_i)$ for a fixed $h \in \scrh$.
+\end{defi}
+
+With this definition, we can derive a similar confidence 
+bound for our learned hypotheses.
+
+\begin{thm}
+  Define the effective size
+  \[
+  \scrh [n] = \sup_{x_1, \dots, x_n} 
+  \abs{\scrh(\left\{ x_1, \dots, x_n \right\})},
+  \]  
+  and let $\hat{h}_n$ denote the consistency learner
+  from $n$ examples. Then we have 
+  \[
+  \Prob_{x \sim D} [\err_D(\hat{h}) \geq \epsilon] \leq \delta, 
+  \] 
+  where 
+  \[
+  \epsilon = O \left( 
+    \frac{\ln \scrh[n] + \ln (1 / \delta)}{n}
+   \right).
+  \]
+\end{thm}
+
+\begin{eg}
+  Consider the threshold hypotheses space: 
+  \[
+  \scrh = \left\{ h_w(x) = 2 \cdot 
+  \ind \left\{ x > w \right\} - 1 : w \in \R \right\}.
+  \]
+  Then it is easy to see that $\scrh[n] = n$. 
+  It follows that
+  \[
+  \epsilon = O\left( 
+    \frac{\ln \scrh[n] + \ln (1 / \delta)}{n}
+   \right) = O\left( 
+    \frac{\ln n + \ln (1 / \delta)}{n}
+   \right),
+  \]
+  which approaches to $0$ as $n \to \infty$.
+\end{eg}
+
+Another way to characterize the ``effective size'' of the 
+hypotheses space is \textbf{VC dimension}.
+
+\begin{defi}[VC dimension]
+  For a hypotheses space $\scrh$, we say 
+  $\scrh$ \textbf{shatters} a dataset 
+  $\left\{ x_1, \dots, x_n \right\}$ if 
+  for any choice of labels 
+  $\left\{ -1, 1 \right\}^n$, there exists 
+  $h \in \scrh$ such that $h(x_i) = y_i$ 
+  for all $1 \leq i \leq n$.
+  
+  The \textbf{VC dimension} of a hypotheses 
+  space $\scrh$ is defined 
+  as the largest $n$ such that there exists a dataset $S$  
+  of size $n$ such that $\scrh$ shatters $S$.
+  Denote this as $\VC(\scrh) = n$.
+\end{defi}
+
+The VC dimension of a hypotheses space $\scrh$ is 
+related to $\scrh[n]$ by the following lemma by 
+Sauer: 
+
+\begin{thm}[Sauer's Lemma]
+  For any hypotheses class $\scrh$, we have 
+  \[
+  \ln \scrh[n] \leq O(\VC(\scrh) \cdot \ln n).
+  \]
+\end{thm}
+
+Recalling our bound for realizable learning, we get
+$(\epsilon, \delta)$-PAC with  
+\[
+\epsilon = O \left( 
+  \frac{\ln \scrh[n] + \ln (1 / \delta)}{n}
+ \right)
+= O \left( 
+  \frac{\VC(\scrh) \cdot \log n + \ln (1 / \delta)}{n}
+ \right).
+\]
+
+
+
 
 \section{Mixture models and EM}
 
