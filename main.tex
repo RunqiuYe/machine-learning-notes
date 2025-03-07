@@ -835,6 +835,71 @@ The following equality holds:
 
 \subsection{The EM Algorithm in General}
 
+Consider a probabilistic model in which we collectively 
+denote all of the observed variables by $X$ and all of 
+the hidden variables by $Z$. The joint distribution 
+$p(X, Z \mid \theta)$ is governed by a set of parameters 
+denoted $\theta$. Our goal is to maximize the likelihood 
+function that is given by
+\[
+p(X \mid \theta) = \sum_Z p(X, Z \mid \theta).
+\]
+
+Assume direct optimiaztion of $p(X \mid \theta)$ is difficult
+but optimiaztion of $p(X, Z \mid \theta)$ is easy.
+Introduce distribution $q(Z)$ for the latent vairable $Z$,
+we then have 
+\[
+\ln p(X \mid \theta) = \L(q, \theta) + \KLD{q}{p},
+\]
+where 
+\[
+\begin{aligned}
+  \L(q, \theta) &= \sum_Z q(Z) \ln \frac{p(X, Z \mid \theta)}{q(Z)}, \\
+  \KLD{q}{p} &= - \sum_Z q(Z) \ln \frac{p(Z \mid X, \theta)}{q(Z)}.
+\end{aligned}
+\]
+Note that $\KLD{q}{p}$ is the KL divergence of $q(Z)$
+and $p(Z \mid X, \theta)$ so $\KLD{q}{p} \geq 0$
+Therefore, $\L(q, \theta) \leq \ln p(X \mid \theta)$. In other word,
+$\L(q, \theta)$ is a lower bound for $\ln p(X \mid \theta)$.
+
+Therefore, for the EM algorithm, suppose currently the model 
+parameter is $\theta_t$. In the E step, the lower bound 
+$\L(q, \theta)$ is maximized with respect to $q(Z)$ while 
+holding $\theta$ fixed. Note that $\ln p(X \mid \theta_t)$
+is not dependent on $q(Z)$, so the lower bound will 
+be maximized when $\KLD{q}{p} = 0$. This is equivalent to
+when $q(Z) = p(Z \mid X, \theta)$. Therefore, in the E 
+step we simply set
+\[
+q(Z) = p(Z \mid X, \theta_t).
+\]
+
+In the subsequent M step, the distribution $q(Z)$ is fixed
+and the lower bound $\L(q, \theta)$ is maximized with 
+respect to $\theta$ to give some new model parameter
+$\theta_{t + 1}$. Because the distribution $q$ is determined 
+using the old parameter values rather than the new values
+and is held fixed during the M step, it will not equal the 
+new posterior distribution $p(Z \mid X, \theta_{t+1})$,
+and hence there will be a nonzero KL divergence.
+Substituting the result from E step, we have the following 
+expression for the lower bound of M step: 
+\[
+\begin{aligned}
+  \L(q, \theta)
+  &= \sum_Z p(Z \mid X, \theta_t) \ln p(X, Z \mid \theta) 
+  - \sum_Z p(Z \mid X, \theta_t) \ln p(Z \mid X, \theta_t) \\
+  &= Q(\theta_t, \theta) + \const,
+\end{aligned}
+\]
+where the constant is simply the negative entropy of 
+the $q$ distribution. Note that the variable $\theta$ 
+over which we are optimizing appears only inside the 
+logarithm.
+
+
 \section{Approximate inference} 
 A central task in the application of probabilistic models is 
 the evaluation of the posterior distribution $p(\Zv|\Xv)$ of the 
