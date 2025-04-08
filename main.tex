@@ -111,13 +111,13 @@ The following implication holds:
   = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma} 
   \convDist Z,
   \]
-  where $Z \sim \normal(0, 1)$. In other words, 
+  where $Z \sim \ncal(0, 1)$. In other words, 
   \[
   \lim_{n \to \infty} \P[Z_n < z] = \Phi(z) 
   = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}} 
   \; dx.
   \]
-  Also write $Z_n \approx \normal(0, 1)$.
+  Also write $Z_n \approx \ncal(0, 1)$.
 \end{thm}
 
 \subsection{Statistical inference}
@@ -212,17 +212,17 @@ learning, and the setting of PAC learning is as follows:
   the distribution $D$ of the features. 
   \item We collect corresponding labels $y_1, \dots, y_n$. 
   \item Assume there exists some true classifier $h^\star$.
-  \item Let $\scrh$ be the set of all hypotheses.
+  \item Let $\hcal$ be the set of all hypotheses.
 \end{itemize}
 The goal of PAC learning is $(\epsilon, \delta)$-PAC, 
 which is defined as follows. 
 \begin{defi}
   An $(\epsilon, \delta)$-PAC learning algorithm
   refers to an algorithm that 
-  picks an hypothesis $h \in \scrh$  
+  picks an hypothesis $h \in \hcal$  
   after observing training data 
   $\left\{ x_i, y_i \right\}_{i=1}^n$,
-  where the hypothesis $h \in \scrh$ satisfies
+  where the hypothesis $h \in \hcal$ satisfies
   \[
   \err_D (\hat{h}) = 
   \Prob_{x \sim D} \left[ \hat{h}(x) \neq h^\star(x) \right]
@@ -255,8 +255,8 @@ $n$ samples and the running time is at most $\poly
 focus on the runtime of the algorithm.
 
 There are two types of PAC learning -- realizable PAC learning,
-in which case $h^\star \in \scrh$, and agnostic PAC learning, 
-in which case $h^\star \notin \scrh$. We first discuss 
+in which case $h^\star \in \hcal$, and agnostic PAC learning, 
+in which case $h^\star \notin \hcal$. We first discuss 
 realizable PAC learning, and we will find out agnostic PAC 
 learning is a more general setting but than PAC learning
 but a natural extension. 
@@ -265,7 +265,7 @@ but a natural extension.
 
 For realizable PAC learning, we present a simple algorithm:
 \begin{algorithm}[Consistent Learner]
-Pick any $\hat{h} \in \scrh$ such that $h(x_i) = y_i$ 
+Pick any $\hat{h} \in \hcal$ such that $h(x_i) = y_i$ 
 for all $1 \leq i \leq n$.
 \end{algorithm}
 Now we analyze this algorithm in terms of the sample size needed 
@@ -275,10 +275,10 @@ to produce a desired hypothesis.
   Over the dataset of $n$ i.i.d. samples,
   the consistent learning algorithm produces $\hat{h}$ such 
   that $\err_D(\hat{h}) > \epsilon$ with probability
-  at most $\abs{\scrh} e^{-n\epsilon}$. 
+  at most $\abs{\hcal} e^{-n\epsilon}$. 
 \end{thm}
 \begin{proof}
-  Suppose $h \in \scrh$ is such that 
+  Suppose $h \in \hcal$ is such that 
   $\err_D(h) = \P_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
   For such an $h$ and some data $x_i$, we have 
   \[
@@ -298,10 +298,10 @@ to produce a desired hypothesis.
   \[
   \begin{aligned}
     \Prob_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon] 
-    & \leq \sum_{h \in \scrh: \; \err_D(h) > \epsilon} 
+    & \leq \sum_{h \in \hcal: \; \err_D(h) > \epsilon} 
     \Prob[\hat{h} = h]  \\
-    & \leq \abs{\scrh} (1 - \epsilon)^n \\
-    & \leq \abs{\scrh} e^{-n\epsilon},
+    & \leq \abs{\hcal} (1 - \epsilon)^n \\
+    & \leq \abs{\hcal} e^{-n\epsilon},
   \end{aligned}
   \]
   where in the last step we used the inequality 
@@ -312,27 +312,27 @@ to produce a desired hypothesis.
   If we want $\P_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
   \leq \delta$, we must have 
   \[
-  n \geq \frac{\ln \left( \abs{\scrh} / \delta \right)}{\epsilon}.
+  n \geq \frac{\ln \left( \abs{\hcal} / \delta \right)}{\epsilon}.
   \]
 \end{cor}
 Technically speaking the implication should be the other direction, 
 but this bound for sample size $n$ 
 \textbf{gurantees} $(\epsilon, \delta)$-PAC.
 
-To illustrate how we should think of $\abs{\scrh}$, 
+To illustrate how we should think of $\abs{\hcal}$, 
 we present an example.
 \begin{eg}
 Consider the binary half-spaces hypotheses: 
 \[
-\scrh = \left\{ h_w(x) = \sign(\braket{w}{x}) : 
+\hcal = \left\{ h_w(x) = \sign(\braket{w}{x}) : 
 w_i \in \left\{ -1, 1 \right\} \right\}.
 \]
-In this case $\abs{\scrh} = 2^d$, so $\ln \abs{\scrh} = 
+In this case $\abs{\hcal} = 2^d$, so $\ln \abs{\hcal} = 
 \Theta(d)$. 
 
-We should always think of $\abs{\scrh}$
+We should always think of $\abs{\hcal}$
 as exponential with respect to the dimension, so 
-$\ln \abs{\scrh}$ is linear with respect to dimension.
+$\ln \abs{\hcal}$ is linear with respect to dimension.
 \end{eg}
 
 Now we move on to the setting of agnostic leraning.
@@ -345,8 +345,8 @@ data set $S_n = \left\{ x_i, y_i \right\}_{i=1}^n$. The
 goal is to use this dataset $S_n$ to produce an hypothesis 
 $\hat{h}$ such that 
 \[
-\reg_{D, \scrh} (\hat{h}) = 
-\err_D (\hat{h}) - \min_{h \in \scrh} \err_D (h) < \epsilon
+\reg_{D, \hcal} (\hat{h}) = 
+\err_D (\hat{h}) - \min_{h \in \hcal} \err_D (h) < \epsilon
 \]
 with probability at least $1 - \delta$, where the probability
 is with respect to the randomness of the dataset $S_n$.
@@ -354,18 +354,18 @@ is with respect to the randomness of the dataset $S_n$.
 For this setting, we present an algorithm called the empirical 
 loss minimizer (ERM). 
 \begin{algorithm}[empirical loss minimizer]
-  Choose $\hat{h} \in \scrh$ by minimizing the $\left\{ 0,1
+  Choose $\hat{h} \in \hcal$ by minimizing the $\left\{ 0,1
    \right\}$ loss:
   \[
-  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n \ind \left\{ 
+  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ind \left\{ 
     h(x_i) = y_i
    \right\}.
   \]
   In a more general setting, suppose $\ell(\cdot, \cdot)$ 
   be any loss function bounded in $[0, 1]$, choose 
-  $\hat{h} \in \scrh$ by minimizing the loss:
+  $\hat{h} \in \hcal$ by minimizing the loss:
   \[
-  \hat{h} = \argmin_{h \in \scrh} \sum_{i=1}^n \ell(h(x_i), 
+  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ell(h(x_i), 
   y_i).
   \] 
 \end{algorithm}
@@ -386,12 +386,12 @@ of risk.
   Over the dataset of $n$ i.i.d. samples, the ERM algorithm
   produces $\hat{h}$ such that 
   \[
-  \reg_{D, \scrh} (\hat{h}) 
-  = \risk_D (\hat{h}) - \min_{h \in \scrh} 
+  \reg_{D, \hcal} (\hat{h}) 
+  = \risk_D (\hat{h}) - \min_{h \in \hcal} 
   \risk_D (h) 
   \leq 2 \epsilon.
   \]
-  with probability at least $1 - 2 \abs{\scrh} e^{- 2
+  with probability at least $1 - 2 \abs{\hcal} e^{- 2
   n \epsilon^2}$.
 \end{thm}
 
@@ -400,21 +400,21 @@ of risk.
   \newcommand{\hopt}{h^{\text{opt}}}
   First we define
   \[
-    \hopt = \argmin_{h \in \scrh} \risk_D (h).
+    \hopt = \argmin_{h \in \hcal} \risk_D (h).
   \]
-  Note that $\reg_{D, \scrh}(\hopt) = 0$. Define also the 
+  Note that $\reg_{D, \hcal}(\hopt) = 0$. Define also the 
   estimated risk of hypothesis $h$ for data set $S$:
   \[
   \hat{\risk}_S (h) := \frac{1}{n} \sum_{i=1}^n \ell(h(x_i),
   y_i).
   \]
-  Note that $\hat{h} = \argmin_{h \in \scrh} 
+  Note that $\hat{h} = \argmin_{h \in \hcal} 
   \hat{\risk}_S (h)$ and $\E[\hat{\risk}_S (h)] = 
   \risk_D(h)$, where the expected value is with respect to 
   the randomness of the dataset. Note that 
   \begin{equation*}
     \begin{aligned}
-      \reg_{D, \scrh} (\hat{h}) 
+      \reg_{D, \hcal} (\hat{h}) 
       &= \risk_D (\hat{h}) - \risk_D (\hopt) \\
       &= (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
       + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt)) 
@@ -429,7 +429,7 @@ of risk.
   always gives
   $\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt) \leq 0$.
 
-  For any $h \in \scrh$, we have
+  For any $h \in \hcal$, we have
   \[
   \begin{aligned}
     \hat{\risk}_S (h) - \risk_D(h) 
@@ -451,39 +451,39 @@ of risk.
   \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
   \leq e^{- 2 n \epsilon^2}
   \]
-  This implies that for any fixed $h \in \scrh$,  
+  This implies that for any fixed $h \in \hcal$,  
   \[
   \Prob \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon 
   \right] \leq 2 e^{-2 n \epsilon^2}.
   \]
   It follows from the union bound that 
   \[
-  \Prob \left[ \exists h \in \scrh: \; 
+  \Prob \left[ \exists h \in \hcal: \; 
   \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right] 
-  \leq 2 \abs{\scrh} e^{- 2 n \epsilon^2}.
+  \leq 2 \abs{\hcal} e^{- 2 n \epsilon^2}.
   \]
   Notice that if  
   $\abs{\hat{\risk}_S (h) - \risk_D (h)} \leq \epsilon$
-  for all $h \in \scrh$, we must have $\reg_{D, \scrh} 
+  for all $h \in \hcal$, we must have $\reg_{D, \hcal} 
   (\hat{h}) \leq 2 \epsilon$ by inequality \eqref{reg}.
   above. Therefore,
-  $\reg_{D, \scrh} (\hat{h}) \leq 2 \epsilon$ with probability at least 
-  $1 - 2 \abs{\scrh} e^{- 2 n \epsilon^2}$. 
+  $\reg_{D, \hcal} (\hat{h}) \leq 2 \epsilon$ with probability at least 
+  $1 - 2 \abs{\hcal} e^{- 2 n \epsilon^2}$. 
 }
 \end{proof}
 
 \begin{cor}
 Let $\delta > 0$ be given. Then, 
 setting 
-$n = \frac{1}{2\epsilon^2} \ln \left( 2 \abs{\scrh} / 
-\delta \right)$, we obtain that $\reg_{D, \scrh} (\hat{h})
+$n = \frac{1}{2\epsilon^2} \ln \left( 2 \abs{\hcal} / 
+\delta \right)$, we obtain that $\reg_{D, \hcal} (\hat{h})
 \leq 2\epsilon$ with probability at least $1 - \delta$.
-Therefore, if we want $\reg_{D, \scrh} 
+Therefore, if we want $\reg_{D, \hcal} 
 (\hat{h}) \leq \epsilon$ with probability at least $1 - 
 \delta$, we must have 
 \[
   n \geq \frac{2 \ln 
-  \left( 2 \abs{\scrh} / \delta \right)}
+  \left( 2 \abs{\hcal} / \delta \right)}
   {\epsilon^2}.
 \]
 \end{cor}
@@ -492,12 +492,12 @@ As a comparison between realizable learning and agnostic
 learning, we can see the sample size needed to 
 achieve the same $(\epsilon, \delta)$-PAC bound is 
 \[
-n = \Theta \left( \frac{\ln \left( \abs{\scrh} / \delta
+n = \Theta \left( \frac{\ln \left( \abs{\hcal} / \delta
 \right)}{\epsilon} \right)
 \]
 for realizable learning, and 
 \[
-n = \Theta \left( \frac{\ln(\abs{\scrh} / \delta)}{\epsilon^2} 
+n = \Theta \left( \frac{\ln(\abs{\hcal} / \delta)}{\epsilon^2} 
 \right)
 \]
 for agnostic learning. Since $\epsilon < 1$, 
@@ -508,22 +508,22 @@ same $(\epsilon, \delta)$-PAC bound.
 \subsection{Infinite hypotheses space and VC dimension}
 
 In last section, we discussed PAC learning with finite 
-hypotheses space $\scrh$. However, we often need 
+hypotheses space $\hcal$. However, we often need 
 to deal with situations where the hypotheses space 
 is infinite. Consider the following example.
 
 \begin{eg}
   Consider the binary half space hypotheses: 
   \[
-  \scrh = \left\{ h_w(x) = 
+  \hcal = \left\{ h_w(x) = 
   \sign(\braket{w}{x}) : w \in \R^d \right\}.
   \]
-  Then, $\abs{\scrh} = \infty$ since each 
+  Then, $\abs{\hcal} = \infty$ since each 
   $w \in \R^d$ gives a different decision boundary.
 \end{eg}
 
 However, on some fixed dataset $S$, not all of the hypotheses
-in the hypotheses space $\scrh$ gives a different prediction. 
+in the hypotheses space $\hcal$ gives a different prediction. 
 This leads to the following definition and theorem, which 
 charaterize the ``effective size'' of the hypotheses
 space.
@@ -531,9 +531,9 @@ space.
 \begin{defi}
   Let $S$ be a dataset with $n$ points 
   $\left\{ x_1, \dots, x_n \right\}$. Define 
-  $\abs{\scrh(S)}$ as the number of distinct labeling 
+  $\abs{\hcal(S)}$ as the number of distinct labeling 
   $\left\{ (x_i, y_i) \right\}_{i=1}^n$, where each 
-  $y_i = h(x_i)$ for a fixed $h \in \scrh$.
+  $y_i = h(x_i)$ for a fixed $h \in \hcal$.
 \end{defi}
 
 With this definition, we can derive a similar confidence 
@@ -542,8 +542,8 @@ bound for our learned hypotheses.
 \begin{thm}
   Define the effective size
   \[
-  \scrh [n] = \sup_{x_1, \dots, x_n} 
-  \abs{\scrh(\left\{ x_1, \dots, x_n \right\})},
+  \hcal [n] = \sup_{x_1, \dots, x_n} 
+  \abs{\hcal(\left\{ x_1, \dots, x_n \right\})},
   \]  
   and let $\hat{h}_n$ denote the consistency learner
   from $n$ examples. Then we have 
@@ -553,7 +553,7 @@ bound for our learned hypotheses.
   where 
   \[
   \epsilon = O \left( 
-    \frac{\ln \scrh[n] + \ln (1 / \delta)}{n}
+    \frac{\ln \hcal[n] + \ln (1 / \delta)}{n}
    \right).
   \]
 \end{thm}
@@ -561,14 +561,14 @@ bound for our learned hypotheses.
 \begin{eg}
   Consider the threshold hypotheses space: 
   \[
-  \scrh = \left\{ h_w(x) = 2 \cdot 
+  \hcal = \left\{ h_w(x) = 2 \cdot 
   \ind \left\{ x > w \right\} - 1 : w \in \R \right\}.
   \]
-  Then it is easy to see that $\scrh[n] = n$. 
+  Then it is easy to see that $\hcal[n] = n$. 
   It follows that
   \[
   \epsilon = O\left( 
-    \frac{\ln \scrh[n] + \ln (1 / \delta)}{n}
+    \frac{\ln \hcal[n] + \ln (1 / \delta)}{n}
    \right) = O\left( 
     \frac{\ln n + \ln (1 / \delta)}{n}
    \right),
@@ -580,37 +580,37 @@ Another way to characterize the ``effective size'' of the
 hypotheses space is \textbf{VC dimension}.
 
 \begin{defi}[VC dimension]
-  For a hypotheses space $\scrh$, we say 
-  $\scrh$ \textbf{shatters} a dataset 
+  For a hypotheses space $\hcal$, we say 
+  $\hcal$ \textbf{shatters} a dataset 
   $\left\{ x_1, \dots, x_n \right\}$ if 
   for any choice of labels 
   $\left\{ -1, 1 \right\}^n$, there exists 
-  $h \in \scrh$ such that $h(x_i) = y_i$ 
+  $h \in \hcal$ such that $h(x_i) = y_i$ 
   for all $1 \leq i \leq n$.
   
   The \textbf{VC dimension} of a hypotheses 
-  space $\scrh$ is defined 
+  space $\hcal$ is defined 
   as the largest $n$ such that there exists a dataset $S$  
-  of size $n$ such that $\scrh$ shatters $S$.
-  Denote this as $\VC(\scrh) = n$.
+  of size $n$ such that $\hcal$ shatters $S$.
+  Denote this as $\VC(\hcal) = n$.
 \end{defi}
 
-The VC dimension of a hypotheses space $\scrh$ is 
-related to $\scrh[n]$ by the following lemma by 
+The VC dimension of a hypotheses space $\hcal$ is 
+related to $\hcal[n]$ by the following lemma by 
 Sauer: 
 
 \begin{thm}[Sauer's Lemma]
-  For any hypotheses class $\scrh$, we have 
+  For any hypotheses class $\hcal$, we have 
   \[
-  \ln \scrh[n] \leq O(\VC(\scrh) \cdot \ln n).
+  \ln \hcal[n] \leq O(\VC(\hcal) \cdot \ln n).
   \]
 \end{thm}
 
 Recalling our bound for realizable learning, we get
 $(\epsilon, \delta)$-PAC with  
 \[
-\epsilon = O \left( \frac{\ln \scrh[n] + \ln (1 / \delta)}{n} \right) 
-= O \left( \frac{\VC(\scrh) \cdot \log n + \ln (1 / \delta)}{n} \right).
+\epsilon = O \left( \frac{\ln \hcal[n] + \ln (1 / \delta)}{n} \right) 
+= O \left( \frac{\VC(\hcal) \cdot \log n + \ln (1 / \delta)}{n} \right).
 \]
 
 
@@ -647,7 +647,7 @@ considered to have very high entropy (i.e. a lot of uncertainty),
 whereas a distribution that assigns all its mass on a single 
 point is considered to have zero entropy (i.e. no uncertainty). 
 Notably, it can be shown that among continuous distributions 
-over $\R$, the Gaussian distribution $\normal(\mu, \sigma^2)$ has 
+over $\R$, the Gaussian distribution $\ncal(\mu, \sigma^2)$ has 
 the highest entropy (highest uncertainty) among all possible 
 distributions that have the given mean $\mu$ and variance $\sigma^2$.
 
