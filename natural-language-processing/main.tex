@@ -1,0 +1,325 @@
+\documentclass[a4paper]{article}
+\usepackage{parskip}
+
+\def\nterm {Spring}
+\def\nyear {2025}
+\def\ncourse {Natural Language Processing}
+
+\input{../header}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+Below is a list of topics that will be covered in this note. 
+The topics include fundamental theoretical knowledge in 
+language processing and language modeling in the first 
+few sections, as well as frontier research results
+in later sections.
+
+\begin{enumerate}
+  \item Language modeling fundamentals 
+  \begin{enumerate}
+    \item Representing words 
+    \item Language modeling 
+    \item Sequence modeling architectures
+  \end{enumerate}
+
+  \item Training and inference models
+  \begin{enumerate}
+    \item Decoding and Generation Algorithms
+    \item In-context learning
+    \item Pre-training
+    \item Fine-tuning
+    \item Reinforcement Learning
+  \end{enumerate}
+
+  \item Evaluation and Experimental Design
+  \begin{enumerate}
+    \item Evaluating Language Generators
+    \item Experimental Design
+    \item Human Annotation
+    \item Debugging/Interpretation Techniques
+  \end{enumerate}
+
+  \item Advanced Algorithms and Architectures 
+  \begin{enumerate}
+    \item Advanced Pretraining, Post-Training, and Inference
+    \item Retrieval and Retrieval-augmented Generation
+    \item Long Sequence Models
+    \item Distillation and Quantization
+    \item Ensembling and Mixture of Experts
+  \end{enumerate}
+
+  \item NLP Applications and Society
+  \begin{enumerate}
+    \item Complex Reasoning Tasks
+    \item Language Agents
+    \item Multimodal NLP
+    \item Multilingual NLP
+    \item Bias and Fairness
+  \end{enumerate}
+\end{enumerate}
+
+\section{Language modeling fundamentals}
+
+\subsection{Neural networks and auto differentiation}
+This process calculates the gradient of the loss with 
+respect to different parameters. Use computational graph 
+and chain rule to compute back propogation efficiently, 
+and implmented in PyTorch. With the calculated gradient, 
+we can use Stochastic Gradient Descent (SGD) to update 
+the model parameters. 
+Other than PyTorch, TensorFlow and JAX are also popular 
+neural network frameworks with different advantages.
+
+\subsection{language and sequence modeling} 
+
+In language modeling, other than binary or multi-class 
+classification, sometimes there are exponential/infinitely
+many labels. This is called \textbf{structured prediction}. 
+For example, assgining a part-of-speech tag for each word in the 
+sentence. It is easy to note that in this case the number 
+of labels grows exponentially with respect to the length 
+of the sequence.
+There are also distinctions between \textbf{uncondictioned 
+prediction} and \textbf{conditioned prediction}, which predict 
+the distribution of $P(X)$ and $P(Y \mid X)$, respectively.
+
+A language model is a probability distribution over all 
+sequences. It can be used to \textbf{score} sequences
+and \textbf{generate} sequences. For example, in 
+conditional generation, we condition on an input text and 
+tries to continue it 
+\[
+\hat{x}_{t + 1: T} \sim p(X_{t+1: T} \mid x_{1 : t}).
+\]
+For another example, it can be used to translate between 
+languages (machine translation). In all of these scenarios, 
+the key is to model the following distribution:
+\[
+p(x_{t + 1} \mid x_1, x_2, \dots, x_n).
+\]
+
+\subsubsection{Bigram models and N-gram models} 
+The assumption of bigram models is 
+\[
+p(X) \approx \prod_{t=1}^T p_\theta(x_{t} \mid x_{t - 1}).
+\]
+This is to say all tokens only depend on the token right 
+before it. To train the bigram models, we simply count 
+\[
+p(x_t \mid x_{t - 1}) = \frac{\text{count} (x_{t-1}, x_t)}
+{\sum_{x'} \text{count}(x_{t-1}, x')}.
+\]
+We can view $\theta_{i, j} = p(x_j \mid x_i)$ the 
+parameters of the model. The reason behind the 
+counting procedure is to produce a \textbf{maximum 
+likelihood estimation}: 
+\[
+\max_{\theta} \sum_{x \in D_{\text{train}}} 
+\log p_\theta(x).
+\]
+This essentially tries to match $p_\theta$ to $p_{\text{data}}$,
+which can be more formally derived with KL divergence.
+
+To evaluate the model, we can use the \textbf{log-likelihood}
+and the \textbf{perplexity} of the model. The log-likelihood 
+is simply defined as 
+\[
+  \operatorname{LL}(\mathcal{X}_{\text{test}}) 
+  = \sum_{X \in \mathcal{X}_{\text{test}}} \log p(X).
+\]
+We can also use the per-word log-likelihood 
+$\operatorname{WLL}(\mathcal{X}_{\text{test}})$,
+which is defined as the log-likelihood divided by the 
+length of the test data.
+The perplexity of the model is 
+$\exp \left( -\operatorname{WLL}(\mathcal{X}_{\text{test}}) \right)$,
+which can be used to simulate the number of tries it need to 
+take before getting the correct prediction. Therefore, 
+lower perplexity is better!
+
+The bigram models or N-gram models in general have a lot of problems.
+When $N$ gets large, the number of parameters will grow 
+exponential with respect to $N$, but the occurrence of these 
+parameters will be extremely rare.
+Additionally, it cannot share strength among similar words, 
+it cannot condition on context with intervening words, 
+and it cannot handle long-distance dependencies. 
+To try it out, use the 
+\texttt{kenlm}\footnote{\texttt{
+  https://github.com/kpu/kenlm
+}} toolkit.
+
+\subsubsection{Feedforward neural language model}
+Use a neural netowrk to model 
+\[
+p(X) = \prod_{t = 1}^{T} p(x_t \mid x_{t-1}, \dots, x_{t-n+1})
+\]
+by miniming the loss 
+\[
+L = - \log p_\theta (x_t \mid x_{1 : t - 1}).
+\]
+This actually correspond to cross entropy loss.
+An example structure of this is shown in Figure 
+\ref{feedforward-nn-lm}.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\linewidth]{figs/forward-nn-lm.jpg}
+  \caption{An illustration of feedforward neural language 
+  model.}
+  \label{feedforward-nn-lm}
+\end{figure}
+
+Note that since we can make the embeddings of word closed to 
+each other if the words have similar meaning, it solves the 
+problem of N-gram models that they cannot share strength 
+between similar words. Neural models can also condition 
+on context with intervening words, which is another advantage
+compare to N-gram models.
+
+\subsubsection{Practice tips for neural language models}
+It is good to initialize weight matrices
+using the \textbf{Xavier initialization} technique, which is 
+implmented in function \texttt{nn.init.xavier\_uniform\_} 
+in PyTorch. Weight initialization
+is important in deep learning models, since it has a huge 
+impact on the training results. 
+For optimizer, instead of SGD, the most 
+standard optimization method is \textbf{Adam}, 
+which is also implmented in PyTorch. 
+For the choice of learning rate, 
+we also have consine learning rate schedule and warmup 
+techniques.
+
+Check out paper to learn more about these methods.
+
+\section{Recurrent neural networks}
+
+\subsection{Setup of recurrent neural networks}
+A \textbf{sequence model} takes in a sequence $x_1, \dots,
+x_T$ and output some hidden state 
+\[
+f_\theta(x_1, \dots, x_T) \to h_1, \dots, h_T,
+\]
+where $h_t \in \R^d$. For language modeling, we can have 
+\[
+p_\theta(\cdot \mid x_{<t}) = \softmax (W h_t^T),
+\]
+where $W$ is some matrix we learned. 
+In contrast, a \textbf{recurrent neural network} (RNN)
+has the following recurrence 
+\[
+h_t = \sigma(W_h h_{t-1} + W_x x_t + b),
+\]
+where $\sigma$ is some activation function (tanh, ReLU, \dots).
+The parameters of the RNN model are $W_h \in \R^{d \times d}$, 
+$W_x \in \R^{d \times d}$, and $b \in \R^d$.
+
+RNN can be used for several applications. We can just 
+run the RNN on a input sequence and use the final hidden 
+state to do sentiment analysis. We can also train 
+an output matrix $W$ and use the hidden states to 
+produce a sequence.
+
+To train RNNs, we need to construct loss for each 
+output (or just the final output if we are doing, 
+for example, sentiment analysis) and run the back propogation
+algorithm to compute the gradients.
+
+Note that in RNNs, computing $h_t$ requires $h_{t-1}$, 
+$h_{t-2}$, \dots, so it is hard to parallelize the training
+process. Also, for inference, we generate one token, 
+use the new hidden state (newly generated token) for the 
+next step, and repeat. We only need to store previous 
+hidden state and the computation for a length $T$ sequence
+is simply $T$ times the cost of a local computation.
+
+\subsection{Vanishing gradient}
+
+\begin{figure}[h!]
+  \centering 
+  \includegraphics[width=0.5\linewidth]{figs/vanish-grad.png}
+  \caption{An illustration of vanishing gradient in RNNs.}
+  \label{vanish-grad}
+\end{figure}
+
+One problem with RNNs is vanishing gradient, which 
+makes the model struggle to learn long-term dependencies.
+A illustration of vanishing gradient is in Figure \ref{vanish-grad}.
+The mathematical detail can be seen through the following 
+equation and derivation. 
+
+*** TO-DO: add math for vanish grad *** 
+
+A solution to this problem is gating and additive 
+connections. The basic idea is to 
+pass information across timesteps with a learned 
+``gate'' $z_t$, and the recurrence would just be 
+\[
+h_t = (1 - z_t) h_{t-1} + z_t \tilde{h_t}.
+\]
+More concretely, we replace each RNN black with a Gated 
+Recurrent Unit (GRU). 
+The GRU has two gates: a ``reset gate'' and an ``update gate''.
+The update gate $z_t$ controls how much of the previous 
+hidden state should be passed to the current hidden state. 
+The reset gate $r_t$ determines how much of the past 
+information to forget.
+The equations for the GRU are as follows:
+\[
+\begin{aligned}
+z_t &= \sigma(W_z x_t + U_z h_{t-1} + b_z), \\
+r_t &= \sigma(W_r x_t + U_r h_{t-1} + b_r), \\
+\tilde{h}_t &= \tanh(W_h x_t + r_t \odot (U_h h_{t-1}) + b_h), \\
+h_t &= (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t, \\
+\end{aligned}
+\]
+where in the third equation $\tilde{h_t}$ is a ``candidate state''
+and the fourth equation gives recurrent update rule.
+
+A similar but improved architecture compared to GRU 
+is Long Short Term Memory (LSTM).
+
+*** TO-DO: add architecture for LSTM ***
+
+\subsection{Encoder-decoder}
+
+The motivation is conditional generation -- generate 
+a sequence given a sequence with $p_\theta (y_1, \dots, y_T 
+\mid x)$. These models are historically developed for machine 
+translation, dialogues, etc.
+The architecture of encoder-decoder is 
+illustrated in Figure \ref{encode-decode}. The first 
+RNN (encoder) read in the sequence $x$ to generate 
+the final hidden state (context vector) to represent the whole sequence. 
+Then, the second RNN use the context vector to initialize
+the inital hidden state and hence generate a new sequence.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\linewidth]{figs/encode-decode.png}
+  \caption{An illustration of encoder-decoder architecture.}
+  \label{encode-decode}
+\end{figure}
+
+Typically, the parameters of the two RNNs are separator. 
+Additionally, having a differentiable connection 
+between the two RNNs is important, as the decoder 
+need to learn its parameters from the sequence 
+generated and the corresponding loss function.
+
+Encoder-decoder only has one context vector for the 
+whole sequence. Can we do better?
+
+\subsection{Attention}
+
+
+
+
+\end{document}
