@@ -264,7 +264,7 @@ Carnegie Mellon University}
 \newcommand{\phantomeq}{\hphantom{{}={}}}
 
 % Probability
-\newcommand{\ind}{\mathbb{I}}
+\newcommand{\ind}{\mathbf{1}}
 \newcommand{\convAS}{\overset{\mathrm{as}}{\longrightarrow}}
 \newcommand{\convProb}{\overset{\mathrm{P}}{\longrightarrow}}
 \newcommand{\convDist}{\rightsquigarrow}
@@ -281,7 +281,7 @@ Carnegie Mellon University}
 \DeclareMathOperator{\Poisson}{Poisson}
 \DeclareMathOperator{\var}{var}
 \newcommand{\E}{\mathbb{E}}
-\newcommand{\Prob}{\mathbb{P}}
+\renewcommand{\Pr}{\mathbb{P}}
 \newcommand{\KLD}[2]{\mathrm{KL}\left(#1 \Vert #2 \right)}
 \newcommand{\const}{\mathrm{const}}
 \DeclareMathOperator{\KL}{KL}
@@ -320,7 +320,6 @@ Carnegie Mellon University}
 \newcommand{\hol}{\mathfrak{hol}}
 \newcommand{\Id}{\mathrm{Id}}
 \newcommand{\lie}[1]{\mathfrak{#1}}
-\renewcommand{\L}{\mathcal{L}}
 \newcommand{\op}{\mathrm{op}}
 \newcommand{\Oc}{\mathcal{O}}
 \newcommand{\pr}{\mathrm{pr}}
@@ -333,8 +332,6 @@ Carnegie Mellon University}
 \newcommand{\wt}{\mathrm{wt}}
 \newcommand{\wto}{\stackrel{\mathrm{w}}{\to}}
 \renewcommand{\d}{\mathrm{d}}
-\renewcommand{\P}{\mathbb{P}}
-%\renewcommand{\F}{\mathcal{F}}
 
 
 \let\Im\relax
@@ -464,8 +461,15 @@ Carnegie Mellon University}
 \newcommand{\hscr}{\mathscr{H}}
 
 % mathcal
-\newcommand{\ncal}{\mathcal{N}}
+\newcommand{\acal}{\mathcal{A}}
+\newcommand{\ecal}{\mathcal{E}}
+\newcommand{\fcal}{\mathcal{F}}
 \newcommand{\hcal}{\mathcal{H}}
+\newcommand{\ncal}{\mathcal{N}}
+\newcommand{\rcal}{\mathcal{R}}
+\def\L{\mathcal{L}}
+\def\H{\mathcal{H}}
+\renewcommand{\P}{\mathcal{P}}
 
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,

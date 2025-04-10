@@ -26,7 +26,7 @@ be the CDF of $X$.
   and write $X_n \convProb X$ if for arbitrary 
   $\epsilon > 0$, 
   \[
-  \Prob \left[ \abs{X_n - X} > \epsilon \right] \to 0
+  \Pr \left[ \abs{X_n - X} > \epsilon \right] \to 0
   \]
   as $n \to \infty$.
 
@@ -48,7 +48,7 @@ be the CDF of $X$.
   \item $X_n$ converges to $X$ \textbf{almost surely} 
   and write $X_n \convAS X$ if 
   \[
-  \Prob \left[ \lim_{n \to \infty} X_n =  X \right] = 1. 
+  \Pr \left[ \lim_{n \to \infty} X_n =  X \right] = 1. 
   \]
 \end{enumerate}
 \end{defi}
@@ -77,24 +77,24 @@ The following implication holds:
   \]
   Note that $A_n \supset A_{n+1}$ for each $n \in \N$ and 
   let $A_\infty = \bigcap_{n=1}^\infty A_n$. 
-  Now show $\P[A_\infty] = 0$. If $\omega \notin O$, then 
+  Now show $\Pr[A_\infty] = 0$. If $\omega \notin O$, then 
   $\lim_{n \to \infty} X_n (\omega) = X(\omega)$ and thus 
   $\abs{X_n(\omega) - X(\omega)} < \epsilon$ for some $n \in \N$.
   Therefore, $\omega \notin A_\infty$.
-  It follows that $A_\infty \subset O$ and $\P[A_\infty] = 0$. 
+  It follows that $A_\infty \subset O$ and $\Pr[A_\infty] = 0$. 
   
   By monotone 
-  continuity, we have $\lim_{n \to \infty} \P[A_n] = 
-  \P[A_\infty]$. It follows that
+  continuity, we have $\lim_{n \to \infty} \Pr[A_n] = 
+  \Pr[A_\infty]$. It follows that
   \[
-  \P \left[ \abs{X_n - X} > \epsilon \right] 
-  \leq \P \left[ A_n \right] \to 0 
+  \Pr \left[ \abs{X_n - X} > \epsilon \right] 
+  \leq \Pr \left[ A_n \right] \to 0 
   \]
   as $n \to \infty$. This completes the proof.
 
   \item From Chebyshev's inequality, we have 
   \[
-  \Prob \left[ \abs{X - X_n} > \epsilon \right] \leq 
+  \Pr \left[ \abs{X - X_n} > \epsilon \right] \leq 
   \frac{1}{\epsilon^p} \E [\abs{X - X_n}^p].
   \]
   The claim follows directly.
@@ -113,7 +113,7 @@ The following implication holds:
   \]
   where $Z \sim \ncal(0, 1)$. In other words, 
   \[
-  \lim_{n \to \infty} \P[Z_n < z] = \Phi(z) 
+  \lim_{n \to \infty} \Pr[Z_n < z] = \Phi(z) 
   = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}} 
   \; dx.
   \]
@@ -225,7 +225,7 @@ which is defined as follows.
   where the hypothesis $h \in \hcal$ satisfies
   \[
   \err_D (\hat{h}) = 
-  \Prob_{x \sim D} \left[ \hat{h}(x) \neq h^\star(x) \right]
+  \Pr_{x \sim D} \left[ \hat{h}(x) \neq h^\star(x) \right]
   < \epsilon.
   \]
   with probability at least $1 - \delta$, where the probability
@@ -234,7 +234,7 @@ which is defined as follows.
 Putting it more concretely, suppose $g$ is a point estimator
 (the algorithm), then we want 
 \[
-\Prob_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon 
+\Pr_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon 
 \right] \geq 1 - \delta.
 \]
 Through the $\epsilon$-$\delta$ definition of limit, 
@@ -282,24 +282,24 @@ to produce a desired hypothesis.
   $\err_D(h) = \P_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
   For such an $h$ and some data $x_i$, we have 
   \[
-  \Prob_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
+  \Pr_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
   \]
   Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are i.i.d., we have 
   \[
-  \Prob_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all 
+  \Pr_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all 
   $1 \leq i \leq n$}] < (1 - \epsilon)^n.
   \]
   Note that our consistent learner do not make any mistake 
   on the training set $\left\{ x_i, y_i \right\}_{i=1}^n$
   \[
-  \Prob_{x_{1 : n} \sim D} [h = \hat{h}] < (1 - \epsilon)^n.
+  \Pr_{x_{1 : n} \sim D} [h = \hat{h}] < (1 - \epsilon)^n.
   \]
   It follows that 
   \[
   \begin{aligned}
-    \Prob_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon] 
+    \Pr_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon] 
     & \leq \sum_{h \in \hcal: \; \err_D(h) > \epsilon} 
-    \Prob[\hat{h} = h]  \\
+    \Pr[\hat{h} = h]  \\
     & \leq \abs{\hcal} (1 - \epsilon)^n \\
     & \leq \abs{\hcal} e^{-n\epsilon},
   \end{aligned}
@@ -446,19 +446,19 @@ of risk.
   i.i.d., $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore, 
   we can utilize the \textbf{Hoeffding bound} to get 
   \[
-  \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
+  \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
   \leq e^{- 2 n \epsilon^2} \text{ and }
-  \Prob \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
+  \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
   \leq e^{- 2 n \epsilon^2}
   \]
   This implies that for any fixed $h \in \hcal$,  
   \[
-  \Prob \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon 
+  \Pr \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon 
   \right] \leq 2 e^{-2 n \epsilon^2}.
   \]
   It follows from the union bound that 
   \[
-  \Prob \left[ \exists h \in \hcal: \; 
+  \Pr \left[ \exists h \in \hcal: \; 
   \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right] 
   \leq 2 \abs{\hcal} e^{- 2 n \epsilon^2}.
   \]
@@ -548,7 +548,7 @@ bound for our learned hypotheses.
   and let $\hat{h}_n$ denote the consistency learner
   from $n$ examples. Then we have 
   \[
-  \Prob_{x \sim D} [\err_D(\hat{h}) \geq \epsilon] \leq \delta, 
+  \Pr_{x \sim D} [\err_D(\hat{h}) \geq \epsilon] \leq \delta, 
   \] 
   where 
   \[
