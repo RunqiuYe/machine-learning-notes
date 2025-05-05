@@ -626,7 +626,7 @@ In this section, we adopt the convention that $0 \log 0 = 0$.
   distributions $P(X)$ and $Q(X)$ 
   over the outcome space $X$ is defined as follows: 
   \[
-  \KL (P \Vert Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)}.
+  \KL (P \; \Vert \; Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)}.
   \]
 \end{defi}
 
@@ -740,7 +740,7 @@ $Q(X)$, under the scenario where symbols are actually
 distributed as $P(X)$. It is straightforward to see this:
 \[
 \begin{aligned}
-  \KL(P \Vert Q) 
+  \KL(P \; \Vert \; Q) 
   &= \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} \\
   &= \sum_{x \in X} P(x) \log P(x) - \sum_{x \in X} 
   P(x) \log Q(x) \\
@@ -750,11 +750,11 @@ distributed as $P(X)$. It is straightforward to see this:
 \]
 
 If the cross entropy between $P$ and $Q$ is zero 
-(and hence $\KL(P \Vert Q) = 0$) then it necessarily 
+(and hence $\KL(P \; \Vert \; Q) = 0$) then it necessarily 
 means $P = Q$. In Machine Learning, it is a common 
 task to find a distribution $Q$ that is ``close'' to 
 another distribution $P$. To achieve this, we use 
-$\KL(P \Vert Q)$ to be the loss function to be optimized. 
+$\KL(P \; \Vert \; Q)$ to be the loss function to be optimized. 
 As we will see in this below, Maximum Likelihood 
 Estimation, which is a commonly used optimization objective, 
 turns out to be equivalent minimizing KL divergence between 
@@ -766,21 +766,21 @@ Now we present some useful properties of KL divergence.
 \begin{thm}[Non-negativity]
   For any distribution $P$ and $Q$, we have 
   \[
-  \KL(P \Vert Q) \geq 0,
+  \KL(P \; \Vert \; Q) \geq 0,
   \]
-  and $\KL(P \Vert Q) = 0$ if and only if $P = Q$ (almost 
+  and $\KL(P \; \Vert \; Q) = 0$ if and only if $P = Q$ (almost 
   everywhere).
 \end{thm}
 
 \begin{proof}
   By definition,
   \[
-    \KL(P \Vert Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}.
+    \KL(P \; \Vert \; Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}.
   \] 
   Since $-\log x$ is strictly convex, by Jensen's inequality, we have
   \[
   \begin{aligned}
-    \KL(P \Vert Q) = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}
+    \KL(P \; \Vert \; Q) = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}
     \geq -\log \sum_{x \in X} P(x) \frac{Q(x)}{P(x)} = 0.
   \end{aligned}
   \]
@@ -797,7 +797,7 @@ Now we present some useful properties of KL divergence.
   The KL divergence between 2 conditional distributions 
   $P(X \mid Y)$, $Q(X \mid Y)$ is defined as follows:
   \[
-  \KL({P(X \mid Y)} \Vert {Q(X \mid Y)}) = \sum_y P(y) 
+  \KL({P(X \mid Y)} \; \Vert \; {Q(X \mid Y)}) = \sum_y P(y) 
   \left( \sum_x P(x \mid y) \log 
   \frac{P(x \mid y)}{Q(x \mid y)} \right).
   \]
@@ -810,9 +810,9 @@ Now we present some useful properties of KL divergence.
 \begin{thm}[Chain rule for KL divergence]
 The following equality holds:
 \[
-\KL({P(X, Y)} \Vert {Q(X, Y)}) = 
-\KL({P(X)} \Vert {Q(X)}) + \KL({P(Y \mid X)} 
-\Vert {Q(Y \mid X)}).
+\KL({P(X, Y)} \; \Vert \; {Q(X, Y)}) = 
+\KL({P(X)} \; \Vert \; {Q(X)}) + \KL({P(Y \mid X)} 
+\; \Vert \; {Q(Y \mid X)}).
 \]
 \end{thm}
 
@@ -827,7 +827,7 @@ The following equality holds:
   \frac{P(x)}{Q(x)} \sum_y P(y \mid x) \\
   &= \sum_x \sum_y P(y \mid x) P(x) \log \frac{P(y \mid x)}
   {Q(y \mid x)} + \sum_x P(x) \log \frac{P(x)}{Q(x)} \\
-  &= \KL({P(X)} \Vert {Q(X)}) + \KL({P(Y \mid X)} \Vert {Q(Y \mid X)}) \\
+  &= \KL({P(X)} \; \Vert \; {Q(X)}) + \KL({P(Y \mid X)} \; \Vert \; {Q(Y \mid X)}) \\
   &= \text{RHS}.
 \end{aligned}
 \]
@@ -891,12 +891,12 @@ expression for the lower bound of M step:
   \L(q, \theta)
   &= \sum_Z p(Z \mid X, \theta_t) \log p(X, Z \mid \theta) 
   - \sum_Z p(Z \mid X, \theta_t) \log p(Z \mid X, \theta_t) \\
-  &= Q(\theta_t, \theta) + \const,
+  &= \Q(\theta_t, \theta) + \const,
 \end{aligned}
 \]
 where 
 \[
-Q(\theta_t, \theta) = \sum_Z p(Z \mid X, \theta_t) 
+\Q(\theta_t, \theta) = \sum_Z p(Z \mid X, \theta_t) 
 \log (X, Z \mid \theta)
 \]
 and the constant is simply the negative entropy of 
