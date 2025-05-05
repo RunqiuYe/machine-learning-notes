@@ -859,10 +859,12 @@ where
   \KLD{q}{p} &= - \sum_Z q(Z) \log \frac{p(Z \mid X, \theta)}{q(Z)}.
 \end{aligned}
 \]
-Note that $\KLD{q}{p}$ is the KL divergence of $q(Z)$
+Note that $\L$ is a functional of the distribution $q(Z)$.
+Note also that $\KLD{q}{p}$ is the KL divergence of $q(Z)$
 and $p(Z \mid X, \theta)$ so $\KLD{q}{p} \geq 0$
 Therefore, $\L(q, \theta) \leq \log p(X \mid \theta)$. In other word,
-$\L(q, \theta)$ is a lower bound for $\log p(X \mid \theta)$.
+$\L(q, \theta)$ is a \textbf{lower bound} 
+for $\log p(X \mid \theta)$.
 
 Therefore, for the EM algorithm, suppose currently the model 
 parameter is $\theta_t$. In the E step, the lower bound 
@@ -904,12 +906,26 @@ the $q$ distribution. Note that the variable $\theta$
 over which we are optimizing appears only inside the 
 logarithm.
 
+The EM algorithm can also be used to maximize the 
+\textbf{posterior} 
+$p(\theta \mid X)$ with a prior $p(\theta)$ 
+of the parameters. This is done by noting that 
+\[
+\begin{aligned}
+\log p(\theta \mid X) 
+&= \log p(\theta, X) - \log (X) \\ 
+&= \L(q, \theta) + \KLD{q}{p} + \log p(\theta) - \log p(X) \\
+&\geq \L(q, \theta) + \log p(\theta) - \log p(X),
+\end{aligned}
+\]
+where $\log p(X)$ is a constant.
+
 
 \section{Approximate inference} 
 A central task in the application of probabilistic models is 
-the evaluation of the posterior distribution $p(\Zv \mid \Xv)$ of the 
-latent variables $\Zv$ given the observed (visible) data variables 
-$\Xv$, and the evaluation of expectations computed with respect 
+the evaluation of the posterior distribution $p(Z \mid X)$ of the 
+latent variables $Z$ given the observed (visible) data variables 
+$X$, and the evaluation of expectations computed with respect 
 to this distribution. For many models of practical interest, 
 it will be infeasible 
 to evaluate the posterior distribution or indeed to compute 
