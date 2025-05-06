@@ -18,37 +18,37 @@
 \subsection{Probability}
 \begin{defi}[Types of convergence]
 Let $\left\{ X_n \right\}_{n=1}^\infty$ be a sequence of random
-variables and $X$ be another random variable. Let 
-$F_n$ be the CDF of $X_n$ for each $n \in \N$ and $F$ 
-be the CDF of $X$. 
+variables and $X$ be another random variable. Let
+$F_n$ be the CDF of $X_n$ for each $n \in \N$ and $F$
+be the CDF of $X$.
 \begin{enumerate}
-  \item $X_n$ converges to $X$ \textbf{in probability} 
-  and write $X_n \convProb X$ if for arbitrary 
-  $\epsilon > 0$, 
+  \item $X_n$ converges to $X$ \textbf{in probability}
+  and write $X_n \convProb X$ if for arbitrary
+  $\epsilon > 0$,
   \[
   \Pr \left[ \abs{X_n - X} > \epsilon \right] \to 0
   \]
   as $n \to \infty$.
 
-  \item $X_n$ converges to $X$ \textbf{in distribution} and 
-  write $X_n \convDist X$ if 
+  \item $X_n$ converges to $X$ \textbf{in distribution} and
+  write $X_n \convDist X$ if
   \[
   \lim_{n \to \infty} F_n(t) = F(t)
   \]
   for all $t$ where $F$ is continuous.
-  
-  \item $X_n$ converges to $X$ in $L^p$ if 
+
+  \item $X_n$ converges to $X$ in $L^p$ if
   \[
   \E \left[ \abs{X_n - X}^p \right] \to 0
   \]
-  as $n \to \infty$. In particular, say $X_n$ converges to 
+  as $n \to \infty$. In particular, say $X_n$ converges to
   $X$ in \textbf{quadratic mean} and write $X_n \convQM X$
   if $X_n$ converges to $X$ in $L^2$.
 
-  \item $X_n$ converges to $X$ \textbf{almost surely} 
-  and write $X_n \convAS X$ if 
+  \item $X_n$ converges to $X$ \textbf{almost surely}
+  and write $X_n \convAS X$ if
   \[
-  \Pr \left[ \lim_{n \to \infty} X_n =  X \right] = 1. 
+  \Pr \left[ \lim_{n \to \infty} X_n =  X \right] = 1.
   \]
 \end{enumerate}
 \end{defi}
@@ -56,10 +56,10 @@ be the CDF of $X$.
 \begin{thm}
 The following implication holds:
 \begin{enumerate}
-  \item If $X_n$ converges to $X$ almost surely, 
-  then $X_n$ converges to $X$ in probability. 
-  
-  \item If $X_n$ converges to $X$ in $L^p$, then 
+  \item If $X_n$ converges to $X$ almost surely,
+  then $X_n$ converges to $X$ in probability.
+
+  \item If $X_n$ converges to $X$ in $L^p$, then
   $X_n$ converges to $X$ in probability.
 \end{enumerate}
 \end{thm}
@@ -67,34 +67,34 @@ The following implication holds:
 \begin{proof}
 
 \begin{enumerate}
-  \item If $X_n$ converges to $X$ almost surely, 
+  \item If $X_n$ converges to $X$ almost surely,
   the set of points $O = \left\{ \omega : \lim_{n \to \infty}
   X_n(\omega) \neq X(\omega) \right\}$ has measure zero.
-  Now fix $\epsilon > 0$ and consider the sequence of 
-  sets 
+  Now fix $\epsilon > 0$ and consider the sequence of
+  sets
   \[
   A_n = \bigcup_{m = n}^\infty \left\{ \abs{X_m - X} > \epsilon \right\}.
   \]
-  Note that $A_n \supset A_{n+1}$ for each $n \in \N$ and 
-  let $A_\infty = \bigcap_{n=1}^\infty A_n$. 
-  Now show $\Pr[A_\infty] = 0$. If $\omega \notin O$, then 
-  $\lim_{n \to \infty} X_n (\omega) = X(\omega)$ and thus 
+  Note that $A_n \supset A_{n+1}$ for each $n \in \N$ and
+  let $A_\infty = \bigcap_{n=1}^\infty A_n$.
+  Now show $\Pr[A_\infty] = 0$. If $\omega \notin O$, then
+  $\lim_{n \to \infty} X_n (\omega) = X(\omega)$ and thus
   $\abs{X_n(\omega) - X(\omega)} < \epsilon$ for some $n \in \N$.
   Therefore, $\omega \notin A_\infty$.
-  It follows that $A_\infty \subset O$ and $\Pr[A_\infty] = 0$. 
-  
-  By monotone 
-  continuity, we have $\lim_{n \to \infty} \Pr[A_n] = 
+  It follows that $A_\infty \subset O$ and $\Pr[A_\infty] = 0$.
+
+  By monotone
+  continuity, we have $\lim_{n \to \infty} \Pr[A_n] =
   \Pr[A_\infty]$. It follows that
   \[
-  \Pr \left[ \abs{X_n - X} > \epsilon \right] 
-  \leq \Pr \left[ A_n \right] \to 0 
+  \Pr \left[ \abs{X_n - X} > \epsilon \right]
+  \leq \Pr \left[ A_n \right] \to 0
   \]
   as $n \to \infty$. This completes the proof.
 
-  \item From Chebyshev's inequality, we have 
+  \item From Chebyshev's inequality, we have
   \[
-  \Pr \left[ \abs{X - X_n} > \epsilon \right] \leq 
+  \Pr \left[ \abs{X - X_n} > \epsilon \right] \leq
   \frac{1}{\epsilon^p} \E [\abs{X - X_n}^p].
   \]
   The claim follows directly.
@@ -103,18 +103,18 @@ The following implication holds:
 \end{proof}
 
 \begin{thm}[Central Limit Theorem]
-  Let $X_1, \dots, X_n$ be i.i.d. with mean $\mu$ and variance 
+  Let $X_1, \dots, X_n$ be i.i.d. with mean $\mu$ and variance
   $\sigma^2$. Let $S_n = \frac{1}{n} \sum_{i=1}^n X_i$.
-  Then 
+  Then
   \[
   Z_n = \frac{S_n - \mu}{\sqrt{\var S_n}}
-  = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma} 
+  = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma}
   \convDist Z,
   \]
-  where $Z \sim \ncal(0, 1)$. In other words, 
+  where $Z \sim \ncal(0, 1)$. In other words,
   \[
-  \lim_{n \to \infty} \Pr[Z_n < z] = \Phi(z) 
-  = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}} 
+  \lim_{n \to \infty} \Pr[Z_n < z] = \Phi(z)
+  = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}}
   \; dx.
   \]
   Also write $Z_n \approx \ncal(0, 1)$.
@@ -123,20 +123,20 @@ The following implication holds:
 \subsection{Statistical inference}
 
 \begin{defi}
-  Let $X_1, \dots, X_n$ be $n$ i.i.d. data points observed 
-  from some distribution $F$ with respect to parameter 
-  $\theta$. A point estimator $\hat{\theta}_n$ 
-  of the parameter $\theta$ is some function of 
+  Let $X_1, \dots, X_n$ be $n$ i.i.d. data points observed
+  from some distribution $F$ with respect to parameter
+  $\theta$. A point estimator $\hat{\theta}_n$
+  of the parameter $\theta$ is some function of
   $X_1, \dots, X_n$:
   \[
   \hat{\theta}_n = g(X_1, \dots, X_n).
   \]
-  The bias of an estimator is defined as 
+  The bias of an estimator is defined as
   \[
-  \bias (\hat{\theta}_n)  
+  \bias (\hat{\theta}_n)
   = \E_\theta [\hat{\theta}_n] - \theta.
   \]
-  The mean squared error is defined as 
+  The mean squared error is defined as
   \[
   \mse = \E_\theta (\hat{\theta}_n - \theta)^2.
   \]
@@ -144,40 +144,40 @@ The following implication holds:
 
 \begin{defi}[Consistent point estimator]
   A point estimator $\hat\theta_n$ of a parameter
-  $\theta$ is \textbf{consistent} if $\hat{\theta}_n 
+  $\theta$ is \textbf{consistent} if $\hat{\theta}_n
   \convProb \theta$.
 \end{defi}
 
-Next we an important relation between bias, variance, 
+Next we an important relation between bias, variance,
 and MSE. This is a more rigorous way to express the
 \textbf{bias-variance tradeoff} of point estimators.
 
 \begin{thm}
-The MSE can be written as 
+The MSE can be written as
 \[
 \mse = \bias^2 (\hat{\theta}_n) + \var_\theta (\hat{\theta}_n).
 \]
 \end{thm}
 
 \begin{proof}
-  Let $\bar{\theta}_n = \E_\theta (\hat{\theta}_n)$. 
-  Then we have 
+  Let $\bar{\theta}_n = \E_\theta (\hat{\theta}_n)$.
+  Then we have
   \[
   \begin{aligned}
-    \E_\theta(\theta - \hat{\theta}_n)^2 
-    &= \E_\theta(\theta - \bar{\theta}_n + \bar{\theta}_n 
+    \E_\theta(\theta - \hat{\theta}_n)^2
+    &= \E_\theta(\theta - \bar{\theta}_n + \bar{\theta}_n
     - \hat{\theta}_n)^2 \\
-    &= \E_\theta(\theta - \bar{\theta}_n)^2 
-    - 2 (\theta - \bar{\theta}_n) \E_\theta (\bar{\theta}_n - 
+    &= \E_\theta(\theta - \bar{\theta}_n)^2
+    - 2 (\theta - \bar{\theta}_n) \E_\theta (\bar{\theta}_n -
     \hat{\theta}_n)
     + \E_\theta (\bar{\theta}_n - \theta)^2 \\
-    &= (\theta - \bar{\theta}_n)^2 
+    &= (\theta - \bar{\theta}_n)^2
     + \E_\theta (\bar{\theta}_n - \theta)^2 \\
     &= \bias^2(\hat{\theta}_n) + \var_\theta (\hat{\theta}_n),
   \end{aligned}
   \]
-  where we have used the fact that 
-  $\E_\theta (\bar{\theta}_n - 
+  where we have used the fact that
+  $\E_\theta (\bar{\theta}_n -
   \hat{\theta}_n) = \bar{\theta}_n - E_\theta(\hat{\theta}_n)
   = \bar{\theta}_n - \bar{\theta}_n = 0$.
 \end{proof}
@@ -185,46 +185,46 @@ The MSE can be written as
 Below is the definition of a confidence set/interval.
 
 \begin{defi}
-  A $1 - \alpha$ interval for a parameter $\theta$ is 
-  an interval $C_n = (a, b)$ where 
+  A $1 - \alpha$ interval for a parameter $\theta$ is
+  an interval $C_n = (a, b)$ where
   $a = a(X_1, \dots, X_n)$ and $b = b(X_1, \dots, X_n)$
-  are functions of data such that 
+  are functions of data such that
   \[
-  \P_\theta[\theta \in C_n] \geq 1 - \alpha 
+  \P_\theta[\theta \in C_n] \geq 1 - \alpha
   \text{ for all $\theta \in \Theta$. }
   \]
-  In other word, $(a, b)$ traps $\theta$ with probablity 
-  $1 - \alpha$. 
+  In other word, $(a, b)$ traps $\theta$ with probablity
+  $1 - \alpha$.
 \end{defi}
 
-\textbf{Warning!} In the above definition, 
+\textbf{Warning!} In the above definition,
 $C_n$ is random and $\theta$ is fixed.
 
 \subsection{PAC learning}
 
-PAC learning is short for Probably Approxinate Correct 
+PAC learning is short for Probably Approxinate Correct
 learning, and the setting of PAC learning is as follows:
 \begin{itemize}
-  \item We have data $x \in \R^d$ and label $y \in \left\{ -1, 
-  +1 \right\}$. 
-  \item We collect features $x_1, \dots, x_n$ i.i.d. from 
-  some distribution $D$. Note that we make no assumption on 
-  the distribution $D$ of the features. 
-  \item We collect corresponding labels $y_1, \dots, y_n$. 
+  \item We have data $x \in \R^d$ and label $y \in \left\{ -1,
+  +1 \right\}$.
+  \item We collect features $x_1, \dots, x_n$ i.i.d. from
+  some distribution $D$. Note that we make no assumption on
+  the distribution $D$ of the features.
+  \item We collect corresponding labels $y_1, \dots, y_n$.
   \item Assume there exists some true classifier $h^\star$.
   \item Let $\hcal$ be the set of all hypotheses.
 \end{itemize}
-The goal of PAC learning is $(\epsilon, \delta)$-PAC, 
-which is defined as follows. 
+The goal of PAC learning is $(\epsilon, \delta)$-PAC,
+which is defined as follows.
 \begin{defi}
   An $(\epsilon, \delta)$-PAC learning algorithm
-  refers to an algorithm that 
-  picks an hypothesis $h \in \hcal$  
-  after observing training data 
+  refers to an algorithm that
+  picks an hypothesis $h \in \hcal$
+  after observing training data
   $\left\{ x_i, y_i \right\}_{i=1}^n$,
   where the hypothesis $h \in \hcal$ satisfies
   \[
-  \err_D (\hat{h}) = 
+  \err_D (\hat{h}) =
   \Pr_{x \sim D} \left[ \hat{h}(x) \neq h^\star(x) \right]
   < \epsilon.
   \]
@@ -232,106 +232,106 @@ which is defined as follows.
   is with respect to the randomness of the training set.
 \end{defi}
 Putting it more concretely, suppose $g$ is a point estimator
-(the algorithm), then we want 
+(the algorithm), then we want
 \[
-\Pr_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon 
+\Pr_{x_i \sim D} \left[ \err_D (g(x_1, \dots, x_n)) < \epsilon
 \right] \geq 1 - \delta.
 \]
-Through the $\epsilon$-$\delta$ definition of limit, 
-it is not hard to  
-notice the similarity between this definition 
+Through the $\epsilon$-$\delta$ definition of limit,
+it is not hard to
+notice the similarity between this definition
 and \textbf{convergence in probability}.
-As we observe more and more data ($n \to \infty$), 
-we want the hypothesis 
+As we observe more and more data ($n \to \infty$),
+we want the hypothesis
 produce by the algorithm to converge to the true classifier
-\textbf{in probability}. This is exactly the definition 
-of a \textbf{consistent} point estimator in the previous 
+\textbf{in probability}. This is exactly the definition
+of a \textbf{consistent} point estimator in the previous
 section.
 
-We also say the algorithm is a PAC learner if it uses 
+We also say the algorithm is a PAC learner if it uses
 $n$ samples and the running time is at most $\poly
-\left( d, \frac{1}{\epsilon}, \log \frac{1}{\delta}, 
-\bits(h^\star) \right)$, but in this section we do not 
+\left( d, \frac{1}{\epsilon}, \log \frac{1}{\delta},
+\bits(h^\star) \right)$, but in this section we do not
 focus on the runtime of the algorithm.
 
 There are two types of PAC learning -- realizable PAC learning,
-in which case $h^\star \in \hcal$, and agnostic PAC learning, 
-in which case $h^\star \notin \hcal$. We first discuss 
-realizable PAC learning, and we will find out agnostic PAC 
+in which case $h^\star \in \hcal$, and agnostic PAC learning,
+in which case $h^\star \notin \hcal$. We first discuss
+realizable PAC learning, and we will find out agnostic PAC
 learning is a more general setting but than PAC learning
-but a natural extension. 
+but a natural extension.
 
 \subsubsection{Realizable learning}
 
 For realizable PAC learning, we present a simple algorithm:
 \begin{algorithm}[Consistent Learner]
-Pick any $\hat{h} \in \hcal$ such that $h(x_i) = y_i$ 
+Pick any $\hat{h} \in \hcal$ such that $h(x_i) = y_i$
 for all $1 \leq i \leq n$.
 \end{algorithm}
-Now we analyze this algorithm in terms of the sample size needed 
+Now we analyze this algorithm in terms of the sample size needed
 to produce a desired hypothesis.
 
 \begin{thm}
   Over the dataset of $n$ i.i.d. samples,
-  the consistent learning algorithm produces $\hat{h}$ such 
+  the consistent learning algorithm produces $\hat{h}$ such
   that $\err_D(\hat{h}) > \epsilon$ with probability
-  at most $\abs{\hcal} e^{-n\epsilon}$. 
+  at most $\abs{\hcal} e^{-n\epsilon}$.
 \end{thm}
 \begin{proof}
-  Suppose $h \in \hcal$ is such that 
+  Suppose $h \in \hcal$ is such that
   $\err_D(h) = \P_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
-  For such an $h$ and some data $x_i$, we have 
+  For such an $h$ and some data $x_i$, we have
   \[
   \Pr_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
   \]
-  Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are i.i.d., we have 
+  Since $\left\{ x_i, y_i \right\}_{i=1}^n$ are i.i.d., we have
   \[
-  \Pr_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all 
+  \Pr_{x_{1:n} \sim D}[h(x_i) = h^\star(x_i) \text{ for all
   $1 \leq i \leq n$}] < (1 - \epsilon)^n.
   \]
-  Note that our consistent learner do not make any mistake 
+  Note that our consistent learner do not make any mistake
   on the training set $\left\{ x_i, y_i \right\}_{i=1}^n$
   \[
   \Pr_{x_{1 : n} \sim D} [h = \hat{h}] < (1 - \epsilon)^n.
   \]
-  It follows that 
+  It follows that
   \[
   \begin{aligned}
-    \Pr_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon] 
-    & \leq \sum_{h \in \hcal: \; \err_D(h) > \epsilon} 
+    \Pr_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
+    & \leq \sum_{h \in \hcal: \; \err_D(h) > \epsilon}
     \Pr[\hat{h} = h]  \\
     & \leq \abs{\hcal} (1 - \epsilon)^n \\
     & \leq \abs{\hcal} e^{-n\epsilon},
   \end{aligned}
   \]
-  where in the last step we used the inequality 
+  where in the last step we used the inequality
   $(1 - u)^n \leq e^{-nu}$. This completes the proof.
 \end{proof}
 
 \begin{cor}
   If we want $\P_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
-  \leq \delta$, we must have 
+  \leq \delta$, we must have
   \[
   n \geq \frac{\log \left( \abs{\hcal} / \delta \right)}{\epsilon}.
   \]
 \end{cor}
-Technically speaking the implication should be the other direction, 
-but this bound for sample size $n$ 
+Technically speaking the implication should be the other direction,
+but this bound for sample size $n$
 \textbf{gurantees} $(\epsilon, \delta)$-PAC.
 
-To illustrate how we should think of $\abs{\hcal}$, 
+To illustrate how we should think of $\abs{\hcal}$,
 we present an example.
 \begin{eg}
-Consider the binary half-spaces hypotheses: 
+Consider the binary half-spaces hypotheses:
 \[
-\hcal = \left\{ h_w(x) = \sign(\braket{w}{x}) : 
+\hcal = \left\{ h_w(x) = \sign(\braket{w}{x}) :
 w_i \in \left\{ -1, 1 \right\} \right\}.
 \]
-In this case $\abs{\hcal} = 2^d$, so $\log \abs{\hcal} = 
-\Theta(d)$. 
+In this case $\abs{\hcal} = 2^d$, so $\log \abs{\hcal} =
+\Theta(d)$.
 
 We should always think of $\abs{\hcal}$
-as exponential with respect to the dimension, so 
+as exponential with respect to the dimension, so
 $\log \abs{\hcal}$ is linear with respect to dimension.
 \end{eg}
 
@@ -340,43 +340,43 @@ Now we move on to the setting of agnostic leraning.
 \subsubsection{Agnostic leraning}
 
 In agnostic learning, again we collect features $x_1, \dots,
-x_n \sim D$ i.i.d., and labels $y_1, \dots, y_n$. This forms a 
-data set $S_n = \left\{ x_i, y_i \right\}_{i=1}^n$. The 
-goal is to use this dataset $S_n$ to produce an hypothesis 
-$\hat{h}$ such that 
+x_n \sim D$ i.i.d., and labels $y_1, \dots, y_n$. This forms a
+data set $S_n = \left\{ x_i, y_i \right\}_{i=1}^n$. The
+goal is to use this dataset $S_n$ to produce an hypothesis
+$\hat{h}$ such that
 \[
-\reg_{D, \hcal} (\hat{h}) = 
+\reg_{D, \hcal} (\hat{h}) =
 \err_D (\hat{h}) - \min_{h \in \hcal} \err_D (h) < \epsilon
 \]
 with probability at least $1 - \delta$, where the probability
 is with respect to the randomness of the dataset $S_n$.
 
-For this setting, we present an algorithm called the empirical 
-loss minimizer (ERM). 
+For this setting, we present an algorithm called the empirical
+loss minimizer (ERM).
 \begin{algorithm}[empirical loss minimizer]
   Choose $\hat{h} \in \hcal$ by minimizing the $\left\{ 0,1
    \right\}$ loss:
   \[
-  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ind \left\{ 
+  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ind \left\{
     h(x_i) = y_i
    \right\}.
   \]
-  In a more general setting, suppose $\ell(\cdot, \cdot)$ 
-  be any loss function bounded in $[0, 1]$, choose 
+  In a more general setting, suppose $\ell(\cdot, \cdot)$
+  be any loss function bounded in $[0, 1]$, choose
   $\hat{h} \in \hcal$ by minimizing the loss:
   \[
-  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ell(h(x_i), 
+  \hat{h} = \argmin_{h \in \hcal} \sum_{i=1}^n \ell(h(x_i),
   y_i).
-  \] 
+  \]
 \end{algorithm}
 
-We next prove a similar relation between the sample 
-size and the performance of the hypothesis, evaluated 
-in terms of risk. We first present the definition 
+We next prove a similar relation between the sample
+size and the performance of the hypothesis, evaluated
+in terms of risk. We first present the definition
 of risk.
 
 \begin{defi}[Risk]
-  The risk of a hypothesis $h$ is defined as 
+  The risk of a hypothesis $h$ is defined as
   \[
   \risk_D (h) = \E_{x \sim D} [ \ell(h(x), y) ].
   \]
@@ -384,11 +384,11 @@ of risk.
 
 \begin{thm}
   Over the dataset of $n$ i.i.d. samples, the ERM algorithm
-  produces $\hat{h}$ such that 
+  produces $\hat{h}$ such that
   \[
-  \reg_{D, \hcal} (\hat{h}) 
-  = \risk_D (\hat{h}) - \min_{h \in \hcal} 
-  \risk_D (h) 
+  \reg_{D, \hcal} (\hat{h})
+  = \risk_D (\hat{h}) - \min_{h \in \hcal}
+  \risk_D (h)
   \leq 2 \epsilon.
   \]
   with probability at least $1 - 2 \abs{\hcal} e^{- 2
@@ -402,22 +402,22 @@ of risk.
   \[
     \hopt = \argmin_{h \in \hcal} \risk_D (h).
   \]
-  Note that $\reg_{D, \hcal}(\hopt) = 0$. Define also the 
+  Note that $\reg_{D, \hcal}(\hopt) = 0$. Define also the
   estimated risk of hypothesis $h$ for data set $S$:
   \[
   \hat{\risk}_S (h) := \frac{1}{n} \sum_{i=1}^n \ell(h(x_i),
   y_i).
   \]
-  Note that $\hat{h} = \argmin_{h \in \hcal} 
-  \hat{\risk}_S (h)$ and $\E[\hat{\risk}_S (h)] = 
-  \risk_D(h)$, where the expected value is with respect to 
-  the randomness of the dataset. Note that 
+  Note that $\hat{h} = \argmin_{h \in \hcal}
+  \hat{\risk}_S (h)$ and $\E[\hat{\risk}_S (h)] =
+  \risk_D(h)$, where the expected value is with respect to
+  the randomness of the dataset. Note that
   \begin{equation*}
     \begin{aligned}
-      \reg_{D, \hcal} (\hat{h}) 
+      \reg_{D, \hcal} (\hat{h})
       &= \risk_D (\hat{h}) - \risk_D (\hopt) \\
       &= (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
-      + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt)) 
+      + (\hat{\risk}_S (\hat{h}) - \hat{\risk}_S (\hopt))
       - (\risk_D (\hopt) - \hat{\risk}_S (\hopt))  \\
       &\leq (\risk_D (\hat{h}) - \hat{\risk}_S (\hat{h}))
       - (\risk_D (\hopt) - \hat{\risk}_S (\hopt)),
@@ -432,184 +432,184 @@ of risk.
   For any $h \in \hcal$, we have
   \[
   \begin{aligned}
-    \hat{\risk}_S (h) - \risk_D(h) 
-    &= \frac{1}{n} \sum_{i=1}^n \ell(h(x_i), y_i) 
+    \hat{\risk}_S (h) - \risk_D(h)
+    &= \frac{1}{n} \sum_{i=1}^n \ell(h(x_i), y_i)
     - \risk_D (h) \\
-    &= \frac{1}{n} \sum_{i=1}^n \left( 
-      \ell(h(x_i), y_i) - \E_{x, y \sim D} 
+    &= \frac{1}{n} \sum_{i=1}^n \left(
+      \ell(h(x_i), y_i) - \E_{x, y \sim D}
       [\ell(h(x), y)]
      \right).
   \end{aligned}
   \]
-  Define now random variable $Z_i := \ell(h(x_i), y_i) - 
-  \E_{x, y \sim D} [\ell(h(x), y)]$. Notice that $Z_i$ 
-  i.i.d., $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore, 
-  we can utilize the \textbf{Hoeffding bound} to get 
+  Define now random variable $Z_i := \ell(h(x_i), y_i) -
+  \E_{x, y \sim D} [\ell(h(x), y)]$. Notice that $Z_i$
+  i.i.d., $\E[Z_i] = 0$, and $\abs{Z_i} \leq 1$. Therefore,
+  we can utilize the \textbf{Hoeffding bound} to get
   \[
   \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
   \leq e^{- 2 n \epsilon^2} \text{ and }
   \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
   \leq e^{- 2 n \epsilon^2}
   \]
-  This implies that for any fixed $h \in \hcal$,  
+  This implies that for any fixed $h \in \hcal$,
   \[
-  \Pr \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon 
+  \Pr \left[ \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon
   \right] \leq 2 e^{-2 n \epsilon^2}.
   \]
-  It follows from the union bound that 
+  It follows from the union bound that
   \[
-  \Pr \left[ \exists h \in \hcal: \; 
-  \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right] 
+  \Pr \left[ \exists h \in \hcal: \;
+  \abs{\hat{\risk}_S(h) - \risk_D(h)} > \epsilon \right]
   \leq 2 \abs{\hcal} e^{- 2 n \epsilon^2}.
   \]
-  Notice that if  
+  Notice that if
   $\abs{\hat{\risk}_S (h) - \risk_D (h)} \leq \epsilon$
-  for all $h \in \hcal$, we must have $\reg_{D, \hcal} 
+  for all $h \in \hcal$, we must have $\reg_{D, \hcal}
   (\hat{h}) \leq 2 \epsilon$ by inequality \eqref{reg}.
   above. Therefore,
-  $\reg_{D, \hcal} (\hat{h}) \leq 2 \epsilon$ with probability at least 
-  $1 - 2 \abs{\hcal} e^{- 2 n \epsilon^2}$. 
+  $\reg_{D, \hcal} (\hat{h}) \leq 2 \epsilon$ with probability at least
+  $1 - 2 \abs{\hcal} e^{- 2 n \epsilon^2}$.
 }
 \end{proof}
 
 \begin{cor}
-Let $\delta > 0$ be given. Then, 
-setting 
-$n = \frac{1}{2\epsilon^2} \log \left( 2 \abs{\hcal} / 
+Let $\delta > 0$ be given. Then,
+setting
+$n = \frac{1}{2\epsilon^2} \log \left( 2 \abs{\hcal} /
 \delta \right)$, we obtain that $\reg_{D, \hcal} (\hat{h})
 \leq 2\epsilon$ with probability at least $1 - \delta$.
-Therefore, if we want $\reg_{D, \hcal} 
-(\hat{h}) \leq \epsilon$ with probability at least $1 - 
-\delta$, we must have 
+Therefore, if we want $\reg_{D, \hcal}
+(\hat{h}) \leq \epsilon$ with probability at least $1 -
+\delta$, we must have
 \[
-  n \geq \frac{2 \log 
+  n \geq \frac{2 \log
   \left( 2 \abs{\hcal} / \delta \right)}
   {\epsilon^2}.
 \]
 \end{cor}
 
-As a comparison between realizable learning and agnostic 
-learning, we can see the sample size needed to 
-achieve the same $(\epsilon, \delta)$-PAC bound is 
+As a comparison between realizable learning and agnostic
+learning, we can see the sample size needed to
+achieve the same $(\epsilon, \delta)$-PAC bound is
 \[
 n = \Theta \left( \frac{\log \left( \abs{\hcal} / \delta
 \right)}{\epsilon} \right)
 \]
-for realizable learning, and 
+for realizable learning, and
 \[
-n = \Theta \left( \frac{\log(\abs{\hcal} / \delta)}{\epsilon^2} 
+n = \Theta \left( \frac{\log(\abs{\hcal} / \delta)}{\epsilon^2}
 \right)
 \]
-for agnostic learning. Since $\epsilon < 1$, 
-we can deduce that agnostic learning needs 
-\textbf{more sample} for the estimator to achieve the 
+for agnostic learning. Since $\epsilon < 1$,
+we can deduce that agnostic learning needs
+\textbf{more sample} for the estimator to achieve the
 same $(\epsilon, \delta)$-PAC bound.
 
 \subsection{Infinite hypotheses space and VC dimension}
 
-In last section, we discussed PAC learning with finite 
-hypotheses space $\hcal$. However, we often need 
-to deal with situations where the hypotheses space 
+In last section, we discussed PAC learning with finite
+hypotheses space $\hcal$. However, we often need
+to deal with situations where the hypotheses space
 is infinite. Consider the following example.
 
 \begin{eg}
-  Consider the binary half space hypotheses: 
+  Consider the binary half space hypotheses:
   \[
-  \hcal = \left\{ h_w(x) = 
+  \hcal = \left\{ h_w(x) =
   \sign(\braket{w}{x}) : w \in \R^d \right\}.
   \]
-  Then, $\abs{\hcal} = \infty$ since each 
+  Then, $\abs{\hcal} = \infty$ since each
   $w \in \R^d$ gives a different decision boundary.
 \end{eg}
 
 However, on some fixed dataset $S$, not all of the hypotheses
-in the hypotheses space $\hcal$ gives a different prediction. 
-This leads to the following definition and theorem, which 
+in the hypotheses space $\hcal$ gives a different prediction.
+This leads to the following definition and theorem, which
 charaterize the ``effective size'' of the hypotheses
 space.
 
 \begin{defi}
-  Let $S$ be a dataset with $n$ points 
-  $\left\{ x_1, \dots, x_n \right\}$. Define 
-  $\abs{\hcal(S)}$ as the number of distinct labeling 
-  $\left\{ (x_i, y_i) \right\}_{i=1}^n$, where each 
+  Let $S$ be a dataset with $n$ points
+  $\left\{ x_1, \dots, x_n \right\}$. Define
+  $\abs{\hcal(S)}$ as the number of distinct labeling
+  $\left\{ (x_i, y_i) \right\}_{i=1}^n$, where each
   $y_i = h(x_i)$ for a fixed $h \in \hcal$.
 \end{defi}
 
-With this definition, we can derive a similar confidence 
+With this definition, we can derive a similar confidence
 bound for our learned hypotheses.
 
 \begin{thm}
   Define the effective size
   \[
-  \hcal [n] = \sup_{x_1, \dots, x_n} 
+  \hcal [n] = \sup_{x_1, \dots, x_n}
   \abs{\hcal(\left\{ x_1, \dots, x_n \right\})},
-  \]  
+  \]
   and let $\hat{h}_n$ denote the consistency learner
-  from $n$ examples. Then we have 
+  from $n$ examples. Then we have
   \[
-  \Pr_{x \sim D} [\err_D(\hat{h}) \geq \epsilon] \leq \delta, 
-  \] 
-  where 
+  \Pr_{x \sim D} [\err_D(\hat{h}) \geq \epsilon] \leq \delta,
+  \]
+  where
   \[
-  \epsilon = O \left( 
+  \epsilon = O \left(
     \frac{\log \hcal[n] + \log (1 / \delta)}{n}
    \right).
   \]
 \end{thm}
 
 \begin{eg}
-  Consider the threshold hypotheses space: 
+  Consider the threshold hypotheses space:
   \[
-  \hcal = \left\{ h_w(x) = 2 \cdot 
+  \hcal = \left\{ h_w(x) = 2 \cdot
   \ind \left\{ x > w \right\} - 1 : w \in \R \right\}.
   \]
-  Then it is easy to see that $\hcal[n] = n$. 
+  Then it is easy to see that $\hcal[n] = n$.
   It follows that
   \[
-  \epsilon = O\left( 
+  \epsilon = O\left(
     \frac{\log \hcal[n] + \log (1 / \delta)}{n}
-   \right) = O\left( 
+   \right) = O\left(
     \frac{\log n + \log (1 / \delta)}{n}
    \right),
   \]
   which approaches to $0$ as $n \to \infty$.
 \end{eg}
 
-Another way to characterize the ``effective size'' of the 
+Another way to characterize the ``effective size'' of the
 hypotheses space is \textbf{VC dimension}.
 
 \begin{defi}[VC dimension]
-  For a hypotheses space $\hcal$, we say 
-  $\hcal$ \textbf{shatters} a dataset 
-  $\left\{ x_1, \dots, x_n \right\}$ if 
-  for any choice of labels 
-  $\left\{ -1, 1 \right\}^n$, there exists 
-  $h \in \hcal$ such that $h(x_i) = y_i$ 
+  For a hypotheses space $\hcal$, we say
+  $\hcal$ \textbf{shatters} a dataset
+  $\left\{ x_1, \dots, x_n \right\}$ if
+  for any choice of labels
+  $\left\{ -1, 1 \right\}^n$, there exists
+  $h \in \hcal$ such that $h(x_i) = y_i$
   for all $1 \leq i \leq n$.
-  
-  The \textbf{VC dimension} of a hypotheses 
-  space $\hcal$ is defined 
-  as the largest $n$ such that there exists a dataset $S$  
+
+  The \textbf{VC dimension} of a hypotheses
+  space $\hcal$ is defined
+  as the largest $n$ such that there exists a dataset $S$
   of size $n$ such that $\hcal$ shatters $S$.
   Denote this as $\VC(\hcal) = n$.
 \end{defi}
 
-The VC dimension of a hypotheses space $\hcal$ is 
-related to $\hcal[n]$ by the following lemma by 
-Sauer: 
+The VC dimension of a hypotheses space $\hcal$ is
+related to $\hcal[n]$ by the following lemma by
+Sauer:
 
 \begin{thm}[Sauer's Lemma]
-  For any hypotheses class $\hcal$, we have 
+  For any hypotheses class $\hcal$, we have
   \[
   \log \hcal[n] \leq O(\VC(\hcal) \cdot \log n).
   \]
 \end{thm}
 
 Recalling our bound for realizable learning, we get
-$(\epsilon, \delta)$-PAC with  
+$(\epsilon, \delta)$-PAC with
 \[
-\epsilon = O \left( \frac{\log \hcal[n] + \log (1 / \delta)}{n} \right) 
+\epsilon = O \left( \frac{\log \hcal[n] + \log (1 / \delta)}{n} \right)
 = O \left( \frac{\VC(\hcal) \cdot \log n + \log (1 / \delta)}{n} \right).
 \]
 
@@ -622,153 +622,153 @@ $(\epsilon, \delta)$-PAC with
 In this section, we adopt the convention that $0 \log 0 = 0$.
 
 \begin{defi}[KL divergence]
-  The \textbf{Kullback-Leibler (KL) divergence} of two  
-  distributions $P(X)$ and $Q(X)$ 
-  over the outcome space $X$ is defined as follows: 
+  The \textbf{Kullback-Leibler (KL) divergence} of two
+  distributions $P(X)$ and $Q(X)$
+  over the outcome space $X$ is defined as follows:
   \[
   \KL (P \; \Vert \; Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)}.
   \]
 \end{defi}
 
-To understand the significance of KL-divergence better, 
+To understand the significance of KL-divergence better,
 we first discuss some related concepts in information theory,
 starting with the definition of \textbf{entropy}.
 \begin{defi}
-  The \textbf{entropy} of a distribution $P(X)$ 
-  is defined as 
+  The \textbf{entropy} of a distribution $P(X)$
+  is defined as
   \[
   H(P) = - \sum_{x \in X} P(x) \log P(x)
   \]
 \end{defi}
 
-Intuitively, entropy measures how dispersed a probability 
-distribution is. For example, a uniform distribution is 
-considered to have very high entropy (i.e. a lot of uncertainty), 
-whereas a distribution that assigns all its mass on a single 
-point is considered to have zero entropy (i.e. no uncertainty). 
-Notably, it can be shown that among continuous distributions 
-over $\R$, the Gaussian distribution $\ncal(\mu, \sigma^2)$ has 
-the highest entropy (highest uncertainty) among all possible 
+Intuitively, entropy measures how dispersed a probability
+distribution is. For example, a uniform distribution is
+considered to have very high entropy (i.e. a lot of uncertainty),
+whereas a distribution that assigns all its mass on a single
+point is considered to have zero entropy (i.e. no uncertainty).
+Notably, it can be shown that among continuous distributions
+over $\R$, the Gaussian distribution $\ncal(\mu, \sigma^2)$ has
+the highest entropy (highest uncertainty) among all possible
 distributions that have the given mean $\mu$ and variance $\sigma^2$.
 
-To further solidify our intuition, we present motivation from 
-communication theory. Suppose we want to communicate from a 
-source to a destination, and our messages are always 
-(a sequence of) discrete symbols over space $X$ 
-(for example, $X$ could be letters \{a, b, \dots, z\}). 
-We want to construct an encoding scheme for our symbols 
-in the form of sequences of binary bits that are transmitted 
-over the channel. Further, suppose that in the long run the 
-frequency of occurrence of symbols follow a probability 
-distribution $P(X)$. This means, in the long run, the fraction 
+To further solidify our intuition, we present motivation from
+communication theory. Suppose we want to communicate from a
+source to a destination, and our messages are always
+(a sequence of) discrete symbols over space $X$
+(for example, $X$ could be letters \{a, b, \dots, z\}).
+We want to construct an encoding scheme for our symbols
+in the form of sequences of binary bits that are transmitted
+over the channel. Further, suppose that in the long run the
+frequency of occurrence of symbols follow a probability
+distribution $P(X)$. This means, in the long run, the fraction
 of times the symbol $x$ gets transmitted is $P(x)$.
 
-A common desire is to construct an encoding scheme such that 
-the average number of bits per symbol transmitted remains as 
-small as possible. Intuitively, this means we want very 
-frequent symbols to be assigned to a bit pattern having a 
-small number of bits. Likewise, because we are interested in 
-reducing the average number of bits per symbol in the long 
-term, it is tolerable for infrequent words to be assigned to 
-bit patterns having a large number of bits, since their low 
-frequency has little effect on the long term average. The 
-encoding scheme can be as complex as we desire, for example, 
-a single bit could possibly represent a long sequence of 
-multiple symbols (if that specific pattern of symbols is very 
-common). The entropy of a probability distribution $P(X)$ is 
-its optimal bit rate, i.e., the lowest average bits per 
-message that can possibly be achieved if the symbols $x \in X$ 
-occur according to $P(X)$. It does not specifically tell us 
-how to construct that optimal encoding scheme. It only tells 
-us that no encoding can possibly give us a lower long term 
+A common desire is to construct an encoding scheme such that
+the average number of bits per symbol transmitted remains as
+small as possible. Intuitively, this means we want very
+frequent symbols to be assigned to a bit pattern having a
+small number of bits. Likewise, because we are interested in
+reducing the average number of bits per symbol in the long
+term, it is tolerable for infrequent words to be assigned to
+bit patterns having a large number of bits, since their low
+frequency has little effect on the long term average. The
+encoding scheme can be as complex as we desire, for example,
+a single bit could possibly represent a long sequence of
+multiple symbols (if that specific pattern of symbols is very
+common). The entropy of a probability distribution $P(X)$ is
+its optimal bit rate, i.e., the lowest average bits per
+message that can possibly be achieved if the symbols $x \in X$
+occur according to $P(X)$. It does not specifically tell us
+how to construct that optimal encoding scheme. It only tells
+us that no encoding can possibly give us a lower long term
 bits per message than $H(P)$.
 
-To see a concrete example, suppose our messages have a 
-vocabulary of $K = 32$ symbols, and each symbol has an equal 
-probability of transmission in the long term (i.e, uniform 
-probability distribution). An encoding scheme that would 
-work well for this scenario would be to have $\log_2 K$ bits 
-per symbol, and assign each symbol some unique combination 
-of the $\log_2 K$ bits. In fact, it turns out that this is the 
-most efficient encoding one can come up with for the uniform 
+To see a concrete example, suppose our messages have a
+vocabulary of $K = 32$ symbols, and each symbol has an equal
+probability of transmission in the long term (i.e, uniform
+probability distribution). An encoding scheme that would
+work well for this scenario would be to have $\log_2 K$ bits
+per symbol, and assign each symbol some unique combination
+of the $\log_2 K$ bits. In fact, it turns out that this is the
+most efficient encoding one can come up with for the uniform
 distribution scenario.
 
-It may have occurred to you by now that the long term average 
-number of bits per message depends only on the frequency of 
-occurrence of symbols. The encoding scheme of scenario A can 
-in theory be reused in scenario B with a different set of 
-symbols (assume equal vocabulary size for simplicity), 
-with the same long term efficiency, as long as the symbols 
-of scenario B follow the same probability distribution as the 
-symbols of scenario A. It might also have occured to you, 
-that reusing the encoding scheme designed to be optimal for 
-scenario A, for messages in scenario B having a different 
-probability of symbols, will always be suboptimal for 
-scenario B. To be clear, we do not need know what the 
-specific optimal schemes are in either scenarios. As long 
-as we know the distributions of their symbols, we can say 
-that the optimal scheme designed for scenario A will be 
+It may have occurred to you by now that the long term average
+number of bits per message depends only on the frequency of
+occurrence of symbols. The encoding scheme of scenario A can
+in theory be reused in scenario B with a different set of
+symbols (assume equal vocabulary size for simplicity),
+with the same long term efficiency, as long as the symbols
+of scenario B follow the same probability distribution as the
+symbols of scenario A. It might also have occured to you,
+that reusing the encoding scheme designed to be optimal for
+scenario A, for messages in scenario B having a different
+probability of symbols, will always be suboptimal for
+scenario B. To be clear, we do not need know what the
+specific optimal schemes are in either scenarios. As long
+as we know the distributions of their symbols, we can say
+that the optimal scheme designed for scenario A will be
 suboptimal for scenario B if the distributions are different.
 
-Concretely, if we reuse the optimal scheme designed for a 
-scenario having symbol distribution $Q(X)$, into a scenario 
-that has symbol distribution $P(X)$, the long term average 
-number of bits per symbol achieved is called the cross entropy, 
+Concretely, if we reuse the optimal scheme designed for a
+scenario having symbol distribution $Q(X)$, into a scenario
+that has symbol distribution $P(X)$, the long term average
+number of bits per symbol achieved is called the cross entropy,
 denoted by $H(P,Q)$:
 
 \begin{defi}
   The cross-entropy of two distributions $P(X)$
-  and $Q(X)$ is defined as 
+  and $Q(X)$ is defined as
   \[
-  H(P, Q) = - \sum_{x \in X} P(X) \log Q(x) 
+  H(P, Q) = - \sum_{x \in X} P(X) \log Q(x)
   \]
 \end{defi}
 
-To recap, the entropy $H(P)$ is the best possible long term 
-average bits per message (optimal) that can be achived under 
-a symbol distribution $P(X)$ by using an encoding scheme 
-(possibly unknown) specifically designed for $P(X)$. 
-The cross entropy $H(P,Q)$ is the long term average bits 
-per message (suboptimal) that results under a symbol 
-distribution $P(X)$, by reusing an encoding scheme 
-(possibly unknown) designed to be optimal for a scenario 
+To recap, the entropy $H(P)$ is the best possible long term
+average bits per message (optimal) that can be achived under
+a symbol distribution $P(X)$ by using an encoding scheme
+(possibly unknown) specifically designed for $P(X)$.
+The cross entropy $H(P,Q)$ is the long term average bits
+per message (suboptimal) that results under a symbol
+distribution $P(X)$, by reusing an encoding scheme
+(possibly unknown) designed to be optimal for a scenario
 with symbol distribution $Q(X)$.
 
-Now, KL divergence is the penalty we pay, as measured in 
-average number of bits, for using the optimal scheme for 
-$Q(X)$, under the scenario where symbols are actually 
+Now, KL divergence is the penalty we pay, as measured in
+average number of bits, for using the optimal scheme for
+$Q(X)$, under the scenario where symbols are actually
 distributed as $P(X)$. It is straightforward to see this:
 \[
 \begin{aligned}
-  \KL(P \; \Vert \; Q) 
+  \KL(P \; \Vert \; Q)
   &= \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} \\
-  &= \sum_{x \in X} P(x) \log P(x) - \sum_{x \in X} 
+  &= \sum_{x \in X} P(x) \log P(x) - \sum_{x \in X}
   P(x) \log Q(x) \\
-  &= H(P, Q) - H(P). 
+  &= H(P, Q) - H(P).
   \quad \text{ (difference in average number of bits) }
 \end{aligned}
 \]
 
-If the cross entropy between $P$ and $Q$ is zero 
-(and hence $\KL(P \; \Vert \; Q) = 0$) then it necessarily 
-means $P = Q$. In Machine Learning, it is a common 
-task to find a distribution $Q$ that is ``close'' to 
-another distribution $P$. To achieve this, we use 
-$\KL(P \; \Vert \; Q)$ to be the loss function to be optimized. 
-As we will see in this below, Maximum Likelihood 
-Estimation, which is a commonly used optimization objective, 
-turns out to be equivalent minimizing KL divergence between 
-the training data (i.e. the empirical distribution over the 
+If the cross entropy between $P$ and $Q$ is zero
+(and hence $\KL(P \; \Vert \; Q) = 0$) then it necessarily
+means $P = Q$. In Machine Learning, it is a common
+task to find a distribution $Q$ that is ``close'' to
+another distribution $P$. To achieve this, we use
+$\KL(P \; \Vert \; Q)$ to be the loss function to be optimized.
+As we will see in this below, Maximum Likelihood
+Estimation, which is a commonly used optimization objective,
+turns out to be equivalent minimizing KL divergence between
+the training data (i.e. the empirical distribution over the
 data) and the model.
 
 Now we present some useful properties of KL divergence.
 
 \begin{thm}[Non-negativity]
-  For any distribution $P$ and $Q$, we have 
+  For any distribution $P$ and $Q$, we have
   \[
   \KL(P \; \Vert \; Q) \geq 0,
   \]
-  and $\KL(P \; \Vert \; Q) = 0$ if and only if $P = Q$ (almost 
+  and $\KL(P \; \Vert \; Q) = 0$ if and only if $P = Q$ (almost
   everywhere).
 \end{thm}
 
@@ -776,7 +776,7 @@ Now we present some useful properties of KL divergence.
   By definition,
   \[
     \KL(P \; \Vert \; Q) = \sum_{x \in X} P(x) \log \frac{P(x)}{Q(x)} = - \sum_{x \in X} P(x) \log \frac{Q(x)}{P(x)}.
-  \] 
+  \]
   Since $-\log x$ is strictly convex, by Jensen's inequality, we have
   \[
   \begin{aligned}
@@ -784,34 +784,34 @@ Now we present some useful properties of KL divergence.
     \geq -\log \sum_{x \in X} P(x) \frac{Q(x)}{P(x)} = 0.
   \end{aligned}
   \]
-  When the equality holds, 
+  When the equality holds,
   \[
   \log \frac{Q(x)}{P(x)} = 0
   \]
-  almost everywhere. 
-  That is, $Q = P$ almost everywhere. 
+  almost everywhere.
+  That is, $Q = P$ almost everywhere.
   This completes the proof.
 \end{proof}
 
 \begin{defi}[KL divergence of conditional distribution]
-  The KL divergence between 2 conditional distributions 
+  The KL divergence between 2 conditional distributions
   $P(X \mid Y)$, $Q(X \mid Y)$ is defined as follows:
   \[
-  \KL({P(X \mid Y)} \; \Vert \; {Q(X \mid Y)}) = \sum_y P(y) 
-  \left( \sum_x P(x \mid y) \log 
+  \KL({P(X \mid Y)} \; \Vert \; {Q(X \mid Y)}) = \sum_y P(y)
+  \left( \sum_x P(x \mid y) \log
   \frac{P(x \mid y)}{Q(x \mid y)} \right).
   \]
-  This can be thought of as the expected KL divergence 
-  between the corresponding conditional distributions on 
-  $x$. That is, between $P(X \mid Y = y)$ and $Q(X \mid Y = y)$, 
+  This can be thought of as the expected KL divergence
+  between the corresponding conditional distributions on
+  $x$. That is, between $P(X \mid Y = y)$ and $Q(X \mid Y = y)$,
   where the expectation is taken over the random $y$.
 \end{defi}
 
 \begin{thm}[Chain rule for KL divergence]
 The following equality holds:
 \[
-\KL({P(X, Y)} \; \Vert \; {Q(X, Y)}) = 
-\KL({P(X)} \; \Vert \; {Q(X)}) + \KL({P(Y \mid X)} 
+\KL({P(X, Y)} \; \Vert \; {Q(X, Y)}) =
+\KL({P(X)} \; \Vert \; {Q(X)}) + \KL({P(Y \mid X)}
 \; \Vert \; {Q(Y \mid X)}).
 \]
 \end{thm}
@@ -820,10 +820,10 @@ The following equality holds:
 \[
 \begin{aligned}
   \text{LHS} &= \sum_x \sum_y P(x,y) \log \frac{P(x,y)}{Q(x,y)} \\
-  &= \sum_x \sum_y P(y \mid x) P(x) \left[ \log 
+  &= \sum_x \sum_y P(y \mid x) P(x) \left[ \log
   \frac{P(y \mid x)}{Q(y \mid x)} + \log \frac{P(x)}{Q(x)} \right] \\
-  &= \sum_x \sum_y P(y \mid x) P(x) \log 
-  \frac{P(y \mid x)}{Q(y \mid x)} + \sum_x P(x) \log 
+  &= \sum_x \sum_y P(y \mid x) P(x) \log
+  \frac{P(y \mid x)}{Q(y \mid x)} + \sum_x P(x) \log
   \frac{P(x)}{Q(x)} \sum_y P(y \mid x) \\
   &= \sum_x \sum_y P(y \mid x) P(x) \log \frac{P(y \mid x)}
   {Q(y \mid x)} + \sum_x P(x) \log \frac{P(x)}{Q(x)} \\
@@ -835,11 +835,11 @@ The following equality holds:
 
 \subsection{The EM Algorithm in General}
 
-Consider a probabilistic model in which we collectively 
-denote all of the observed variables by $X$ and all of 
-the hidden variables by $Z$. The joint distribution 
-$p(X, Z \mid \theta)$ is governed by a set of parameters 
-denoted $\theta$. Our goal is to maximize the likelihood 
+Consider a probabilistic model in which we collectively
+denote all of the observed variables by $X$ and all of
+the hidden variables by $Z$. The joint distribution
+$p(X, Z \mid \theta)$ is governed by a set of parameters
+denoted $\theta$. Our goal is to maximize the likelihood
 function that is given by
 \[
 p(X \mid \theta) = \sum_Z p(X, Z \mid \theta).
@@ -848,11 +848,11 @@ p(X \mid \theta) = \sum_Z p(X, Z \mid \theta).
 Assume direct optimiaztion of $p(X \mid \theta)$ is difficult
 but optimiaztion of $p(X, Z \mid \theta)$ is easy.
 Introduce distribution $q(Z)$ for the latent vairable $Z$,
-we then have 
+we then have
 \[
 \log p(X \mid \theta) = \L(q, \theta) + \KLD{q}{p},
 \]
-where 
+where
 \[
 \begin{aligned}
   \L(q, \theta) &= \sum_Z q(Z) \log \frac{p(X, Z \mid \theta)}{q(Z)}, \\
@@ -863,57 +863,57 @@ Note that $\L$ is a functional of the distribution $q(Z)$.
 Note also that $\KLD{q}{p}$ is the KL divergence of $q(Z)$
 and $p(Z \mid X, \theta)$ so $\KLD{q}{p} \geq 0$
 Therefore, $\L(q, \theta) \leq \log p(X \mid \theta)$. In other word,
-$\L(q, \theta)$ is a \textbf{lower bound} 
+$\L(q, \theta)$ is a \textbf{lower bound}
 for $\log p(X \mid \theta)$.
 
-Therefore, for the EM algorithm, suppose currently the model 
-parameter is $\theta_t$. In the E step, the lower bound 
-$\L(q, \theta)$ is maximized with respect to $q(Z)$ while 
+Therefore, for the EM algorithm, suppose currently the model
+parameter is $\theta_t$. In the E step, the lower bound
+$\L(q, \theta)$ is maximized with respect to $q(Z)$ while
 holding $\theta$ fixed. Note that $\log p(X \mid \theta_t)$
-is not dependent on $q(Z)$, so the lower bound will 
+is not dependent on $q(Z)$, so the lower bound will
 be maximized when $\KLD{q}{p} = 0$. This is equivalent to
-when $q(Z) = p(Z \mid X, \theta)$. Therefore, in the E 
+when $q(Z) = p(Z \mid X, \theta)$. Therefore, in the E
 step we simply set
 \[
 q(Z) = p(Z \mid X, \theta_t).
 \]
 
 In the subsequent M step, the distribution $q(Z)$ is fixed
-and the lower bound $\L(q, \theta)$ is maximized with 
+and the lower bound $\L(q, \theta)$ is maximized with
 respect to $\theta$ to give some new model parameter
-$\theta_{t + 1}$. Because the distribution $q$ is determined 
+$\theta_{t + 1}$. Because the distribution $q$ is determined
 using the old parameter values rather than the new values
-and is held fixed during the M step, it will not equal the 
+and is held fixed during the M step, it will not equal the
 new posterior distribution $p(Z \mid X, \theta_{t+1})$,
 and hence there will be a nonzero KL divergence.
-Substituting the result from E step, we have the following 
-expression for the lower bound of M step: 
+Substituting the result from E step, we have the following
+expression for the lower bound of M step:
 \[
 \begin{aligned}
   \L(q, \theta)
-  &= \sum_Z p(Z \mid X, \theta_t) \log p(X, Z \mid \theta) 
+  &= \sum_Z p(Z \mid X, \theta_t) \log p(X, Z \mid \theta)
   - \sum_Z p(Z \mid X, \theta_t) \log p(Z \mid X, \theta_t) \\
   &= \Q(\theta_t, \theta) + \const,
 \end{aligned}
 \]
-where 
+where
 \[
-\Q(\theta_t, \theta) = \sum_Z p(Z \mid X, \theta_t) 
+\Q(\theta_t, \theta) = \sum_Z p(Z \mid X, \theta_t)
 \log (X, Z \mid \theta)
 \]
-and the constant is simply the negative entropy of 
-the $q$ distribution. Note that the variable $\theta$ 
-over which we are optimizing appears only inside the 
+and the constant is simply the negative entropy of
+the $q$ distribution. Note that the variable $\theta$
+over which we are optimizing appears only inside the
 logarithm.
 
-The EM algorithm can also be used to maximize the 
-\textbf{posterior} 
-$p(\theta \mid X)$ with a prior $p(\theta)$ 
-of the parameters. This is done by noting that 
+The EM algorithm can also be used to maximize the
+\textbf{posterior}
+$p(\theta \mid X)$ with a prior $p(\theta)$
+of the parameters. This is done by noting that
 \[
 \begin{aligned}
-\log p(\theta \mid X) 
-&= \log p(\theta, X) - \log (X) \\ 
+\log p(\theta \mid X)
+&= \log p(\theta, X) - \log (X) \\
 &= \L(q, \theta) + \KLD{q}{p} + \log p(\theta) - \log p(X) \\
 &\geq \L(q, \theta) + \log p(\theta) - \log p(X),
 \end{aligned}
@@ -921,25 +921,113 @@ of the parameters. This is done by noting that
 where $\log p(X)$ is a constant.
 
 
-\section{Approximate inference} 
-A central task in the application of probabilistic models is 
-the evaluation of the posterior distribution $p(Z \mid X)$ of the 
-latent variables $Z$ given the observed (visible) data variables 
-$X$, and the evaluation of expectations computed with respect 
-to this distribution. For many models of practical interest, 
-it will be infeasible 
-to evaluate the posterior distribution or indeed to compute 
+\section{Approximate inference}
+A central task in the application of probabilistic models is
+the evaluation of the posterior distribution $p(Z \mid X)$ of the
+latent variables $Z$ given the observed (visible) data variables
+$X$, and the evaluation of expectations computed with respect
+to this distribution. For many models of practical interest,
+it will be infeasible
+to evaluate the posterior distribution or indeed to compute
 expectations with respect to this distribution.
+This could be because the dimensionality of
+the latent space is too high to work with directly or
+because the posterior distribution has a highly complex
+form for which expectations are not analytically tractable.
+In the case of continuous variables, the required
+integrations may not have closed-form analytical solutions,
+while the dimensionality of the space and the complexity of
+the integrand may prohibit numerical integration.
+For discrete variables, the marginalizations involve
+summing over all possible configurations of the hidden
+variables, and though this is always possible in principle,
+we often find in practice that there may be exponentially
+many hidden states so that exact calculation is
+prohibitively expensive.
 
-In this chapter, we introduce a range of deterministic 
-approximation schemes, some of which scale well to large 
-applications. These are based on analytical approximations 
-to the posterior distribution, for example by assuming that 
-it factorizes in a particular way or that it has a specific 
-parametric form such as a Gaussian. As such, they can never 
-generate exact results, and so their strengths and weaknesses 
+In this chapter, we introduce a range of deterministic
+approximation schemes, some of which scale well to large
+applications. These are based on analytical approximations
+to the posterior distribution, for example by assuming that
+it factorizes in a particular way or that it has a specific
+parametric form such as a Gaussian. As such, they can never
+generate exact results, and so their strengths and weaknesses
 are complementary to those of sampling methods.
 
+\subsection{Variational inference}
 
+Suppose we have a fully Bayesian model in which every parameter
+is given prior distributions. Denote all latent variable with
+$Z$ and all observed variable with $X$. As before we have
+\[
+\log p(X) = \L(q) + \KLD{q}{p},
+\]
+where
+\[
+\begin{aligned}
+  \L(q) &= \int q(Z) \log \frac{p(X, Z)}{q(Z)} \d Z, \\
+  \KLD{q}{p} &= - \int q(Z) \log \frac{p(Z \mid X)}{q(Z)}
+  \d Z.
+\end{aligned}
+\]
+It is well known that the KL divergence $\KLD{q}{p}$ is
+maximized when $q(Z) = p(Z \mid X)$. However, here we
+assume the posterior $p(Z \mid X)$ is intractable.
+We therefore consider instead a restricted family of
+distributions $q(Z)$ and then seek the member of this
+family for which the KL divergence is minimized.
+
+\subsubsection{Factorized distributions}
+Suppose paritioning the latent variables $Z$ into disjoint
+groups $Z_1, \dots, Z_m$, and assume the $q$ distribution
+factorizes in the form
+\[
+q(Z) = \prod_{i=1}^m q_i(Z_i).
+\]
+This factorized form of variational inference corresponds to an
+approximation framework developed in physics called \textbf{mean
+field theory}.
+
+We know wish to optimize $\L(q)$ with respect to all distributions
+$q_i(Z_i)$. We first compute
+\[
+\begin{aligned}
+\L(q)
+&= \int \prod_i q_i(Z_i) \left[ \log p(X, Z) - \sum_i
+\log q_i(Z_i) \right] \d Z \\
+&= \int q_j \left[ \int \log p(X, Z) \prod_{i \neq j}
+q_i(Z_i) \d Z_i \right] \d Z_j
+- \int q_j \log q_j \d Z_j + \const \\
+&= \int q_j \log \tilde{p} (X, Z_j) \d Z_j
+- \int q_j \log q_j \d Z_j + \const,
+\end{aligned}
+\]
+where we have defined
+\[
+\log \tilde{p} (X, Z_j) = \E_{i \neq j}
+[\log p(X, Z)] + \const.
+\]
+Suppose we keep $\{q_{i \neq j}\}$ fixed and maximize
+$\L(q)$ with respect to one of the factor
+$q_j(Z_j)$. Note that this is equivalent
+to minimizing the KL divergence of $q_j(Z_j)$ and $\tilde{p}
+(X, Z_j)$, and the minimum is achieved at $q_j(Z_j)
+= \tilde{p} (X, Z_j)$. Hence, the general solution is
+\begin{equation*}
+  \log q_j^\star (Z_j) = \E_{i \neq j} [\log p(X, Z)] +
+  \const,
+  \tag{$*$}
+\end{equation*}
+and the constant is set by normalizing:
+\[
+q^\star_j(Z_j)
+= \frac{\exp (\E_{i \neq j} [\log p(X, Z)])}
+{\int \exp (\E_{i \neq j} [\log p(X, Z)]) \d Z_j}.
+\]
+The algorithm is then to first initialize each $q_i (Z_i)$
+appropriately and cycling through all the factors and
+replacing each with a revised estimate given by $(*)$.
+Convergence is guaranteed because the bound is convex
+with respect to each factor $q_i(Z_i)$.
 
 \end{document}
