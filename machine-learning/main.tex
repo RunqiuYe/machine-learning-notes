@@ -74,14 +74,15 @@ $\binomial(m \mid N, \mu)$.
 The multinomial distribution is given by 
 \[
 \multinomial(m_1, \dots, m_K \mid \mu, N)
-= \binom{N}{m_1 \; m_2 \cdots m_K} \prod_{k=1}^K \mu_k^{m_k},
+= \binom{N}{m_1 \; m_2 \; \cdots \; m_K} 
+\prod_{k=1}^K \mu_k^{m_k},
 \]
 where $\sum_{k=1}^K m_k = N$, 
 $\mu = (\mu_1, \dots, \mu_K)$ is such that 
 $\sum_{k=1}^K \mu_k = 1$, and 
 \[
-\binom{N}{m_1 \; \dots \; m_K}
-= \frac{N!}{m_1! \; m_2! \cdots m_K!}
+\binom{N}{m_1 \; m_2 \; \cdots \; m_K}
+= \frac{N!}{m_1! \; m_2! \; \cdots \; m_K!}
 \]
 is the multinomial coefficient.
 \end{defi}
