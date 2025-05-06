@@ -17,6 +17,19 @@
 
 \subsection{Binary variables}
 
+\begin{defi}[binomial distribution]
+The binomial distribution is given by 
+\[
+\binomial(m \mid N, \mu) 
+= \binom{N}{m} \mu^{m} (1 - \mu)^{N - m},
+\]
+where 
+\[
+\binom{N}{m} = \frac{N!}{(N - m)! m!} 
+\]
+is the binomial coefficient.
+\end{defi}
+
 \begin{defi}[beta distribution]
 The beta distribution is given by 
 \[
@@ -57,6 +70,22 @@ $\binomial(m \mid N, \mu)$.
 
 \subsection{Multinomial vairables}
 
+\begin{defi}[multinomial distribution]
+The multinomial distribution is given by 
+\[
+\multinomial(m_1, \dots, m_K \mid \mu, N)
+= \binom{N}{m_1 \; m_2 \cdots m_K} \prod_{k=1}^K \mu_k^{m_k},
+\]
+where $\sum_{k=1}^K m_k = N$, 
+$\mu = (\mu_1, \dots, \mu_K)$ is such that 
+$\sum_{k=1}^K \mu_k = 1$, and 
+\[
+\binom{N}{m_1 \; \dots \; m_K}
+= \frac{N!}{m_1! \; m_2! \cdots m_K!}
+\]
+is the multinomial coefficient.
+\end{defi}
+
 \begin{defi}[Dirichlet distribution]
 The Dirichlet is a multivariate distribution over $K$ 
 random variables $0 \leq \mu_k \leq 1$,
@@ -78,6 +107,18 @@ C(\alpha) = \frac{\Gamma(\alpha_1 + \dots + \alpha_K)}
 {\Gamma(\alpha_1) \dots \Gamma(\alpha_K)}.
 \]
 \end{defi}
+
+It is easy to verify that the Dirichlet distribution
+is the \textbf{conjugate prior} of the multinomial distribution. 
+Indeed, 
+\[
+p(\mu \mid \dcal, \alpha)
+\propto p(\dcal \mid \mu) p(\mu \mid \alpha) 
+\propto \prod_{k=1}^K \mu_k^{\alpha_k + m_k - 1},
+\]
+so $p(\mu \mid \dcal, \alpha)
+= \Dir(\mu \mid \alpha + m)$, where we denote 
+$m = (m_1, \dots, m_K)$.
 
 \subsection{The Gaussian distribution}
 
