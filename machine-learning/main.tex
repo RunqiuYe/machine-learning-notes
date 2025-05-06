@@ -15,7 +15,7 @@
 
 \section{Probability and statistical inference}
 
-\subsection{Probability}
+\subsection{Basic probability theory}
 \begin{defi}[Convergence of random vairables]
 Let $\left\{ X_n \right\}_{n=1}^\infty$ be a sequence of random
 variables and $X$ be another random variable. Let
@@ -68,8 +68,12 @@ The following implication holds:
 
 \begin{enumerate}
   \item If $X_n$ converges to $X$ almost surely,
-  the set of points $O = \left\{ \omega : \lim_{n \to \infty}
-  X_n(\omega) \neq X(\omega) \right\}$ has measure zero.
+  the set of points 
+  \[
+  O = \left\{ \omega : \lim_{n \to \infty}
+  X_n(\omega) \neq X(\omega) \right\}
+  \]
+  has measure zero.
   Now fix $\epsilon > 0$ and consider the sequence of
   sets
   \[
@@ -120,6 +124,16 @@ The following implication holds:
   \]
   Also write $Z_n \approx \ncal(0, 1)$.
 \end{thm}
+
+\subsection{Probability distributions}
+
+\begin{defi}[Gamma distribution]
+The \textbf{gamma distribution} is given by 
+\[
+\gammaD(\lambda \mid a, b) = 
+\frac{1}{\Gamma(a)} b^a \lambda^{a - 1} \exp (-b \gamma).
+\]  
+\end{defi}
 
 \subsection{Statistical inference}
 
@@ -1055,5 +1069,23 @@ The optimization result is
 \[
 q_j^\star (Z_j) = \int p(Z) \prod_{i \neq j} \d Z_i = p(Z_j).
 \]
+
+To compare the two results, note that we have 
+\[
+\begin{aligned}
+\KLD{q}{p} = - \int q(Z) \log \frac{p(Z)}{q(Z)} \d Z, \\
+\KLD{p}{q} = - \int p(Z) \log \frac{q(Z)}{p(Z)} \d Z.
+\end{aligned}
+\]
+Note that for $\KLD{q}{p}$, there is a large positive 
+contribution in region where $p(Z)$ is small.
+Therefore, minimizing $\KLD{q}{p}$ avoids region 
+where $p(Z)$ is near $0$. Conversely, 
+$\KLD{p}{q}$ is minimized by having $q(Z)$ nonzero 
+in region where $p(Z)$ is nonzero. It follows that 
+minimizing $\KLD{q}{p}$ often leads to a more \textbf{compact} 
+distribution, while minimizing $\KLD{p}{q}$ tends 
+to give an \textbf{average across a large region}
+(see figures in PRML).
 
 \end{document}
