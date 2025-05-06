@@ -16,7 +16,7 @@
 \section{Probability and statistical inference}
 
 \subsection{Probability}
-\begin{defi}[Types of convergence]
+\begin{defi}[Convergence of random vairables]
 Let $\left\{ X_n \right\}_{n=1}^\infty$ be a sequence of random
 variables and $X$ be another random variable. Let
 $F_n$ be the CDF of $X_n$ for each $n \in \N$ and $F$
@@ -111,7 +111,8 @@ The following implication holds:
   = \frac{\sqrt{n} \left( S_n - \mu \right)}{\sigma}
   \convDist Z,
   \]
-  where $Z \sim \ncal(0, 1)$. In other words,
+  where $Z \sim \ncal(0, 1)$ and $\convDist$ represents 
+  convergence in distribution. In other words,
   \[
   \lim_{n \to \infty} \Pr[Z_n < z] = \Phi(z)
   = \int_{-\infty}^z \frac{1}{\sqrt{2\pi}} e^{- \frac{x^2}{2}}
@@ -190,7 +191,7 @@ Below is the definition of a confidence set/interval.
   $a = a(X_1, \dots, X_n)$ and $b = b(X_1, \dots, X_n)$
   are functions of data such that
   \[
-  \P_\theta[\theta \in C_n] \geq 1 - \alpha
+  \Pr_\theta[\theta \in C_n] \geq 1 - \alpha
   \text{ for all $\theta \in \Theta$. }
   \]
   In other word, $(a, b)$ traps $\theta$ with probablity
@@ -279,7 +280,7 @@ to produce a desired hypothesis.
 \end{thm}
 \begin{proof}
   Suppose $h \in \hcal$ is such that
-  $\err_D(h) = \P_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
+  $\err_D(h) = \Pr_{x \sim D} [h(x) \neq h^\star(x)] > \epsilon$.
   For such an $h$ and some data $x_i$, we have
   \[
   \Pr_{x_i \sim D} [h(x_i) = y_i = h^\star(x_i)] < 1 - \epsilon.
@@ -309,7 +310,7 @@ to produce a desired hypothesis.
 \end{proof}
 
 \begin{cor}
-  If we want $\P_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
+  If we want $\Pr_{x_{1 : n} \sim D} [\err_D (\hat{h}) > \epsilon]
   \leq \delta$, we must have
   \[
   n \geq \frac{\log \left( \abs{\hcal} / \delta \right)}{\epsilon}.
@@ -982,7 +983,7 @@ Suppose paritioning the latent variables $Z$ into disjoint
 groups $Z_1, \dots, Z_m$, and assume the $q$ distribution
 factorizes in the form
 \[
-q(Z) = \prod_{i=1}^m q_i(Z_i).
+q(Z) = \prod_{i=1}^M q_i(Z_i).
 \]
 This factorized form of variational inference corresponds to an
 approximation framework developed in physics called \textbf{mean
@@ -1011,7 +1012,15 @@ Suppose we keep $\{q_{i \neq j}\}$ fixed and maximize
 $\L(q)$ with respect to one of the factor
 $q_j(Z_j)$. Note that this is equivalent
 to minimizing the KL divergence of $q_j(Z_j)$ and $\tilde{p}
-(X, Z_j)$, and the minimum is achieved at $q_j(Z_j)
+(X, Z_j)$. Indeed, we have 
+\[
+\begin{aligned}
+\KLD{q_j (Z_j)}{\tilde{p}(X, Z_j)} 
+&= \int q_j \log q_j \d Z_j 
+- \int q_j \log \tilde{p} (X, Z_j) \d Z_j. 
+\end{aligned}
+\]
+The minimum is thus achieved at $q_j(Z_j)
 = \tilde{p} (X, Z_j)$. Hence, the general solution is
 \begin{equation*}
   \log q_j^\star (Z_j) = \E_{i \neq j} [\log p(X, Z)] +
@@ -1029,5 +1038,22 @@ appropriately and cycling through all the factors and
 replacing each with a revised estimate given by $(*)$.
 Convergence is guaranteed because the bound is convex
 with respect to each factor $q_i(Z_i)$.
+
+Alternatively, consider instead that we have been minimizing 
+the reverse KL divergence $\KLD{p}{q}$ with respect to 
+factorized distribution $q$. The KL divergence
+take the form 
+\[
+\KLD{p}{q} = - \int p(Z) \left[ \sum_{i=1}^M \log q_i 
+(Z_i) \right] \d Z + \const.
+\]
+
+\TODO{use Lagrange multiplier and functional derivative 
+to derive the optimization result.}
+
+The optimization result is 
+\[
+q_j^\star (Z_j) = \int p(Z) \prod_{i \neq j} \d Z_i = p(Z_j).
+\]
 
 \end{document}
