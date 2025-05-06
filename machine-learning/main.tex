@@ -98,7 +98,7 @@ Denoting $\mu = (\mu_1, \dots, \mu_K)$ and
 $\alpha = (\alpha_1, \dots, \alpha_K)$,
 the PDF of Dirichlet distribution is given by 
 \[
-\Dir(\mu \mid \alpha)
+\dirichlet(\mu \mid \alpha)
 = C(\alpha) \prod_{k=1}^K \mu_k^{\alpha_k - 1},
 \]
 where $C(\alpha)$ is a normalizing constant given by 
@@ -117,7 +117,7 @@ p(\mu \mid \dcal, \alpha)
 \propto \prod_{k=1}^K \mu_k^{\alpha_k + m_k - 1},
 \]
 so $p(\mu \mid \dcal, \alpha)
-= \Dir(\mu \mid \alpha + m)$, where we denote 
+= \dirichlet(\mu \mid \alpha + m)$, where we denote 
 $m = (m_1, \dots, m_K)$.
 
 \subsection{The Gaussian distribution}
