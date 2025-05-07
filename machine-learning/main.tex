@@ -1,6 +1,7 @@
 \documentclass[a4paper]{article}
 \usepackage{float}
 \usepackage{parskip}
+% \setcounter{tocdepth}{2}
 
 \def\nterm {Spring}
 \def\nyear {2025}
@@ -233,6 +234,32 @@ p(x_a) = \ncal(x_a \mid \mu_a, \Sigma_{aa}).
 \] 
 \end{thm}
 
+\subsubsection{Bayes' theorem for Gaussian distribution}
+
+\begin{thm}
+Given a marginal Gaussian distribution for $x$ and a 
+conditional Gaussian distribution for $y$ given $x$ in 
+the form
+\[
+\begin{aligned}
+p(x) &= \ncal (x \mid \mu, \Lambda^{-1}), \\
+p(y \mid x) &= \ncal (y \mid A x + b, L^{-1}),
+\end{aligned}
+\]
+the marginal distribution of $y$ and the conditional 
+distribution of $x$ given $y$ are given by 
+\[
+\begin{aligned}
+p(y) &= \ncal (y \mid A \mu + b, L^{-1} + A \Lambda^{-1} A), \\
+p(x \mid y) &= \ncal (x \mid \Sigma (A^T L (y - b) + 
+\Lambda \mu), \Sigma),
+\end{aligned}
+\]
+where 
+\[
+\Sigma = (\Lambda + A^T L A)^{-1}.
+\]
+\end{thm}
 
 \begin{defi}[Gamma distribution]
 The \textbf{gamma distribution} is given by 
