@@ -138,17 +138,24 @@ The inverse of the covariance matrix $\Lambda = \Sigma^{-1}$
 is called the \textbf{precision matrix}.
 \end{defi}
 
+The moment and covariance of the Gaussian distribution
+is given by 
+\[
+\E[x] = \mu \quad \text{ and } \quad 
+\E[x x^T] = \mu \mu^T + \Sigma.
+\]
+Therefore, the covariance (or variance) is 
+\[
+\cov[x] = \E \left[ (x - \E[x]) (x - \E[x])^T \right]
+= \Sigma.
+\]
+
 Note that the functional dependence of the Gaussian on 
 $x$ is through the quadratic from
 \[
 \Delta^2 = (x - \mu)^T \Sigma^{-1} (x - \mu)
 \]
-which appears in the exponent. 
-
-\subsubsection{Conditionals and marginals of Gaussian 
-distribution}
-
-It is usually the case 
+which appears in the exponent. It is usually the case 
 that we can identify some distribution is Gaussian by 
 noting the quadratic form in the exponent. We can then 
 identify the mean and variance of the distribution by 
@@ -162,6 +169,9 @@ the following identity is very helpful:
 where the constant is independent of $x$. This can helps 
 us read off the precision matrix and the mean from quadratic
 term and linear term of the expression.
+
+\subsubsection{Conditionals and marginals of Gaussian 
+distribution}
 
 When considering the conditional and marginals of Gaussian
 distributions, we often need to deal with \textbf{partitioned
