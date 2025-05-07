@@ -134,9 +134,95 @@ The $D$-dimensional multivariate
 \]
 where $\mu$ is the \textbf{mean} and $\Sigma$ is the 
 \textbf{covariance matrix}.
-The inverse of the covariance matrix $\Sigma^{-1}$ 
+The inverse of the covariance matrix $\Lambda = \Sigma^{-1}$ 
 is called the \textbf{precision matrix}.
 \end{defi}
+
+Note that the functional dependence of the Gaussian on 
+$x$ is through the quadratic from
+\[
+\Delta^2 = (x - \mu)^T \Sigma^{-1} (x - \mu)
+\]
+which appears in the exponent. 
+
+\subsubsection{Conditionals and marginals of Gaussian 
+distribution}
+
+It is usually the case 
+that we can identify some distribution is Gaussian by 
+noting the quadratic form in the exponent. We can then 
+identify the mean and variance of the distribution by 
+\textbf{completing the square}. When completing the square,
+the following identity is very helpful:
+\[
+- \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) 
+= - \frac{1}{2} x^T \Sigma^{-1} x 
++ x^T \Sigma^{-1} \mu + \const,
+\]
+where the constant is independent of $x$. This can helps 
+us read off the precision matrix and the mean from quadratic
+term and linear term of the expression.
+
+When considering the conditional and marginals of Gaussian
+distributions, we often need to deal with \textbf{partitioned
+matrix}. The inverse of a partitioned matrix and itself 
+is related through the following identity: 
+\[
+\begin{bmatrix}
+  A & B \\
+  C & D
+\end{bmatrix}^{-1} 
+= 
+\begin{bmatrix}
+  M & - M B D^{-1} \\
+  - D^{-1} C M & D^{-1} + D^{-1} C M B D^{-1}
+\end{bmatrix},
+\]
+where 
+\[
+M = (A - B D^{-1} C)^{-1}.
+\]
+
+\begin{thm}
+Given a joint Gaussian distribution $\ncal (x \mid \mu,
+\Sigma)$ with $\Lambda = \Sigma^{-1}$, and 
+\[
+x = \begin{bmatrix}
+  x_a \\
+  x_b
+\end{bmatrix}, 
+\quad 
+\mu = \begin{bmatrix}
+  \mu_a \\
+  \mu_b
+\end{bmatrix}, 
+\quad 
+\Sigma = \begin{bmatrix}
+  \Sigma_{aa} & \Sigma_{ab} \\
+  \Sigma_{ba} & \Sigma_{bb}
+\end{bmatrix}, 
+\quad 
+\Lambda = \begin{bmatrix}
+  \Lambda_{aa} & \Lambda_{ab} \\
+  \Lambda_{ba} & \Lambda_{bb}
+\end{bmatrix}.
+\]
+We have the conditional distribution: 
+\[
+p(x_a \mid x_b) 
+= \ncal (x \mid \mu_{a \mid b}, \Lambda_{aa}^{-1}),
+\]
+where 
+\[
+\mu_{a \mid b} = \mu_a - \Lambda_{aa}^{-1} \Lambda_{ab} 
+(x_b - \mu_b),
+\]
+and the marginal distribution 
+\[
+p(x_a) = \ncal(x_a \mid \mu_a, \Sigma_{aa}).
+\] 
+\end{thm}
+
 
 \begin{defi}[Gamma distribution]
 The \textbf{gamma distribution} is given by 
