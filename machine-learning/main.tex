@@ -381,7 +381,7 @@ p(X \mid \lambda)
 To choose a conjugate prior, we introduce the 
 gamma distribution.
 
-\begin{defi}[Gamma distribution]
+\begin{defi}[gamma distribution]
 The \textbf{gamma distribution} is given by 
 \[
 \gammaD(\lambda \mid a, b) = 
@@ -462,6 +462,78 @@ where $\mu_0 = \frac{c}{\beta}$, $a = \frac{\beta}{2} + 1$,
 and $b = d - \frac{c^2}{2 \beta}$.
 
 \subsubsection{Student's t-distribution}
+
+We have seen the conjugate prior for the precision 
+of a Gaussian is given by the gamma distribution. Now 
+suppose we have a univariate Gaussian $\ncal(x \mid \mu, 
+\tau^{-1})$ together with a gamma prior $\gammaD (\tau \mid 
+a, b)$, we integrate over the precision to get
+\[
+\begin{aligned}
+p(x \mid \mu, a, b) 
+&= \int_0^\infty \ncal(x \mid \mu, \tau^{-1}) 
+\gammaD(\tau \mid a, b) \d \tau \\
+&= \int_0^\infty \frac{\tau^{1 / 2}}{(2 \pi)^{1 / 2}} 
+\exp \left[ -\frac{\tau}{2} (x - \mu)^2 \right] 
+\frac{1}{\Gamma(a)} b^a \tau^{a - 1} \exp (- \tau b) \d \tau \\
+&= \frac{b^a}{\Gamma(a)} \frac{1}{(2 \pi)^{1 / 2}} 
+\left[ b + \frac{(x - \mu)^2}{2} + b \right]^{- a - 1 / 2}
+\Gamma \left( a + 1 / 2 \right).
+\end{aligned}
+\]
+Now we introduce a new distribution.
+\begin{defi}[student's t-distribution]
+The \textbf{student's t-distribution} is given by 
+\[
+\St (x \mid \mu, \lambda, \nu)
+= \frac{\Gamma \left( \nu / 2 + 1 / 2 \right)}
+{\Gamma \left( \nu / 2 \right)} 
+\left( \frac{\lambda}{\pi \nu} \right)^{1 / 2} 
+\left[ 1 + \frac{\lambda (x - \mu)^2}{\nu} \right]^{ - 
+\nu / 2 - 1 / 2},
+\]
+where $\nu$ is called the \textbf{degrees of freedom}
+of the distribution.
+\end{defi}
+
+Student's t-distribution have longer tails than the 
+Gaussian distribution, so it is more \textbf{robust} 
+-- much less sensitive to a few outliers.
+
+It is easy to verify that 
+\[
+\St(x \mid \mu, \lambda, \nu) 
+= \int_0^\infty \ncal(x \mid \mu, (\eta \lambda)^{-1})
+\gammaD (\eta \mid \nu / 2, \nu / 2) \d \eta.
+\]
+We can then generalize this to \textbf{a multivariate 
+student's t-distribution}: 
+\[
+\St (x \mid \mu, \Lambda, \nu) 
+= \int_0^\infty \ncal(x \mid \mu, (\eta \Lambda)^{-1}) 
+\gammaD(\eta \mid \nu / 2, \nu / 2) \d \eta.
+\]
+Through computation, we obtain 
+\[
+\St (x \mid \mu, \Lambda, \nu) 
+= \frac{\Gamma(D / 2 + \nu / 2)}{\Gamma(\nu / 2)} 
+\frac{\abs{\Lambda}^{1 / 2}}{(\pi \nu)^{D / 2}}
+\left( 1 + \frac{\Delta^2}{\nu} \right)^{- D / 2 - 
+\nu / 2},
+\]
+where $D$ is the dimensionality of $x$ and 
+\[
+\Delta^2 = (x - \mu)^T \Lambda (x - \mu).
+\]
+We also have 
+\[
+\begin{aligned}
+  \E[x] &= \mu & \text{if $\nu > 1$}, \\
+  \cov[x] &= \frac{\nu}{(\nu - 2)} \Lambda^{-1} 
+  & \text{if $\nu > 2$}, \\
+  \mode[x] &= \mu.
+\end{aligned}
+\]
 
 \section{Probability and statistical inference}
 
