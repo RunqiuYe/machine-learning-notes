@@ -261,6 +261,111 @@ where
 \]
 \end{thm}
 
+\subsubsection{Maximum likelihood for the Gaussian}
+
+Given a data set $X = \{x_1, \dots, x_N\}$ of obsrevations 
+drawn independent from a Gaussian distribution, we can 
+estimate the parameters of the distribution by maximum 
+likelihood. The log likelihood function is given by
+\[
+\log p(X \mid \mu, \Sigma)
+= -\frac{N D}{2} \log (2 \pi) - \frac{N}{2} \log \abs{\Sigma}
+- \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^T \Sigma^{-1} 
+(x_n - \mu).
+\]
+It is easy to notice that this only depends on $\sum_{n=1}^N 
+x_n$ and $\sum_{n=1}^N x_n x_n^T$. These quantities are 
+called the \textbf{sufficient statistics} for the Gaussian 
+distribution. We can easily 
+derive the maximum likelihood estimation by setting the
+corresponding partial derivative to zero: 
+\[
+\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n, 
+\quad 
+\Sigma_{\ML} = \frac{1}{N} \sum_{n=1}^N 
+(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
+\]
+
+Recall the moment of the Gaussian distribution 
+$\E[x] = \mu$ and $\E[x x^T] = \mu \mu^T + \Sigma$.
+It follows that 
+\[
+\begin{aligned}
+\E[x_n] = \mu, 
+\quad 
+\E[x_n \mu_{\ML}^T] 
+= \frac{N - 1}{N} \mu \mu^T + \frac{1}{N} \Sigma
+\end{aligned}
+\]
+for any $1 \leq n \leq N$, and 
+\[
+\E[\mu_{\ML} \mu_{\ML}^T]
+= \frac{N^2 - 1}{N^2} \mu \mu^T 
++ \frac{N}{N^2 - 1} \Sigma.
+\]
+Therefore, if we evaluate the maximum likelihood estimation 
+under the true distribution, we obtain
+\[
+\E[\mu_{\ML}] = \mu,
+\quad 
+\E[\Sigma_{\ML}] = \frac{N - 1}{N} \Sigma,
+\]
+We can see that the estimation for mean is unbiased but the 
+estimation for variance is biased. We can correct this 
+by 
+\[
+\tilde{\Sigma} = \frac{1}{N - 1} \sum_{n=1}^N 
+(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
+\]
+It is clear that now 
+\[
+\E[\tilde{\Sigma}] = \Sigma,
+\]
+and $\tilde{\Sigma}$ is called the \textbf{unbiased 
+estimator} for the Gaussian distribution
+
+\subsubsection{Bayesian inference for the Gaussian}
+
+Now consider a Bayesian model for Gaussian distribution.
+Suppose first the variance $\sigma^2$ of a Gaussian
+distribution is known and we 
+want to infer the mean $\mu$ with observed data 
+$X = \{x_1, \dots, x_N\}$. The likelihood function is 
+given by 
+\[
+p(X \mid \mu) = \frac{1}{(2 \pi \sigma^2)^{N / 2}}
+\exp \left[ - \frac{1}{2 \sigma^2} 
+\sum_{n=1}^N (x_n - \mu)^2 \right].
+\]
+If we take the prior to be also Gaussian, then it will be 
+conjugate to this likelihood function. Therefore, 
+we take our prior distribution to be 
+\[
+p(\mu) = \ncal(\mu \mid \mu_0, \sigma_0^2).
+\]
+Then the posterior is given by $p(\mu \mid X) 
+\propto p(X \mid \mu) p(\mu)$. Through calculation, 
+we can obtain that $p(\mu \mid X) = \ncal(\mu \mid
+\mu_N, \sigma_N)$, where 
+\[
+\begin{aligned}
+  \mu_N &= \frac{\sigma^2}{N \sigma_0^2 + \sigma^2} 
+  \mu_0 + \frac{N \sigma_0^2}{N \sigma_0^2 + \sigma^2} 
+  \mu_{\ML}, \\
+  \frac{1}{\sigma_N^2} &= \frac{1}{\sigma_0^2} 
+  + \frac{N}{\sigma^2},
+\end{aligned}
+\]
+in which $\mu_{\ML}$ is the maximum likelihood estimation 
+given by 
+\[
+\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n.
+\]
+Note that as we increase the number of observed data points (taking the 
+limit as $N \to \infty$), the precision steadily increases, 
+corresponding to a posterior distribution with steadily 
+decreasing variance.
+
 \begin{defi}[Gamma distribution]
 The \textbf{gamma distribution} is given by 
 \[
