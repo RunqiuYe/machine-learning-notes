@@ -322,7 +322,7 @@ It is clear that now
 \E[\tilde{\Sigma}] = \Sigma,
 \]
 and $\tilde{\Sigma}$ is called the \textbf{unbiased 
-estimator} for the Gaussian distribution
+estimator} for the Gaussian distribution.
 
 \subsubsection{Bayesian inference for the Gaussian}
 
@@ -337,6 +337,8 @@ p(X \mid \mu) = \frac{1}{(2 \pi \sigma^2)^{N / 2}}
 \exp \left[ - \frac{1}{2 \sigma^2} 
 \sum_{n=1}^N (x_n - \mu)^2 \right].
 \]
+It is important to note that this is not a probability
+distribution over $\mu$.
 If we take the prior to be also Gaussian, then it will be 
 conjugate to this likelihood function. Therefore, 
 we take our prior distribution to be 
@@ -366,13 +368,100 @@ limit as $N \to \infty$), the precision steadily increases,
 corresponding to a posterior distribution with steadily 
 decreasing variance.
 
+Now suppose the mean $\mu$ is known and we hope to infer 
+the variance. It turns out working with the precision 
+$\lambda = \frac{1}{\sigma^2}$ is more convenient. We 
+again write down the likelihood function: 
+\[
+p(X \mid \lambda) 
+\propto \lambda^{N / 2} 
+\exp \left[ - \frac{\lambda}{2} \sum_{n=1}^N 
+(x_n - \mu)^2 \right].
+\]
+To choose a conjugate prior, we introduce the 
+gamma distribution.
+
 \begin{defi}[Gamma distribution]
 The \textbf{gamma distribution} is given by 
 \[
 \gammaD(\lambda \mid a, b) = 
 \frac{1}{\Gamma(a)} b^a \lambda^{a - 1} \exp (-b \lambda).
 \]  
+In particular, we have the following integral: 
+\[
+\begin{aligned}
+\int_0^\infty \lambda^{a - 1} \exp(- b \lambda) \d \lambda
+= \int_0^\infty \frac{1}{b^a} u^{a - 1} e^{-u} \d u 
+= \frac{1}{b^a} \Gamma(a),
+\end{aligned}
+\]
+where we used change of variable $u = b \lambda$
+in the first equality.
 \end{defi}
+
+Through more gamma function calculation, we can 
+obtain the mean and variance of the gamma distribution:
+\[
+\E[\lambda] = \frac{a}{b}, 
+\quad 
+\var[\lambda] = \frac{a}{b^2}.
+\]
+
+Now consider a prior distribution $\gammaD(\lambda 
+\mid a_0, b_0)$. We can then obtain the posterior
+\[
+p(\lambda \mid X) 
+\propto \lambda^{a_0 - 1} \lambda^{N / 2} 
+\exp \left[ - b_0 \lambda - \frac{\lambda}{2} 
+\sum_{n=1}^N (x_n - \mu)^2 \right],
+\]
+which is easily identified as a gamma distribution with 
+\[
+\begin{aligned}
+a_N &= a_0 + \frac{N}{2}, \\
+b_N &= b_0 + \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^2
+= b_0 + \frac{N}{2} \sigma_{\ML}^2,
+\end{aligned}
+\]
+and the normalization constant then follows easily.
+
+Now suppose both the mean and the variance is unknown.
+Consider the likelihood function: 
+\[
+\begin{aligned}
+p(X \mid \mu, \lambda)
+&= \prodn^N \frac{\lambda^{1 / 2}}{(2 \pi)^{1 / 2}}
+\exp \left[ - \frac{\lambda}{2} (x_n - \mu)^2 \right] \\
+&\propto \left[ \lambda^{1 / 2} \exp \left( - 
+\frac{\lambda \mu^2}{2} \right) \right]^{N}
+\exp \left[ \lambda \mu \sumn^N x_n 
+- \frac{\lambda}{2} \sumn^N x_n^2 \right].
+\end{aligned}
+\]
+Therefore, we should be looking for a conjugate prior 
+in the form of 
+\[
+\begin{aligned}
+p(\mu, \lambda)
+&\propto \left[ \lambda^{1 / 2} \exp \left( - \frac{\lambda \mu^2}
+{2} \right) \right]^\beta \exp \left( c \lambda \mu - 
+d \lambda \right) \\
+&= \exp \left[ - \frac{\lambda \beta}{2} 
+\left( \mu - \frac{c}{\beta} \right)^2 \right]
+\lambda^{\beta / 2} \exp \left[ - \left( d - 
+\frac{c^2}{2 \beta} \right) \lambda \right].
+\end{aligned}
+\]
+This is the \textbf{Gaussian-gamma distribution}: 
+\[
+p(\mu, \lambda) 
+= \ncal (\mu \mid \mu_0, (\beta \lambda)^{-1}) 
+\gammaD (\lambda \mid a, b),
+\]
+where $\mu_0 = \frac{c}{\beta}$, $a = \frac{\beta}{2} + 1$,
+and $b = d - \frac{c^2}{2 \beta}$.
+
+\subsubsection{Student's t-distribution}
 
 \section{Probability and statistical inference}
 
