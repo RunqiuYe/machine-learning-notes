@@ -868,7 +868,7 @@ where
 
 \subsubsection{Maximum likelihood for the Gaussian}
 
-Given a data set $X = \{x_1, \dots, x_N\}$ of obsrevations 
+Given a data set $X = \{x_1, \dots, x_N\}$ of observations 
 drawn independent from a Gaussian distribution, we can 
 estimate the parameters of the distribution by maximum 
 likelihood. The log likelihood function is given by
@@ -1663,5 +1663,45 @@ minimizing $\KLD{q}{p}$ often leads to a more \textbf{compact}
 distribution, while minimizing $\KLD{p}{q}$ tends 
 to give an \textbf{average across a large region}
 (see figures in PRML).
+
+\subsection{Illustration: variational mixture of
+Gaussians}
+
+Consider the following model: for each observation
+$x_n$, we have a corresponding latent variable
+$z_n$, which is a 1-of-$K$ binary vector with elements 
+$z_{nk}$ for $k = 1, \dots, K$. Denote $X = \{x_1, \dots, 
+x_n\}$ and $Z = \{z_1, \dots, z_n\}$. We have the 
+following likelihood model:
+\[
+\begin{aligned}
+p(Z \mid \pi) &= \prodn^N \prodk^K \pi_k^{z_{nk}}, \\
+p(X \mid Z, \mu, \Lambda)
+&= \prodn^N \prodk^K \ncal(x_n \mid \mu_k, \Lambda_k^{-1})
+^{z_{nk}}.
+\end{aligned}
+\]
+Now we choose conjugate priors for each parameter. For 
+the mixing coefficient $\pi$, we have
+\[
+\begin{aligned}
+p(\pi) = \dirichlet(\pi \mid \alpha_0)
+= C(\alpha_0) \prodk^K \pi_k^{\alpha_0 - 1},
+\end{aligned}
+\]
+where we choose the same parameter $\alpha_0$ for each 
+component by symmetry. For the mean $\mu$ and precision
+$\Lambda$, we have
+\[
+\begin{aligned}
+p(\mu, \Lambda) 
+= p(\mu \mid \Lambda) p(\Lambda) 
+= \prodk^K \ncal (\mu_k \mid m_0, (\beta_0 \Lambda_k^{-1}))
+\wcal (\Lambda_k \mid W_0, \nu_0),
+\end{aligned}
+\]
+where we often choose $m_0 = 0$ by symmetry.
+
+\TODO{do the calculation}
 
 \end{document}
