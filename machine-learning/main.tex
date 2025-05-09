@@ -535,6 +535,26 @@ We also have
 \end{aligned}
 \]
 
+\subsection{The exponential family}
+
+\begin{defi}
+The exponential family of distributions over $x$, 
+given parameters $\eta$, is defined to be the set of 
+distributions of the form
+\[
+p(x \mid \eta) = h(x) g(\eta) \exp \left[ \eta^T u(x) 
+\right].
+\]
+Here $\eta$ is called the \textbf{natural parameters}
+of the distribution, $u(x)$ is some function of $x$ 
+and $g(\eta)$ can be interpreted as a normalization 
+constant so that 
+\[
+g(\eta) \int h(x) \exp \left[ \eta^T u(x) \right] \d x = 1.
+\]
+\end{defi}
+
+
 \section{Probability and statistical inference}
 
 \subsection{Basic probability theory}
