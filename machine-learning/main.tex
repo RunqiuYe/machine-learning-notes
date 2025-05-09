@@ -1064,7 +1064,36 @@ p(\mu, \lambda)
 \gammaD (\lambda \mid a, b),
 \]
 where $\mu_0 = \frac{c}{\beta}$, $a = \frac{\beta}{2} + 1$,
-and $b = d - \frac{c^2}{2 \beta}$.
+and $b = d - \frac{c^2}{2 \beta}$. 
+
+In the case of a multivariate Gaussian $\ncal (x \mid \mu, 
+\Lambda^{-1})$ for a $D$-dimensional variable $x$, 
+the conjugate prior for the mean is again Gaussian
+if we assume the variance is known. If the mean is 
+known and the variance is unknown, the conjugate prior
+is a \textbf{Wishart distribution} given by 
+\[
+\wcal (\Lambda \mid W, \nu)
+= B \abs{\Lambda}^{(\nu - D - 1) / 2} 
+\exp \left[ -\frac{1}{2} \tr (W^{-1} \Lambda) \right],
+\]
+where $\nu$ is the degrees of freedom and $W$ is a 
+$D \times D$ scale matrix. The normalization constant 
+$B$ is given by 
+\[
+B(W, \nu) = \abs{W}^{- \nu / 2} 
+\left[ 2^{\nu D / 2} \pi^{D (D - 1) / 4} 
+\prodi^D \Gamma \left( \frac{\nu + 1 - i}{2} \right) 
+\right]^{-1}.
+\]
+For unknown mean and unknown precision, the conjugate
+prior is the \textbf{Gaussian-Wishart distribution} 
+given by 
+\[
+p(\mu, \Lambda \mid \mu_0, \beta, W, \nu) 
+= \ncal (\mu \mid \mu_0, (\beta \Lambda)^{-1}) 
+\wcal (\Lambda \mid W, \nu).
+\]
 
 \subsubsection{Student's t-distribution}
 
@@ -1489,7 +1518,21 @@ summing over all possible configurations of the hidden
 variables, and though this is always possible in principle,
 we often find in practice that there may be exponentially
 many hidden states so that exact calculation is
-prohibitively expensive.
+prohibitively expensive. The following table summarizes 
+the properties of the mentioned distributions:
+
+\begin{center}
+\begin{tabular}{lccl}
+Concept & Known? & Tractable? & Notes \\
+\hline
+$p(Z)$ & \cmark & \cmark & Chosen prior distribution \\
+$p(X \mid Z)$ & \cmark & \cmark & Likelihood model 
+(possibly NN) \\ 
+$p(X, Z)$ & \cmark & \cmark & Product of above two \\ 
+$p(Z \mid X)$ & \xmark & \xmark & Intractable posterior \\
+$p(X)$ & \xmark & \xmark & Intractable marginals \\
+\end{tabular}
+\end{center}
 
 In this chapter, we introduce a range of deterministic
 approximation schemes, some of which scale well to large
@@ -1583,6 +1626,8 @@ appropriately and cycling through all the factors and
 replacing each with a revised estimate given by $(*)$.
 Convergence is guaranteed because the bound is convex
 with respect to each factor $q_i(Z_i)$.
+
+\subsubsection{Properties of factorized approximations}
 
 Alternatively, consider instead that we have been minimizing 
 the reverse KL divergence $\KLD{p}{q}$ with respect to 

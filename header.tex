@@ -34,6 +34,9 @@ Carnegie Mellon University}
 \usepackage{imakeidx}
 \usepackage{mathrsfs}
 \usepackage[includehead,includefoot,heightrounded,left=1.25in,right=1.25in]{geometry}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
 
 \makeindex[intoc, title=Index]
 \indexsetup{othercode={\lhead{\emph{Index}}}}
@@ -204,6 +207,9 @@ Carnegie Mellon University}
 \newcommand{\sumn}{\sum_{n=1}}
 \newcommand{\prodn}{\prod_{n=1}}
 \newcommand{\seqn}[1]{\{ #1 \}_{n=1}}
+\newcommand{\sumi}{\sum_{i=1}}
+\newcommand{\prodi}{\prod_{i=1}}
+\newcommand{\seqi}[1]{\{ #1 \}_{i=1}}
 
 % machine learning 
 \DeclareMathOperator{\VC}{VC}
@@ -484,6 +490,7 @@ Carnegie Mellon University}
 \renewcommand{\P}{\mathcal{P}}
 \renewcommand{\Q}{\mathcal{Q}}
 \newcommand{\rcal}{\mathcal{R}}
+\newcommand{\wcal}{\mathcal{W}}
 
 \pgfarrowsdeclarecombine{twolatex'}{twolatex'}{latex'}{latex'}{latex'}{latex'}
 \tikzset{->/.style = {decoration={markings,
