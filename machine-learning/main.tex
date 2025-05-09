@@ -14,547 +14,6 @@
 
 \tableofcontents
 
-\section{Probability distributions}
-
-\subsection{Binary variables}
-
-\begin{defi}[binomial distribution]
-The binomial distribution is given by 
-\[
-\binomial(m \mid N, \mu) 
-= \binom{N}{m} \mu^{m} (1 - \mu)^{N - m},
-\]
-where 
-\[
-\binom{N}{m} = \frac{N!}{(N - m)! m!} 
-\]
-is the binomial coefficient.
-\end{defi}
-
-\begin{defi}[beta distribution]
-The beta distribution is given by 
-\[
-\betaD(\mu \mid a, b) 
-= \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)}
-\mu^{a - 1} (1 - \mu)^{b - 1},
-\]
-where $\Gamma(x)$ is the Gamma function given by 
-\[
-\Gamma(x) = \int_0^\infty t^{x - 1} e^{-t} \d t.
-\]
-\end{defi}
-The mean and variance of the beta distribution is given 
-by 
-\[
-\begin{aligned}
-\E[\mu] = \frac{a}{a + b}
-\quad \text{ and } \quad
-\var[\mu] = \frac{ab}{(a + b)^2 (a + b + 1)}.
-\end{aligned}
-\]
-
-\begin{defi}[conjugate distribution]
-In Bayesian probability theory, if, given a likelihood 
-function $p(x \mid \theta)$, the posterior distribution 
-$p(\theta \mid x)$ is in the same probability distribution 
-family as the prior probability distribution 
-$p(\theta)$, the prior and posterior are then called 
-\textbf{conjugate distributions} with respect to that 
-likelihood function and the prior is called a \textbf{conjugate 
-prior} for the likelihood function $p(x \mid \theta)$. 
-\end{defi}
-
-It is easy to verify that the beta distribution $\betaD
-(\mu \mid a, b)$ is  
-the \textbf{conjugate prior} of the binomial distribution
-$\binomial(m \mid N, \mu)$.
-
-\subsection{Multinomial vairables}
-
-\begin{defi}[multinomial distribution]
-The multinomial distribution is given by 
-\[
-\multinomial(m_1, \dots, m_K \mid \mu, N)
-= \binom{N}{m_1 \; m_2 \; \cdots \; m_K} 
-\prod_{k=1}^K \mu_k^{m_k},
-\]
-where $\sum_{k=1}^K m_k = N$, 
-$\mu = (\mu_1, \dots, \mu_K)$ is such that 
-$\sum_{k=1}^K \mu_k = 1$, and 
-\[
-\binom{N}{m_1 \; m_2 \; \cdots \; m_K}
-= \frac{N!}{m_1! \; m_2! \; \cdots \; m_K!}
-\]
-is the multinomial coefficient.
-\end{defi}
-
-\begin{defi}[Dirichlet distribution]
-The Dirichlet is a multivariate distribution over $K$ 
-random variables $0 \leq \mu_k \leq 1$,
-where $k = 1, \dots, K$, subject to the constraints
-\[
-0 \leq \mu_k \leq 1 \quad 
-\text{ and } \quad \sum_{k=1}^K \mu_k = 1.
-\]
-Denoting $\mu = (\mu_1, \dots, \mu_K)$ and 
-$\alpha = (\alpha_1, \dots, \alpha_K)$,
-the PDF of Dirichlet distribution is given by 
-\[
-\dirichlet(\mu \mid \alpha)
-= C(\alpha) \prod_{k=1}^K \mu_k^{\alpha_k - 1},
-\]
-where $C(\alpha)$ is a normalizing constant given by 
-\[
-C(\alpha) = \frac{\Gamma(\alpha_1 + \dots + \alpha_K)}
-{\Gamma(\alpha_1) \dots \Gamma(\alpha_K)}.
-\]
-\end{defi}
-
-It is easy to verify that the Dirichlet distribution
-is the \textbf{conjugate prior} of the multinomial distribution. 
-Indeed, 
-\[
-p(\mu \mid \dcal, \alpha)
-\propto p(\dcal \mid \mu) p(\mu \mid \alpha) 
-\propto \prod_{k=1}^K \mu_k^{\alpha_k + m_k - 1},
-\]
-so $p(\mu \mid \dcal, \alpha)
-= \dirichlet(\mu \mid \alpha + m)$, where we denote 
-$m = (m_1, \dots, m_K)$.
-
-\subsection{The Gaussian distribution}
-
-\begin{defi}[Gaussian distribution]
-The $D$-dimensional multivariate 
-\textbf{Gaussian distribution} is given by 
-\[
-\ncal (x \mid \mu, \Sigma) 
-= \frac{1}{(2\pi)^{D / 2} \abs{\Sigma}^{1 / 2}}
-\exp \left[ -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) 
-\right],
-\]
-where $\mu$ is the \textbf{mean} and $\Sigma$ is the 
-\textbf{covariance matrix}.
-The inverse of the covariance matrix $\Lambda = \Sigma^{-1}$ 
-is called the \textbf{precision matrix}.
-\end{defi}
-
-The moment and covariance of the Gaussian distribution
-is given by 
-\[
-\E[x] = \mu \quad \text{ and } \quad 
-\E[x x^T] = \mu \mu^T + \Sigma.
-\]
-Therefore, the covariance (or variance) is 
-\[
-\cov[x] = \E \left[ (x - \E[x]) (x - \E[x])^T \right]
-= \Sigma.
-\]
-
-Note that the functional dependence of the Gaussian on 
-$x$ is through the quadratic from
-\[
-\Delta^2 = (x - \mu)^T \Sigma^{-1} (x - \mu)
-\]
-which appears in the exponent. It is usually the case 
-that we can identify some distribution is Gaussian by 
-noting the quadratic form in the exponent. We can then 
-identify the mean and variance of the distribution by 
-\textbf{completing the square}. When completing the square,
-the following identity is very helpful:
-\[
-- \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) 
-= - \frac{1}{2} x^T \Sigma^{-1} x 
-+ x^T \Sigma^{-1} \mu + \const,
-\]
-where the constant is independent of $x$. This can helps 
-us read off the precision matrix and the mean from quadratic
-term and linear term of the expression.
-
-\subsubsection{Conditionals and marginals of Gaussian 
-distribution}
-
-When considering the conditional and marginals of Gaussian
-distributions, we often need to deal with \textbf{partitioned
-matrix}. The inverse of a partitioned matrix and itself 
-is related through the following identity: 
-\[
-\begin{bmatrix}
-  A & B \\
-  C & D
-\end{bmatrix}^{-1} 
-= 
-\begin{bmatrix}
-  M & - M B D^{-1} \\
-  - D^{-1} C M & D^{-1} + D^{-1} C M B D^{-1}
-\end{bmatrix},
-\]
-where 
-\[
-M = (A - B D^{-1} C)^{-1}.
-\]
-
-\begin{thm}
-Given a joint Gaussian distribution $\ncal (x \mid \mu,
-\Sigma)$ with $\Lambda = \Sigma^{-1}$, and 
-\[
-x = \begin{bmatrix}
-  x_a \\
-  x_b
-\end{bmatrix}, 
-\quad 
-\mu = \begin{bmatrix}
-  \mu_a \\
-  \mu_b
-\end{bmatrix}, 
-\quad 
-\Sigma = \begin{bmatrix}
-  \Sigma_{aa} & \Sigma_{ab} \\
-  \Sigma_{ba} & \Sigma_{bb}
-\end{bmatrix}, 
-\quad 
-\Lambda = \begin{bmatrix}
-  \Lambda_{aa} & \Lambda_{ab} \\
-  \Lambda_{ba} & \Lambda_{bb}
-\end{bmatrix}.
-\]
-We have the conditional distribution: 
-\[
-p(x_a \mid x_b) 
-= \ncal (x \mid \mu_{a \mid b}, \Lambda_{aa}^{-1}),
-\]
-where 
-\[
-\mu_{a \mid b} = \mu_a - \Lambda_{aa}^{-1} \Lambda_{ab} 
-(x_b - \mu_b),
-\]
-and the marginal distribution 
-\[
-p(x_a) = \ncal(x_a \mid \mu_a, \Sigma_{aa}).
-\] 
-\end{thm}
-
-\subsubsection{Bayes' theorem for Gaussian distribution}
-
-\begin{thm}
-Given a marginal Gaussian distribution for $x$ and a 
-conditional Gaussian distribution for $y$ given $x$ in 
-the form
-\[
-\begin{aligned}
-p(x) &= \ncal (x \mid \mu, \Lambda^{-1}), \\
-p(y \mid x) &= \ncal (y \mid A x + b, L^{-1}),
-\end{aligned}
-\]
-the marginal distribution of $y$ and the conditional 
-distribution of $x$ given $y$ are given by 
-\[
-\begin{aligned}
-p(y) &= \ncal (y \mid A \mu + b, L^{-1} + A \Lambda^{-1} A), \\
-p(x \mid y) &= \ncal (x \mid \Sigma (A^T L (y - b) + 
-\Lambda \mu), \Sigma),
-\end{aligned}
-\]
-where 
-\[
-\Sigma = (\Lambda + A^T L A)^{-1}.
-\]
-\end{thm}
-
-\subsubsection{Maximum likelihood for the Gaussian}
-
-Given a data set $X = \{x_1, \dots, x_N\}$ of obsrevations 
-drawn independent from a Gaussian distribution, we can 
-estimate the parameters of the distribution by maximum 
-likelihood. The log likelihood function is given by
-\[
-\log p(X \mid \mu, \Sigma)
-= -\frac{N D}{2} \log (2 \pi) - \frac{N}{2} \log \abs{\Sigma}
-- \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^T \Sigma^{-1} 
-(x_n - \mu).
-\]
-It is easy to notice that this only depends on $\sum_{n=1}^N 
-x_n$ and $\sum_{n=1}^N x_n x_n^T$. These quantities are 
-called the \textbf{sufficient statistics} for the Gaussian 
-distribution. We can easily 
-derive the maximum likelihood estimation by setting the
-corresponding partial derivative to zero: 
-\[
-\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n, 
-\quad 
-\Sigma_{\ML} = \frac{1}{N} \sum_{n=1}^N 
-(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
-\]
-
-Recall the moment of the Gaussian distribution 
-$\E[x] = \mu$ and $\E[x x^T] = \mu \mu^T + \Sigma$.
-It follows that 
-\[
-\begin{aligned}
-\E[x_n] = \mu, 
-\quad 
-\E[x_n \mu_{\ML}^T] 
-= \frac{N - 1}{N} \mu \mu^T + \frac{1}{N} \Sigma
-\end{aligned}
-\]
-for any $1 \leq n \leq N$, and 
-\[
-\E[\mu_{\ML} \mu_{\ML}^T]
-= \frac{N^2 - 1}{N^2} \mu \mu^T 
-+ \frac{N}{N^2 - 1} \Sigma.
-\]
-Therefore, if we evaluate the maximum likelihood estimation 
-under the true distribution, we obtain
-\[
-\E[\mu_{\ML}] = \mu,
-\quad 
-\E[\Sigma_{\ML}] = \frac{N - 1}{N} \Sigma,
-\]
-We can see that the estimation for mean is unbiased but the 
-estimation for variance is biased. We can correct this 
-by 
-\[
-\tilde{\Sigma} = \frac{1}{N - 1} \sum_{n=1}^N 
-(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
-\]
-It is clear that now 
-\[
-\E[\tilde{\Sigma}] = \Sigma,
-\]
-and $\tilde{\Sigma}$ is called the \textbf{unbiased 
-estimator} for the Gaussian distribution.
-
-\subsubsection{Bayesian inference for the Gaussian}
-
-Now consider a Bayesian model for Gaussian distribution.
-Suppose first the variance $\sigma^2$ of a Gaussian
-distribution is known and we 
-want to infer the mean $\mu$ with observed data 
-$X = \{x_1, \dots, x_N\}$. The likelihood function is 
-given by 
-\[
-p(X \mid \mu) = \frac{1}{(2 \pi \sigma^2)^{N / 2}}
-\exp \left[ - \frac{1}{2 \sigma^2} 
-\sum_{n=1}^N (x_n - \mu)^2 \right].
-\]
-It is important to note that this is not a probability
-distribution over $\mu$.
-If we take the prior to be also Gaussian, then it will be 
-conjugate to this likelihood function. Therefore, 
-we take our prior distribution to be 
-\[
-p(\mu) = \ncal(\mu \mid \mu_0, \sigma_0^2).
-\]
-Then the posterior is given by $p(\mu \mid X) 
-\propto p(X \mid \mu) p(\mu)$. Through calculation, 
-we can obtain that $p(\mu \mid X) = \ncal(\mu \mid
-\mu_N, \sigma_N)$, where 
-\[
-\begin{aligned}
-  \mu_N &= \frac{\sigma^2}{N \sigma_0^2 + \sigma^2} 
-  \mu_0 + \frac{N \sigma_0^2}{N \sigma_0^2 + \sigma^2} 
-  \mu_{\ML}, \\
-  \frac{1}{\sigma_N^2} &= \frac{1}{\sigma_0^2} 
-  + \frac{N}{\sigma^2},
-\end{aligned}
-\]
-in which $\mu_{\ML}$ is the maximum likelihood estimation 
-given by 
-\[
-\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n.
-\]
-Note that as we increase the number of observed data points (taking the 
-limit as $N \to \infty$), the precision steadily increases, 
-corresponding to a posterior distribution with steadily 
-decreasing variance.
-
-Now suppose the mean $\mu$ is known and we hope to infer 
-the variance. It turns out working with the precision 
-$\lambda = \frac{1}{\sigma^2}$ is more convenient. We 
-again write down the likelihood function: 
-\[
-p(X \mid \lambda) 
-\propto \lambda^{N / 2} 
-\exp \left[ - \frac{\lambda}{2} \sum_{n=1}^N 
-(x_n - \mu)^2 \right].
-\]
-To choose a conjugate prior, we introduce the 
-gamma distribution.
-
-\begin{defi}[gamma distribution]
-The \textbf{gamma distribution} is given by 
-\[
-\gammaD(\lambda \mid a, b) = 
-\frac{1}{\Gamma(a)} b^a \lambda^{a - 1} \exp (-b \lambda).
-\]  
-In particular, we have the following integral: 
-\[
-\begin{aligned}
-\int_0^\infty \lambda^{a - 1} \exp(- b \lambda) \d \lambda
-= \int_0^\infty \frac{1}{b^a} u^{a - 1} e^{-u} \d u 
-= \frac{1}{b^a} \Gamma(a),
-\end{aligned}
-\]
-where we used change of variable $u = b \lambda$
-in the first equality.
-\end{defi}
-
-Through more gamma function calculation, we can 
-obtain the mean and variance of the gamma distribution:
-\[
-\E[\lambda] = \frac{a}{b}, 
-\quad 
-\var[\lambda] = \frac{a}{b^2}.
-\]
-
-Now consider a prior distribution $\gammaD(\lambda 
-\mid a_0, b_0)$. We can then obtain the posterior
-\[
-p(\lambda \mid X) 
-\propto \lambda^{a_0 - 1} \lambda^{N / 2} 
-\exp \left[ - b_0 \lambda - \frac{\lambda}{2} 
-\sum_{n=1}^N (x_n - \mu)^2 \right],
-\]
-which is easily identified as a gamma distribution with 
-\[
-\begin{aligned}
-a_N &= a_0 + \frac{N}{2}, \\
-b_N &= b_0 + \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^2
-= b_0 + \frac{N}{2} \sigma_{\ML}^2,
-\end{aligned}
-\]
-and the normalization constant then follows easily.
-
-Now suppose both the mean and the variance is unknown.
-Consider the likelihood function: 
-\[
-\begin{aligned}
-p(X \mid \mu, \lambda)
-&= \prodn^N \frac{\lambda^{1 / 2}}{(2 \pi)^{1 / 2}}
-\exp \left[ - \frac{\lambda}{2} (x_n - \mu)^2 \right] \\
-&\propto \left[ \lambda^{1 / 2} \exp \left( - 
-\frac{\lambda \mu^2}{2} \right) \right]^{N}
-\exp \left[ \lambda \mu \sumn^N x_n 
-- \frac{\lambda}{2} \sumn^N x_n^2 \right].
-\end{aligned}
-\]
-Therefore, we should be looking for a conjugate prior 
-in the form of 
-\[
-\begin{aligned}
-p(\mu, \lambda)
-&\propto \left[ \lambda^{1 / 2} \exp \left( - \frac{\lambda \mu^2}
-{2} \right) \right]^\beta \exp \left( c \lambda \mu - 
-d \lambda \right) \\
-&= \exp \left[ - \frac{\lambda \beta}{2} 
-\left( \mu - \frac{c}{\beta} \right)^2 \right]
-\lambda^{\beta / 2} \exp \left[ - \left( d - 
-\frac{c^2}{2 \beta} \right) \lambda \right].
-\end{aligned}
-\]
-This is the \textbf{Gaussian-gamma distribution}: 
-\[
-p(\mu, \lambda) 
-= \ncal (\mu \mid \mu_0, (\beta \lambda)^{-1}) 
-\gammaD (\lambda \mid a, b),
-\]
-where $\mu_0 = \frac{c}{\beta}$, $a = \frac{\beta}{2} + 1$,
-and $b = d - \frac{c^2}{2 \beta}$.
-
-\subsubsection{Student's t-distribution}
-
-We have seen the conjugate prior for the precision 
-of a Gaussian is given by the gamma distribution. Now 
-suppose we have a univariate Gaussian $\ncal(x \mid \mu, 
-\tau^{-1})$ together with a gamma prior $\gammaD (\tau \mid 
-a, b)$, we integrate over the precision to get
-\[
-\begin{aligned}
-p(x \mid \mu, a, b) 
-&= \int_0^\infty \ncal(x \mid \mu, \tau^{-1}) 
-\gammaD(\tau \mid a, b) \d \tau \\
-&= \int_0^\infty \frac{\tau^{1 / 2}}{(2 \pi)^{1 / 2}} 
-\exp \left[ -\frac{\tau}{2} (x - \mu)^2 \right] 
-\frac{1}{\Gamma(a)} b^a \tau^{a - 1} \exp (- \tau b) \d \tau \\
-&= \frac{b^a}{\Gamma(a)} \frac{1}{(2 \pi)^{1 / 2}} 
-\left[ b + \frac{(x - \mu)^2}{2} + b \right]^{- a - 1 / 2}
-\Gamma \left( a + 1 / 2 \right).
-\end{aligned}
-\]
-Now we introduce a new distribution.
-\begin{defi}[student's t-distribution]
-The \textbf{student's t-distribution} is given by 
-\[
-\St (x \mid \mu, \lambda, \nu)
-= \frac{\Gamma \left( \nu / 2 + 1 / 2 \right)}
-{\Gamma \left( \nu / 2 \right)} 
-\left( \frac{\lambda}{\pi \nu} \right)^{1 / 2} 
-\left[ 1 + \frac{\lambda (x - \mu)^2}{\nu} \right]^{ - 
-\nu / 2 - 1 / 2},
-\]
-where $\nu$ is called the \textbf{degrees of freedom}
-of the distribution.
-\end{defi}
-
-Student's t-distribution have longer tails than the 
-Gaussian distribution, so it is more \textbf{robust} 
--- much less sensitive to a few outliers.
-
-It is easy to verify that 
-\[
-\St(x \mid \mu, \lambda, \nu) 
-= \int_0^\infty \ncal(x \mid \mu, (\eta \lambda)^{-1})
-\gammaD (\eta \mid \nu / 2, \nu / 2) \d \eta.
-\]
-We can then generalize this to \textbf{a multivariate 
-student's t-distribution}: 
-\[
-\St (x \mid \mu, \Lambda, \nu) 
-= \int_0^\infty \ncal(x \mid \mu, (\eta \Lambda)^{-1}) 
-\gammaD(\eta \mid \nu / 2, \nu / 2) \d \eta.
-\]
-Through computation, we obtain 
-\[
-\St (x \mid \mu, \Lambda, \nu) 
-= \frac{\Gamma(D / 2 + \nu / 2)}{\Gamma(\nu / 2)} 
-\frac{\abs{\Lambda}^{1 / 2}}{(\pi \nu)^{D / 2}}
-\left( 1 + \frac{\Delta^2}{\nu} \right)^{- D / 2 - 
-\nu / 2},
-\]
-where $D$ is the dimensionality of $x$ and 
-\[
-\Delta^2 = (x - \mu)^T \Lambda (x - \mu).
-\]
-We also have 
-\[
-\begin{aligned}
-  \E[x] &= \mu & \text{if $\nu > 1$}, \\
-  \cov[x] &= \frac{\nu}{(\nu - 2)} \Lambda^{-1} 
-  & \text{if $\nu > 2$}, \\
-  \mode[x] &= \mu.
-\end{aligned}
-\]
-
-\subsection{The exponential family}
-
-\begin{defi}
-The exponential family of distributions over $x$, 
-given parameters $\eta$, is defined to be the set of 
-distributions of the form
-\[
-p(x \mid \eta) = h(x) g(\eta) \exp \left[ \eta^T u(x) 
-\right].
-\]
-Here $\eta$ is called the \textbf{natural parameters}
-of the distribution, $u(x)$ is some function of $x$ 
-and $g(\eta)$ can be interpreted as a normalization 
-constant so that 
-\[
-g(\eta) \int h(x) \exp \left[ \eta^T u(x) \right] \d x = 1.
-\]
-\end{defi}
-
-
 \section{Probability and statistical inference}
 
 \subsection{Basic probability theory}
@@ -1159,6 +618,546 @@ $(\epsilon, \delta)$-PAC with
 \epsilon = O \left( \frac{\log \hcal[n] + \log (1 / \delta)}{n} \right)
 = O \left( \frac{\VC(\hcal) \cdot \log n + \log (1 / \delta)}{n} \right).
 \]
+
+\section{Probability distributions}
+
+\subsection{Binary variables}
+
+\begin{defi}[binomial distribution]
+The binomial distribution is given by 
+\[
+\binomial(m \mid N, \mu) 
+= \binom{N}{m} \mu^{m} (1 - \mu)^{N - m},
+\]
+where 
+\[
+\binom{N}{m} = \frac{N!}{(N - m)! m!} 
+\]
+is the binomial coefficient.
+\end{defi}
+
+\begin{defi}[beta distribution]
+The beta distribution is given by 
+\[
+\betaD(\mu \mid a, b) 
+= \frac{\Gamma(a + b)}{\Gamma(a) \Gamma(b)}
+\mu^{a - 1} (1 - \mu)^{b - 1},
+\]
+where $\Gamma(x)$ is the Gamma function given by 
+\[
+\Gamma(x) = \int_0^\infty t^{x - 1} e^{-t} \d t.
+\]
+\end{defi}
+The mean and variance of the beta distribution is given 
+by 
+\[
+\begin{aligned}
+\E[\mu] = \frac{a}{a + b}
+\quad \text{ and } \quad
+\var[\mu] = \frac{ab}{(a + b)^2 (a + b + 1)}.
+\end{aligned}
+\]
+
+\begin{defi}[conjugate distribution]
+In Bayesian probability theory, if, given a likelihood 
+function $p(x \mid \theta)$, the posterior distribution 
+$p(\theta \mid x)$ is in the same probability distribution 
+family as the prior probability distribution 
+$p(\theta)$, the prior and posterior are then called 
+\textbf{conjugate distributions} with respect to that 
+likelihood function and the prior is called a \textbf{conjugate 
+prior} for the likelihood function $p(x \mid \theta)$. 
+\end{defi}
+
+It is easy to verify that the beta distribution $\betaD
+(\mu \mid a, b)$ is  
+the \textbf{conjugate prior} of the binomial distribution
+$\binomial(m \mid N, \mu)$.
+
+\subsection{Multinomial vairables}
+
+\begin{defi}[multinomial distribution]
+The multinomial distribution is given by 
+\[
+\multinomial(m_1, \dots, m_K \mid \mu, N)
+= \binom{N}{m_1 \; m_2 \; \cdots \; m_K} 
+\prod_{k=1}^K \mu_k^{m_k},
+\]
+where $\sum_{k=1}^K m_k = N$, 
+$\mu = (\mu_1, \dots, \mu_K)$ is such that 
+$\sum_{k=1}^K \mu_k = 1$, and 
+\[
+\binom{N}{m_1 \; m_2 \; \cdots \; m_K}
+= \frac{N!}{m_1! \; m_2! \; \cdots \; m_K!}
+\]
+is the multinomial coefficient.
+\end{defi}
+
+\begin{defi}[Dirichlet distribution]
+The Dirichlet is a multivariate distribution over $K$ 
+random variables $0 \leq \mu_k \leq 1$,
+where $k = 1, \dots, K$, subject to the constraints
+\[
+0 \leq \mu_k \leq 1 \quad 
+\text{ and } \quad \sum_{k=1}^K \mu_k = 1.
+\]
+Denoting $\mu = (\mu_1, \dots, \mu_K)$ and 
+$\alpha = (\alpha_1, \dots, \alpha_K)$,
+the PDF of Dirichlet distribution is given by 
+\[
+\dirichlet(\mu \mid \alpha)
+= C(\alpha) \prod_{k=1}^K \mu_k^{\alpha_k - 1},
+\]
+where $C(\alpha)$ is a normalizing constant given by 
+\[
+C(\alpha) = \frac{\Gamma(\alpha_1 + \dots + \alpha_K)}
+{\Gamma(\alpha_1) \dots \Gamma(\alpha_K)}.
+\]
+\end{defi}
+
+It is easy to verify that the Dirichlet distribution
+is the \textbf{conjugate prior} of the multinomial distribution. 
+Indeed, 
+\[
+p(\mu \mid \dcal, \alpha)
+\propto p(\dcal \mid \mu) p(\mu \mid \alpha) 
+\propto \prod_{k=1}^K \mu_k^{\alpha_k + m_k - 1},
+\]
+so $p(\mu \mid \dcal, \alpha)
+= \dirichlet(\mu \mid \alpha + m)$, where we denote 
+$m = (m_1, \dots, m_K)$.
+
+\subsection{The Gaussian distribution}
+
+\begin{defi}[Gaussian distribution]
+The $D$-dimensional multivariate 
+\textbf{Gaussian distribution} is given by 
+\[
+\ncal (x \mid \mu, \Sigma) 
+= \frac{1}{(2\pi)^{D / 2} \abs{\Sigma}^{1 / 2}}
+\exp \left[ -\frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) 
+\right],
+\]
+where $\mu$ is the \textbf{mean} and $\Sigma$ is the 
+\textbf{covariance matrix}.
+The inverse of the covariance matrix $\Lambda = \Sigma^{-1}$ 
+is called the \textbf{precision matrix}.
+\end{defi}
+
+The moment and covariance of the Gaussian distribution
+is given by 
+\[
+\E[x] = \mu \quad \text{ and } \quad 
+\E[x x^T] = \mu \mu^T + \Sigma.
+\]
+Therefore, the covariance (or variance) is 
+\[
+\cov[x] = \E \left[ (x - \E[x]) (x - \E[x])^T \right]
+= \Sigma.
+\]
+
+Note that the functional dependence of the Gaussian on 
+$x$ is through the quadratic from
+\[
+\Delta^2 = (x - \mu)^T \Sigma^{-1} (x - \mu)
+\]
+which appears in the exponent. It is usually the case 
+that we can identify some distribution is Gaussian by 
+noting the quadratic form in the exponent. We can then 
+identify the mean and variance of the distribution by 
+\textbf{completing the square}. When completing the square,
+the following identity is very helpful:
+\[
+- \frac{1}{2} (x - \mu)^T \Sigma^{-1} (x - \mu) 
+= - \frac{1}{2} x^T \Sigma^{-1} x 
++ x^T \Sigma^{-1} \mu + \const,
+\]
+where the constant is independent of $x$. This can helps 
+us read off the precision matrix and the mean from quadratic
+term and linear term of the expression.
+
+\subsubsection{Conditionals and marginals of Gaussian 
+distribution}
+
+When considering the conditional and marginals of Gaussian
+distributions, we often need to deal with \textbf{partitioned
+matrix}. The inverse of a partitioned matrix and itself 
+is related through the following identity: 
+\[
+\begin{bmatrix}
+  A & B \\
+  C & D
+\end{bmatrix}^{-1} 
+= 
+\begin{bmatrix}
+  M & - M B D^{-1} \\
+  - D^{-1} C M & D^{-1} + D^{-1} C M B D^{-1}
+\end{bmatrix},
+\]
+where 
+\[
+M = (A - B D^{-1} C)^{-1}.
+\]
+
+\begin{thm}
+Given a joint Gaussian distribution $\ncal (x \mid \mu,
+\Sigma)$ with $\Lambda = \Sigma^{-1}$, and 
+\[
+x = \begin{bmatrix}
+  x_a \\
+  x_b
+\end{bmatrix}, 
+\quad 
+\mu = \begin{bmatrix}
+  \mu_a \\
+  \mu_b
+\end{bmatrix}, 
+\quad 
+\Sigma = \begin{bmatrix}
+  \Sigma_{aa} & \Sigma_{ab} \\
+  \Sigma_{ba} & \Sigma_{bb}
+\end{bmatrix}, 
+\quad 
+\Lambda = \begin{bmatrix}
+  \Lambda_{aa} & \Lambda_{ab} \\
+  \Lambda_{ba} & \Lambda_{bb}
+\end{bmatrix}.
+\]
+We have the conditional distribution: 
+\[
+p(x_a \mid x_b) 
+= \ncal (x \mid \mu_{a \mid b}, \Lambda_{aa}^{-1}),
+\]
+where 
+\[
+\mu_{a \mid b} = \mu_a - \Lambda_{aa}^{-1} \Lambda_{ab} 
+(x_b - \mu_b),
+\]
+and the marginal distribution 
+\[
+p(x_a) = \ncal(x_a \mid \mu_a, \Sigma_{aa}).
+\] 
+\end{thm}
+
+\subsubsection{Bayes' theorem for Gaussian distribution}
+
+\begin{thm}
+Given a marginal Gaussian distribution for $x$ and a 
+conditional Gaussian distribution for $y$ given $x$ in 
+the form
+\[
+\begin{aligned}
+p(x) &= \ncal (x \mid \mu, \Lambda^{-1}), \\
+p(y \mid x) &= \ncal (y \mid A x + b, L^{-1}),
+\end{aligned}
+\]
+the marginal distribution of $y$ and the conditional 
+distribution of $x$ given $y$ are given by 
+\[
+\begin{aligned}
+p(y) &= \ncal (y \mid A \mu + b, L^{-1} + A \Lambda^{-1} A), \\
+p(x \mid y) &= \ncal (x \mid \Sigma (A^T L (y - b) + 
+\Lambda \mu), \Sigma),
+\end{aligned}
+\]
+where 
+\[
+\Sigma = (\Lambda + A^T L A)^{-1}.
+\]
+\end{thm}
+
+\subsubsection{Maximum likelihood for the Gaussian}
+
+Given a data set $X = \{x_1, \dots, x_N\}$ of obsrevations 
+drawn independent from a Gaussian distribution, we can 
+estimate the parameters of the distribution by maximum 
+likelihood. The log likelihood function is given by
+\[
+\log p(X \mid \mu, \Sigma)
+= -\frac{N D}{2} \log (2 \pi) - \frac{N}{2} \log \abs{\Sigma}
+- \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^T \Sigma^{-1} 
+(x_n - \mu).
+\]
+It is easy to notice that this only depends on $\sum_{n=1}^N 
+x_n$ and $\sum_{n=1}^N x_n x_n^T$. These quantities are 
+called the \textbf{sufficient statistics} for the Gaussian 
+distribution. We can easily 
+derive the maximum likelihood estimation by setting the
+corresponding partial derivative to zero: 
+\[
+\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n, 
+\quad 
+\Sigma_{\ML} = \frac{1}{N} \sum_{n=1}^N 
+(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
+\]
+
+Recall the moment of the Gaussian distribution 
+$\E[x] = \mu$ and $\E[x x^T] = \mu \mu^T + \Sigma$.
+It follows that 
+\[
+\begin{aligned}
+\E[x_n] = \mu, 
+\quad 
+\E[x_n \mu_{\ML}^T] 
+= \frac{N - 1}{N} \mu \mu^T + \frac{1}{N} \Sigma
+\end{aligned}
+\]
+for any $1 \leq n \leq N$, and 
+\[
+\E[\mu_{\ML} \mu_{\ML}^T]
+= \frac{N^2 - 1}{N^2} \mu \mu^T 
++ \frac{N}{N^2 - 1} \Sigma.
+\]
+Therefore, if we evaluate the maximum likelihood estimation 
+under the true distribution, we obtain
+\[
+\E[\mu_{\ML}] = \mu,
+\quad 
+\E[\Sigma_{\ML}] = \frac{N - 1}{N} \Sigma,
+\]
+We can see that the estimation for mean is unbiased but the 
+estimation for variance is biased. We can correct this 
+by 
+\[
+\tilde{\Sigma} = \frac{1}{N - 1} \sum_{n=1}^N 
+(x_n - \mu_{\ML}) (x_n - \mu_{\ML})^T.
+\]
+It is clear that now 
+\[
+\E[\tilde{\Sigma}] = \Sigma,
+\]
+and $\tilde{\Sigma}$ is called the \textbf{unbiased 
+estimator} for the Gaussian distribution.
+
+\subsubsection{Bayesian inference for the Gaussian}
+
+Now consider a Bayesian model for Gaussian distribution.
+Suppose first the variance $\sigma^2$ of a Gaussian
+distribution is known and we 
+want to infer the mean $\mu$ with observed data 
+$X = \{x_1, \dots, x_N\}$. The likelihood function is 
+given by 
+\[
+p(X \mid \mu) = \frac{1}{(2 \pi \sigma^2)^{N / 2}}
+\exp \left[ - \frac{1}{2 \sigma^2} 
+\sum_{n=1}^N (x_n - \mu)^2 \right].
+\]
+It is important to note that this is not a probability
+distribution over $\mu$.
+If we take the prior to be also Gaussian, then it will be 
+conjugate to this likelihood function. Therefore, 
+we take our prior distribution to be 
+\[
+p(\mu) = \ncal(\mu \mid \mu_0, \sigma_0^2).
+\]
+Then the posterior is given by $p(\mu \mid X) 
+\propto p(X \mid \mu) p(\mu)$. Through calculation, 
+we can obtain that $p(\mu \mid X) = \ncal(\mu \mid
+\mu_N, \sigma_N)$, where 
+\[
+\begin{aligned}
+  \mu_N &= \frac{\sigma^2}{N \sigma_0^2 + \sigma^2} 
+  \mu_0 + \frac{N \sigma_0^2}{N \sigma_0^2 + \sigma^2} 
+  \mu_{\ML}, \\
+  \frac{1}{\sigma_N^2} &= \frac{1}{\sigma_0^2} 
+  + \frac{N}{\sigma^2},
+\end{aligned}
+\]
+in which $\mu_{\ML}$ is the maximum likelihood estimation 
+given by 
+\[
+\mu_{\ML} = \frac{1}{N} \sum_{n=1}^N x_n.
+\]
+Note that as we increase the number of observed data points (taking the 
+limit as $N \to \infty$), the precision steadily increases, 
+corresponding to a posterior distribution with steadily 
+decreasing variance.
+
+Now suppose the mean $\mu$ is known and we hope to infer 
+the variance. It turns out working with the precision 
+$\lambda = \frac{1}{\sigma^2}$ is more convenient. We 
+again write down the likelihood function: 
+\[
+p(X \mid \lambda) 
+\propto \lambda^{N / 2} 
+\exp \left[ - \frac{\lambda}{2} \sum_{n=1}^N 
+(x_n - \mu)^2 \right].
+\]
+To choose a conjugate prior, we introduce the 
+gamma distribution.
+
+\begin{defi}[gamma distribution]
+The \textbf{gamma distribution} is given by 
+\[
+\gammaD(\lambda \mid a, b) = 
+\frac{1}{\Gamma(a)} b^a \lambda^{a - 1} \exp (-b \lambda).
+\]  
+In particular, we have the following integral: 
+\[
+\begin{aligned}
+\int_0^\infty \lambda^{a - 1} \exp(- b \lambda) \d \lambda
+= \int_0^\infty \frac{1}{b^a} u^{a - 1} e^{-u} \d u 
+= \frac{1}{b^a} \Gamma(a),
+\end{aligned}
+\]
+where we used change of variable $u = b \lambda$
+in the first equality.
+\end{defi}
+
+Through more gamma function calculation, we can 
+obtain the mean and variance of the gamma distribution:
+\[
+\E[\lambda] = \frac{a}{b}, 
+\quad 
+\var[\lambda] = \frac{a}{b^2}.
+\]
+
+Now consider a prior distribution $\gammaD(\lambda 
+\mid a_0, b_0)$. We can then obtain the posterior
+\[
+p(\lambda \mid X) 
+\propto \lambda^{a_0 - 1} \lambda^{N / 2} 
+\exp \left[ - b_0 \lambda - \frac{\lambda}{2} 
+\sum_{n=1}^N (x_n - \mu)^2 \right],
+\]
+which is easily identified as a gamma distribution with 
+\[
+\begin{aligned}
+a_N &= a_0 + \frac{N}{2}, \\
+b_N &= b_0 + \frac{1}{2} \sum_{n=1}^N (x_n - \mu)^2
+= b_0 + \frac{N}{2} \sigma_{\ML}^2,
+\end{aligned}
+\]
+and the normalization constant then follows easily.
+
+Now suppose both the mean and the variance is unknown.
+Consider the likelihood function: 
+\[
+\begin{aligned}
+p(X \mid \mu, \lambda)
+&= \prodn^N \frac{\lambda^{1 / 2}}{(2 \pi)^{1 / 2}}
+\exp \left[ - \frac{\lambda}{2} (x_n - \mu)^2 \right] \\
+&\propto \left[ \lambda^{1 / 2} \exp \left( - 
+\frac{\lambda \mu^2}{2} \right) \right]^{N}
+\exp \left[ \lambda \mu \sumn^N x_n 
+- \frac{\lambda}{2} \sumn^N x_n^2 \right].
+\end{aligned}
+\]
+Therefore, we should be looking for a conjugate prior 
+in the form of 
+\[
+\begin{aligned}
+p(\mu, \lambda)
+&\propto \left[ \lambda^{1 / 2} \exp \left( - \frac{\lambda \mu^2}
+{2} \right) \right]^\beta \exp \left( c \lambda \mu - 
+d \lambda \right) \\
+&= \exp \left[ - \frac{\lambda \beta}{2} 
+\left( \mu - \frac{c}{\beta} \right)^2 \right]
+\lambda^{\beta / 2} \exp \left[ - \left( d - 
+\frac{c^2}{2 \beta} \right) \lambda \right].
+\end{aligned}
+\]
+This is the \textbf{Gaussian-gamma distribution}: 
+\[
+p(\mu, \lambda) 
+= \ncal (\mu \mid \mu_0, (\beta \lambda)^{-1}) 
+\gammaD (\lambda \mid a, b),
+\]
+where $\mu_0 = \frac{c}{\beta}$, $a = \frac{\beta}{2} + 1$,
+and $b = d - \frac{c^2}{2 \beta}$.
+
+\subsubsection{Student's t-distribution}
+
+We have seen the conjugate prior for the precision 
+of a Gaussian is given by the gamma distribution. Now 
+suppose we have a univariate Gaussian $\ncal(x \mid \mu, 
+\tau^{-1})$ together with a gamma prior $\gammaD (\tau \mid 
+a, b)$, we integrate over the precision to get
+\[
+\begin{aligned}
+p(x \mid \mu, a, b) 
+&= \int_0^\infty \ncal(x \mid \mu, \tau^{-1}) 
+\gammaD(\tau \mid a, b) \d \tau \\
+&= \int_0^\infty \frac{\tau^{1 / 2}}{(2 \pi)^{1 / 2}} 
+\exp \left[ -\frac{\tau}{2} (x - \mu)^2 \right] 
+\frac{1}{\Gamma(a)} b^a \tau^{a - 1} \exp (- \tau b) \d \tau \\
+&= \frac{b^a}{\Gamma(a)} \frac{1}{(2 \pi)^{1 / 2}} 
+\left[ b + \frac{(x - \mu)^2}{2} + b \right]^{- a - 1 / 2}
+\Gamma \left( a + 1 / 2 \right).
+\end{aligned}
+\]
+Now we introduce a new distribution.
+\begin{defi}[student's t-distribution]
+The \textbf{student's t-distribution} is given by 
+\[
+\St (x \mid \mu, \lambda, \nu)
+= \frac{\Gamma \left( \nu / 2 + 1 / 2 \right)}
+{\Gamma \left( \nu / 2 \right)} 
+\left( \frac{\lambda}{\pi \nu} \right)^{1 / 2} 
+\left[ 1 + \frac{\lambda (x - \mu)^2}{\nu} \right]^{ - 
+\nu / 2 - 1 / 2},
+\]
+where $\nu$ is called the \textbf{degrees of freedom}
+of the distribution.
+\end{defi}
+
+Student's t-distribution have longer tails than the 
+Gaussian distribution, so it is more \textbf{robust} 
+-- much less sensitive to a few outliers.
+
+It is easy to verify that 
+\[
+\St(x \mid \mu, \lambda, \nu) 
+= \int_0^\infty \ncal(x \mid \mu, (\eta \lambda)^{-1})
+\gammaD (\eta \mid \nu / 2, \nu / 2) \d \eta.
+\]
+We can then generalize this to \textbf{a multivariate 
+student's t-distribution}: 
+\[
+\St (x \mid \mu, \Lambda, \nu) 
+= \int_0^\infty \ncal(x \mid \mu, (\eta \Lambda)^{-1}) 
+\gammaD(\eta \mid \nu / 2, \nu / 2) \d \eta.
+\]
+Through computation, we obtain 
+\[
+\St (x \mid \mu, \Lambda, \nu) 
+= \frac{\Gamma(D / 2 + \nu / 2)}{\Gamma(\nu / 2)} 
+\frac{\abs{\Lambda}^{1 / 2}}{(\pi \nu)^{D / 2}}
+\left( 1 + \frac{\Delta^2}{\nu} \right)^{- D / 2 - 
+\nu / 2},
+\]
+where $D$ is the dimensionality of $x$ and 
+\[
+\Delta^2 = (x - \mu)^T \Lambda (x - \mu).
+\]
+We also have 
+\[
+\begin{aligned}
+  \E[x] &= \mu & \text{if $\nu > 1$}, \\
+  \cov[x] &= \frac{\nu}{(\nu - 2)} \Lambda^{-1} 
+  & \text{if $\nu > 2$}, \\
+  \mode[x] &= \mu.
+\end{aligned}
+\]
+
+\subsection{The exponential family}
+
+\begin{defi}
+The exponential family of distributions over $x$, 
+given parameters $\eta$, is defined to be the set of 
+distributions of the form
+\[
+p(x \mid \eta) = h(x) g(\eta) \exp \left[ \eta^T u(x) 
+\right].
+\]
+Here $\eta$ is called the \textbf{natural parameters}
+of the distribution, $u(x)$ is some function of $x$ 
+and $g(\eta)$ can be interpreted as a normalization 
+constant so that 
+\[
+g(\eta) \int h(x) \exp \left[ \eta^T u(x) \right] \d x = 1.
+\]
+\end{defi}
 
 
 
