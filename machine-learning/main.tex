@@ -1664,6 +1664,47 @@ distribution, while minimizing $\KLD{p}{q}$ tends
 to give an \textbf{average across a large region}
 (see figures in PRML).
 
+\subsubsection{Model comparison}
+
+As well as performing inference over the hidden variables 
+$Z$, we may also wish to compare a set of candidate models, 
+labelled by the index $m$, and having prior probabilities 
+$p(m)$. Our goal is then to approximate the posterior 
+probabilities $p(m \mid X)$, where X is the observed data.
+
+We must recognize that the posterior over $Z$ must be 
+conditioned on m, and so we must consider
+$q(Z, m) = q(Z \mid m) q(m)$. We then have the following 
+variational distribution:
+\[
+\log p(X) = \L_m - \sum_m \sum_Z q(Z \mid m) q(m) 
+\log \frac{p(Z, m \mid X)}{q(Z \mid m) q(m)},
+\]
+where $\L_m$ is a lower bound for $\log p(X)$ given 
+by 
+\[
+\L_m = \sum_m \sum_Z q(Z \mid m) q(m) 
+\log \frac{p(X, Z, m)}{q(Z \mid m) q(m)}.
+\]
+
+Now, if we consider a specific model $M$ and 
+assign equal prior $p(m)$ to each model $m$, then 
+\[
+\L = \sum_Z q(Z \mid M) \log \frac{p(X, Z \mid M)}{q(Z \mid M)}
+\]
+is a lower bound for $\log p(X \mid M)$. Note that 
+we also have
+\[
+p(M \mid X) \propto p(X \mid M) p(M).
+\]
+However, $p(m)$ are equal for each $m$. This implies that
+we can interprete $\L$ as an approximation to the posterior
+$p(M \mid X)$, and we can do model selection using the value 
+of $\L$ for each model. This should be contrasted with a
+maximum likelihood approproach, which tend to overfit 
+models.
+
+
 \subsection{Illustration: variational mixture of
 Gaussians}
 
