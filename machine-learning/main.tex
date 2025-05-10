@@ -1661,11 +1661,33 @@ take the form
 \KLD{p}{q} = - \int p(Z) \left[ \sum_{i=1}^M \log q_i 
 (Z_i) \right] \d Z + \const.
 \]
-
-\TODO{use Lagrange multiplier and functional derivative 
-to derive the optimization result.}
-
-The optimization result is 
+To optimize this, consider the Lagrangian 
+\[
+\begin{aligned}
+L[q_j] = - \int p(Z) \log q_j(Z_j) \d Z + 
+\lambda \int q_j (Z_j) \d Z_j,
+\end{aligned}
+\]
+where we have kept only the terms dependent on $q_j$. 
+Note also
+\[
+\begin{aligned}
+\int p(Z) \left[ \sumi^M \log q_i (Z_i) \right] \d Z 
+= \int \log q_j(Z_j) \left[ \int p(Z) \prod_{i \neq j} 
+d Z_i \right] d Z_j.
+\end{aligned}
+\]
+It follows that
+\[
+L[q_j] = -\int \log q_j(Z_j) \left[ \int p(Z) \prod_{i \neq j} 
+d Z_i \right] d Z_j + \lambda \int q_j(Z_j) \d Z_j.
+\]
+Taking the functional derivative, we can then obtain
+\[
+\lambda = 
+- \frac{1}{q_j(Z_j)} \int p(Z) \prod_{i \neq j} d Z_j.
+\]
+Therefore, 
 \[
 q_j^\star (Z_j) = \int p(Z) \prod_{i \neq j} \d Z_i = p(Z_j).
 \]
@@ -1686,7 +1708,7 @@ in region where $p(Z)$ is nonzero. It follows that
 minimizing $\KLD{q}{p}$ often leads to a more \textbf{compact} 
 distribution, while minimizing $\KLD{p}{q}$ tends 
 to give an \textbf{average across a large region}
-(see figures in PRML).
+(see PRML page 469, 472).
 
 \subsubsection{Model comparison}
 
@@ -1726,7 +1748,7 @@ we can interprete $\L$ as an approximation to the posterior
 $p(M \mid X)$, and we can do model selection using the value 
 of $\L$ for each model. This should be contrasted with a
 maximum likelihood approproach, which tend to overfit 
-models.
+models (see PRML page 489-490).
 
 
 \subsection{Illustration: variational mixture of
