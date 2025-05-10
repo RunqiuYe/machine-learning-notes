@@ -1200,17 +1200,40 @@ The exponential family of distributions over $x$,
 given parameters $\eta$, is defined to be the set of 
 distributions of the form
 \[
-p(x \mid \eta) = h(x) g(\eta) \exp \left[ \eta^T u(x) 
-\right].
+p(x \mid \eta) = h(x) g(\eta) \exp \left( \eta^T u(x) 
+\right).
 \]
 Here $\eta$ is called the \textbf{natural parameters}
 of the distribution, $u(x)$ is some function of $x$ 
 and $g(\eta)$ can be interpreted as a normalization 
 constant so that 
 \[
-g(\eta) \int h(x) \exp \left[ \eta^T u(x) \right] \d x = 1.
+g(\eta) \int h(x) \exp \left( \eta^T u(x) \right) \d x = 1.
 \]
 \end{defi}
+
+For any member in the exponential family, there is a 
+\textbf{conjugate prior} that can be written in the form of 
+\[
+p(\eta \mid \chi, \nu)
+= f(\chi, \nu) g(\eta)^\nu \exp \left( \nu \eta^T \chi 
+\right),
+\]
+where $f(\chi, \nu)$ is a normalization constant, and 
+$g$ is the same function as in the likelihood distribution
+$p(x \mid \eta)$. To see this is indeed a conjugate prior,
+note that we have 
+\[
+p(\eta \mid X, \chi, \nu) 
+\propto g(\eta)^{\nu + N} \exp \left[ \eta^T 
+\left( \nu \chi + \sum_{n=1}^N u(x_n) \right) \right].
+\]
+This is indeed in the same functional form as the 
+prior distribution $p(\eta \mid \chi, \nu)$.
+Moreover, $\nu$ can be interpreted as a effective number of
+pseudo-observations in the prior, each of which has a value 
+for the sufficient statistic $u(x)$ given by $\chi$.
+
 
 
 
