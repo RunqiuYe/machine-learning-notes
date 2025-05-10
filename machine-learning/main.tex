@@ -206,6 +206,8 @@ Below is the definition of a confidence set/interval.
 \textbf{Warning!} In the above definition,
 $C_n$ is random and $\theta$ is fixed.
 
+\section{Learning theory}
+
 \subsection{PAC learning}
 
 PAC learning is short for Probably Approxinate Correct
@@ -381,8 +383,8 @@ size and the performance of the hypothesis, evaluated
 in terms of risk. We first present the definition
 of risk.
 
-\begin{defi}[Risk]
-  The risk of a hypothesis $h$ is defined as
+\begin{defi}[risk]
+  The \textbf{risk} of a hypothesis $h$ is defined as
   \[
   \risk_D (h) = \E_{x \sim D} [ \ell(h(x), y) ].
   \]
@@ -453,7 +455,8 @@ of risk.
   we can utilize the \textbf{Hoeffding bound} to get
   \[
   \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i > \epsilon \right]
-  \leq e^{- 2 n \epsilon^2} \text{ and }
+  \leq e^{- 2 n \epsilon^2} 
+  \quad \text{ and } \quad
   \Pr \left[ \frac{1}{n} \sum_{i=1}^n Z_i < -\epsilon \right]
   \leq e^{- 2 n \epsilon^2}
   \]
@@ -510,6 +513,27 @@ for agnostic learning. Since $\epsilon < 1$,
 we can deduce that agnostic learning needs
 \textbf{more sample} for the estimator to achieve the
 same $(\epsilon, \delta)$-PAC bound.
+
+
+
+\begin{thm}[Hoeffding inequality]
+Let $X_1, \dots, X_n$ be independent random variables
+such that $a_i \leq X_i \leq b_i$ almost surely.
+Let 
+\[
+S = X_1 + \dots + X_n.
+\]
+Then for all $t > 0$, we have 
+\[
+\begin{aligned}
+\Pr [S - \E[S] \geq t] &\leq \exp \left[ \frac{2t^2}
+{\sumi^n (b_i - a_i)^2} \right], \\
+\Pr [\abs{S - \E[s]} \geq t] &\leq 2\exp \left[ \frac{2t^2}
+{\sumi^n (b_i - a_i)^2} \right].
+\end{aligned}
+\]
+\end{thm}
+  
 
 \subsection{Infinite hypotheses space and VC dimension}
 
