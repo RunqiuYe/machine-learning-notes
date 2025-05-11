@@ -1816,6 +1816,150 @@ where we often choose $m_0 = 0$ by symmetry.
 
 \subsection{Local variational methods}
 
+In previous sections we tried to approximate the whole
+posterior distribution, now we introduce an approach
+to approximate an \textbf{individual distribution}, often a 
+factor in the much larger model specified by a graph.
+
+Consider the \textbf{convex} function $f(x) = \exp (-x)$. 
+We want to approximate this with a simpler function.
+Consider the first order Taylor expansion
+\[
+y(x) = f(\xi) + f'(\xi) (x - \xi).
+\]
+This is a tangent line.
+Since $f$ is convex, we know that $y(x) \leq f(x)$,
+with equality when $x = \xi$. For our example
+$f(x) = \exp (-x)$, so we have 
+\[
+y(x) = \exp (- \xi) - \exp (- \xi) (x - \xi).
+\]
+Let $\lambda = - \exp (- \xi)$, we then have
+$\xi = - \log (- \lambda)$ and thus 
+\[
+y(x, \lambda) = 
+\lambda x - \lambda + \lambda \log (- \lambda).
+\]
+Here different $\lambda$ corresponds to different tangent 
+lines, which are all lower bounds of the function. 
+That is, $y(x, \lambda) \leq f(x)$. Considering the 
+equality condition, we also have 
+\[
+f(x) = \max_\lambda \left\{ \lambda x - \lambda + \lambda 
+\log (- \lambda) \right\}.
+\]
+
+We can formulate this approach using the framework 
+of \textbf{convex duality}. Suppose the equation 
+of the tangent line $\lambda x - g(\lambda)$, where 
+the slope is $\lambda$ and intercept $- g(\lambda)$.
+Consider moving the line $\lambda x$ up until it touches 
+$f(x)$. We then have
+\[
+g(\lambda) = - \min_x \{f(x) - \lambda x\} 
+= \max_x \{f(x) - \lambda x\}.
+\]
+On the other hand, consider a particular $x$ and 
+then adjust $\lambda$ until the tangent line is
+tangent to $f(x)$ at a particular point $x$. 
+Note that the $y$ value at $x$ is maximized when 
+this happens, so we have 
+\[
+f(x) = \max_\lambda \{\lambda x - g(\lambda)\}.
+\]
+We now see that $f(x)$ and $g(\lambda)$ plays a dual role.
+Our analysis generalizes easily to \textbf{concave functions},
+for which we have 
+\[
+\begin{aligned}
+f(x) &= \min_\lambda \{\lambda x - g(\lambda)\}, \\
+g(\lambda) &= \max_x \{f(x) - \lambda x\}.
+\end{aligned}
+\]
+
+As an example, let $f(x) = \exp (-x)$.
+Consider $g(\lambda) = \max_x \{f(x) - \lambda x\}$. 
+We can see that the maximizing 
+value of $x$ is given by $\xi = - \log(- \lambda)$, so 
+\[
+g(\lambda) = -\lambda + \lambda \log (- \lambda),
+\]
+as obtained previously.
+
+For another example, we want to find an \textbf{upper 
+bound} for the logistic sigmoid function given by
+\[
+\sigma(x) = \frac{1}{1 + e^{-x}}.
+\]
+This is neither convex nor concave. However, 
+\[
+f(x) = \log \sigma(x) = - \log (1 + e^{-x})
+\]
+is concave. We then have 
+\[
+g(\lambda) = \min_x \{\lambda x - f(x)\}
+= - \log \lambda - (1 - \lambda) \log (1 - \lambda),
+\]
+where the second equality is obtained by taking derivative 
+with respect to $x$. Note also this is in the form of 
+a binary entropy. We then have $f(x) \leq \lambda x - g(\lambda)$,
+and thus
+\[
+\sigma(x) \leq \exp (\lambda x - g (\lambda)).
+\]
+
+We can also obtain a \textbf{lower bound} on the sigmoid.
+First we take the log and decompose it:
+\[
+\begin{aligned}
+\log \sigma(x) 
+&= - \log (1 + e^{-x}) \\
+&= - \log \left[ e^{-x / 2} (e^{x / 2} + 
+e^{-x / 2}) \right] \\
+&= \frac{x}{2} - \log (e^{x / 2} + e^{- x / 2}).
+\end{aligned}
+\]
+Note that $f(x) = - \log (e^{x / 2} + e^{- x / 2})$ is 
+convex function of the variable $x^2$. We then have 
+\[
+g(\lambda) = \max_{x^2} \left\{ \lambda x^2 - f \left( 
+  \sqrt{x^2} \right) \right\}.
+\]
+Taking the derivative with respect to $x^2$, we have 
+\[
+0 = \lambda - \frac{d x}{d x^2} \frac{d}{d x} 
+f(x) = \lambda + \frac{1}{4x} \tanh \left( \frac{x}{2} 
+\right).
+\]
+Denote this value of $x$ with $\xi$, then we have 
+\[
+\lambda (\xi) 
+= - \frac{1}{4 \xi} \tanh \left( \frac{\xi}{2} \right) 
+= - \frac{1}{2 \xi} \left( \sigma(\xi) - \frac{1}{2} \right).
+\]
+Using $\xi$ as the variational parameter instead of 
+$\lambda$, we have 
+\[
+g(\lambda) = \lambda(\xi) \xi^2 - f(\xi)
+= \lambda(\xi) \xi^2 + \log (e^{\xi / 2} - e^{- \xi / 2}).
+\]
+It then follows by duality that 
+\[
+f(x) \geq \lambda x^2 - g(\lambda)
+= \lambda(\xi) x^2 - \lambda(\xi) \xi^2 
+- \log (e^{\xi / 2} - e^{- \xi / 2}).
+\]
+Therefore, we can obtain the following lower bound for the 
+sigmoid function: 
+\[
+\sigma(x) \geq \sigma(\xi) 
+\exp \left[ \frac{x - \xi}{2} - \lambda(\xi) (x^2 - \xi^2) 
+\right].
+\]
+
+\subsection{Variational logistic regression}
+
+\TODO{add content}
 
 \section{Sampling methods}
 
