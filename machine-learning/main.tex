@@ -1695,7 +1695,7 @@ where we have kept only the terms dependent on $q_j$.
 Note also
 \[
 \begin{aligned}
-\int p(Z) \left[ \sumi^M \log q_i (Z_i) \right] \d Z 
+\int p(Z) \log q_j (Z_j) \d Z 
 = \int \log q_j(Z_j) \left[ \int p(Z) \prod_{i \neq j} 
 d Z_i \right] d Z_j.
 \end{aligned}
@@ -1708,7 +1708,7 @@ d Z_i \right] d Z_j + \lambda \int q_j(Z_j) \d Z_j.
 Taking the functional derivative, we can then obtain
 \[
 \lambda = 
-- \frac{1}{q_j(Z_j)} \int p(Z) \prod_{i \neq j} d Z_j.
+\frac{1}{q_j(Z_j)} \int p(Z) \prod_{i \neq j} d Z_j.
 \]
 Therefore, 
 \[
@@ -1739,7 +1739,7 @@ As well as performing inference over the hidden variables
 $Z$, we may also wish to compare a set of candidate models, 
 labelled by the index $m$, and having prior probabilities 
 $p(m)$. Our goal is then to approximate the posterior 
-probabilities $p(m \mid X)$, where X is the observed data.
+probabilities $p(m \mid X)$, where $X$ is the observed data.
 
 We must recognize that the posterior over $Z$ must be 
 conditioned on m, and so we must consider
