@@ -1641,8 +1641,10 @@ q_i(Z_i) \d Z_i \right] \d Z_j
 where we have defined
 \[
 \log \tilde{p} (X, Z_j) = \E_{i \neq j}
-[\log p(X, Z)] + \const.
+[\log p(X, Z)] + \const,
 \]
+in which the expectation is with respect to $q$.
+
 Suppose we keep $\{q_{i \neq j}\}$ fixed and maximize
 $\L(q)$ with respect to one of the factor
 $q_j(Z_j)$. Note that this is equivalent
@@ -1746,18 +1748,18 @@ conditioned on m, and so we must consider
 $q(Z, m) = q(Z \mid m) q(m)$. We then have the following 
 variational distribution:
 \[
-\log p(X) = \L_m - \sum_m \sum_Z q(Z \mid m) q(m) 
+\log p(X) = \L - \sum_m \sum_Z q(Z \mid m) q(m) 
 \log \frac{p(Z, m \mid X)}{q(Z \mid m) q(m)},
 \]
-where $\L_m$ is a lower bound for $\log p(X)$ given 
-by 
+where $\L$ is a lower bound for $\log p(X)$ given 
+by $\L = \sum_m \L_m$ and
 \[
-\L_m = \sum_m \sum_Z q(Z \mid m) q(m) 
+\L_m = \sum_Z q(Z \mid m) q(m) 
 \log \frac{p(X, Z, m)}{q(Z \mid m) q(m)}.
 \]
 
-Now, for each model $m$, $\L_m$ is a lower bound for $\log p(X \mid m)$.
-However,
+Now, for each model $m$, $\L_m$ is in fact 
+a lower bound for $\log p(X \mid m)$. Meanwhile, we have
 \[
 p(m \mid X) \propto p(X \mid m) p(m).
 \]
