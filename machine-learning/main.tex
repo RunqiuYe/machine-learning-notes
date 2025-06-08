@@ -1756,20 +1756,15 @@ by
 \log \frac{p(X, Z, m)}{q(Z \mid m) q(m)}.
 \]
 
-Now, if we consider a specific model $M$ and 
-assign equal prior $p(m)$ to each model $m$, then 
+Now, for each model $m$, $\L_m$ is a lower bound for $\log p(X \mid m)$.
+However,
 \[
-\L = \sum_Z q(Z \mid M) \log \frac{p(X, Z \mid M)}{q(Z \mid M)}
+p(m \mid X) \propto p(X \mid m) p(m).
 \]
-is a lower bound for $\log p(X \mid M)$. Note that 
-we also have
-\[
-p(M \mid X) \propto p(X \mid M) p(M).
-\]
-However, $p(m)$ are equal for each $m$. This implies that
-we can interprete $\L$ as an approximation to the posterior
-$p(M \mid X)$, and we can do model selection using the value 
-of $\L$ for each model. This should be contrasted with a
+This is saying that if we assign equal prior $p(m)$ for each model $m$,
+we can interprete $\L_m$ as an approximation to the posterior
+$p(m \mid X)$, and we can do model selection using the value 
+of $\L_m$ for each model $m$. This should be contrasted with a
 maximum likelihood approproach, which tend to overfit 
 models (see PRML page 489-490).
 
